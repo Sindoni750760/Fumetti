@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
-        android:src="@drawable/wallpaper"
+        android:src="@drawable/wallpaper.jpeg"
         tools:ignore="ContentDescription"/>
 
     <!-- Contenuto sopra lo sfondo -->
@@ -36,7 +36,7 @@
                 android:layout_width="250dp"
                 android:layout_height="250dp"
                 android:scaleType="centerCrop"
-                android:src="@drawable/comics_image"
+                android:src="@drawable/comics_image.jpg"
                 tools:ignore="ContentDescription"/>
 
             <!-- Testo di benvenuto -->
@@ -67,8 +67,8 @@
                 android:layout_width="150dp"
                 android:layout_height="60dp"
                 android:layout_marginEnd="16dp"
-                android:background="@drawable/button_background"
-                android:text="@string/login"
+                android:background="@drawable/button_background.xml"
+                android:text="Login"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 android:textColor="@android:color/black"/>
@@ -78,8 +78,8 @@
                 android:id="@+id/registerButton"
                 android:layout_width="150dp"
                 android:layout_height="60dp"
-                android:background="@drawable/button_background"
-                android:text="@string/register"
+                android:background="@drawable/button_background.xml"
+                android:text="Register"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 android:textColor="@android:color/black"/>

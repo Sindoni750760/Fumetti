@@ -13,8 +13,8 @@
         android:layout_marginTop="30dp"
         android:layout_marginEnd="15dp"
         android:layout_marginBottom="10dp"
-        android:background="@drawable/legno_bianco"
-        android:hint="@string/name"
+        android:background="@drawable/legno_bianco.jpeg"
+        android:hint="Name"
         android:textColor="@android:color/white"/>
     <EditText
         android:id="@+id/surnameEditText"
@@ -25,7 +25,7 @@
         android:layout_marginTop="30dp"
         android:layout_marginEnd="15dp"
         android:layout_marginBottom="10dp"
-        android:background="@drawable/legno_bianco"/>
+        android:background="@drawable/legno_bianco.jpeg"/>
     <EditText
         android:id="@+id/emailEditText"
         android:layout_width="match_parent"
@@ -35,7 +35,7 @@
         android:layout_marginTop="30dp"
         android:layout_marginEnd="15dp"
         android:layout_marginBottom="10dp"
-        android:background="@drawable/legno_bianco"/>
+        android:background="@drawable/legno_bianco.jpeg"/>
 
     <EditText
         android:id="@+id/passwordEditText"
@@ -46,7 +46,7 @@
         android:layout_marginTop="30dp"
         android:layout_marginEnd="15dp"
         android:layout_marginBottom="10dp"
-        android:background="@drawable/legno_bianco"/>
+        android:background="@drawable/legno_bianco.jpeg"/>
 
     <Button
         android:id="@+id/button_register"
