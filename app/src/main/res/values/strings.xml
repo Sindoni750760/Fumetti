@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Fumetti</string>
+    <string name="login" />
 </resources>
