@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="8dp"
+    android:background="@drawable/wallpaper">
+
+    <!-- Barra superiore con pulsanti -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="3">
+
+        <Button
+            android:id="@+id/buttonToLibrary"
+            android:layout_width="106dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:background="@drawable/legno_bianco"
+            android:text="Library" />
+
+        <Button
+            android:id="@+id/buttonToMyLibrary"
+            android:layout_width="97dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:background="@drawable/legno_bianco"
+            android:text="MyLibrary" />
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <!-- Icona Profilo -->
+            <ImageButton
+                android:id="@+id/profileIcon"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/circle_shape"
+                android:scaleType="centerCrop"
+                android:src="@drawable/profile_icon"
+                android:contentDescription="@drawable/profile_icon_default"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- Linea divisoria -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@android:color/black"
+        android:layout_marginVertical="4dp"/>
+
+    <!-- RecyclerView per la lista di fumetti -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:clipToPadding="false"
+        android:paddingBottom="16dp"
+        android:scrollbars="vertical"/>
+
+    <!-- Sezione dettagli fumetto -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Serie:"
+        android:textSize="18sp"
+        android:textStyle="bold"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@android:color/black"
+        android:layout_marginBottom="8dp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="Numero:"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@android:color/black"
+        android:layout_marginBottom="8dp"/>
+
+    <!-- Pulsante di Logout in basso a destra -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:gravity="end" />
+
+</LinearLayout>

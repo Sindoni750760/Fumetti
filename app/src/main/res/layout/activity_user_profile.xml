@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    android:padding="16dp"
+    android:background="@color/white">
+
+    <!-- Icona Profilo -->
+    <ImageView
+        android:id="@+id/profileIcon"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginBottom="24dp"
+        android:background="@drawable/circle_shape"
+        android:scaleType="centerCrop"
+        android:src="@drawable/profile_icon"/>
+
+    <!-- Informazioni Utente -->
+    <TextView
+        android:id="@+id/userName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nome Utente"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="8dp" />
+
+    <TextView
+        android:id="@+id/userEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Email Utente"
+        android:textSize="16sp"
+        android:layout_marginBottom="24dp" />
+
+    <!-- Pulsante Logout -->
+    <Button
+        android:id="@+id/logoutButton"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="Logout"
+        android:background="@drawable/legno_bianco"
+        android:textColor="@android:color/black"/>
+</LinearLayout>
