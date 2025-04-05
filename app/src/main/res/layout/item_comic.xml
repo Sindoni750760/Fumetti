@@ -30,7 +30,7 @@
             android:layout_height="100dp"
             android:scaleType="centerCrop"
             android:src="@drawable/ic_placeholder_comic"
-            android:contentDescription="@string/comic_image"
+            android:contentDescription="comics_image"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent" />
@@ -73,7 +73,7 @@
                 android:id="@+id/comicStatus"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:contentDescription="@string/comic_disponibile"
+                android:contentDescription="Disponibile"
                 android:src="@drawable/ic_circle_green"
                 android:layout_marginEnd="4dp" />
 
@@ -81,7 +81,7 @@
                 android:id="@+id/comicStatus2"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:contentDescription="@string/comic_in_attesa"
+                android:contentDescription="In_Attesa"
                 android:src="@drawable/ic_circle_yellow"
                 android:layout_marginEnd="4dp" />
 
@@ -89,7 +89,7 @@
                 android:id="@+id/comicStatus3"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:contentDescription="@string/non_disponibile"
+                android:contentDescription="Non Disponibile"
                 android:src="@drawable/ic_circle_red" />
         </LinearLayout>
 
