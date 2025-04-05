@@ -5,11 +5,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.comicsstore"
+    namespace = "com.example.fumetti"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.example.comicsstore"
+        applicationId = "com.example.fumetti"
         minSdk = 24
         targetSdk = 35
         versionCode = 1
