@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="@color/white">
+
+    <!-- Barra superiore con pulsanti e icona profilo -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <Button
+            android:id="@+id/buttonLibrary"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="Library"
+            android:background="@drawable/legno_bianco" />
+
+        <Button
+            android:id="@+id/buttonHomePage"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="HomeP"
+            android:background="@drawable/legno_bianco" />
+
+        <ImageButton
+            android:id="@+id/profileIcon"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/circle_shape"
+            android:scaleType="centerCrop"
+            android:src="@drawable/profile_icon"/>
+    </LinearLayout>
+
+    <!-- Placeholder per il grafico -->
+    <ImageView
+        android:id="@+id/statsGraph"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/biblioteca"/>
+
+    <!-- Sezione "In lettura" -->
+    <TextView
+        android:id="@+id/comixx"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="fumetti fuori"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_marginTop="16dp" />
+
+    <!-- Lista dei fumetti in lettura -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:paddingTop="8dp"
+        android:scrollbars="vertical"/>
+    <!--Sezione "Disponibili" -->
+    <TextView
+        android:id="@+id/Disponibili"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Disponibili"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_marginTop="16dp" />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView2"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:paddingTop="8dp"
+        android:scrollbars="vertical"/>
+    <!--Sezione "non disponibili"-->
+    <TextView
+        android:id="@+id/NotReadTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Non disponibili"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_marginTop="16dp" />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView3"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:paddingTop="8dp"
+        android:scrollbars="vertical"/>
+</LinearLayout>
