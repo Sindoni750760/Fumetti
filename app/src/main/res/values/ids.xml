@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <item name="buttonHomePage" type="id" />
+    <item name="statusIndicator" type="id" />
+    <item name="titleText" type="id" />
 </resources>

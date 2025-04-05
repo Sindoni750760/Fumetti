@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="8dp">
+
+    <!-- RecyclerView per mostrare tutti i fumetti -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/comicItemContainer"
+        android:scrollbars="vertical" />
+
+    <!-- Layout del singolo fumetto -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/comicItemContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <!-- Immagine del fumetto -->
+        <ImageView
+            android:id="@+id/comicImage"
+            android:layout_width="80dp"
+            android:layout_height="100dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_placeholder_comic"
+            android:contentDescription="@string/comic_image"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+        <!-- Nome del fumetto -->
+        <TextView
+            android:id="@+id/comicName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Comic Name"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:paddingStart="8dp"
+            app:layout_constraintStart_toEndOf="@id/comicImage"
+            app:layout_constraintTop_toTopOf="@id/comicImage"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <!-- Numero del fumetto -->
+        <TextView
+            android:id="@+id/comicNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="N. 1"
+            android:textSize="14sp"
+            android:paddingTop="4dp"
+            app:layout_constraintStart_toStartOf="@id/comicName"
+            app:layout_constraintTop_toBottomOf="@id/comicName" />
+
+        <!-- Stato del fumetto -->
+        <LinearLayout
+            android:id="@+id/comicStatusContainer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingTop="4dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <ImageView
+                android:id="@+id/comicStatus"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:contentDescription="@string/comic_disponibile"
+                android:src="@drawable/ic_circle_green"
+                android:layout_marginEnd="4dp" />
+
+            <ImageView
+                android:id="@+id/comicStatus2"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:contentDescription="@string/comic_in_attesa"
+                android:src="@drawable/ic_circle_yellow"
+                android:layout_marginEnd="4dp" />
+
+            <ImageView
+                android:id="@+id/comicStatus3"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:contentDescription="@string/non_disponibile"
+                android:src="@drawable/ic_circle_red" />
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
