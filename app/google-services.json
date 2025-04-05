@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "106202012198",
+    "project_id": "comixstore-95a44",
+    "storage_bucket": "comixstore-95a44.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:106202012198:android:0084541de40bc8f2f2e4e7",
+        "android_client_info": {
+          "package_name": "com.example.comicsstore"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD65E2QPjgJy7XMtmNrmKGfNHEFzDlVNxI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:106202012198:android:626b1a7a98c220edf2e4e7",
+        "android_client_info": {
+          "package_name": "com.example.fumetti"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD65E2QPjgJy7XMtmNrmKGfNHEFzDlVNxI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
