@@ -14,11 +14,11 @@
         android:gravity="center_vertical">
 
         <Button
-            android:id="@+id/buttonToMyLibrary"
+            android:id="@+id/buttonMyLibrary"
             android:layout_width="163dp"
             android:layout_height="wrap_content"
             android:background="@drawable/legno_bianco"
-            android:text="My_Library" />
+            android:text="My_Library"/>
 
         <Button
             android:id="@+id/buttonHomePage"

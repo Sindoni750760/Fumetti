@@ -32,7 +32,8 @@
         <activity android:name=".activity.RegisterActivity"/>
         <activity android:name=".activity.UserHomePageActivity"/>
         <activity android:name=".activity.Library"/>
-        <activity android:name=".activity.UserProfileActivity"/>
+        <activity android:name=".activity.UserProfileActivity"
+            android:theme="@style/Theme.AppCompat.Dialog"/>
         <activity android:name=".activity.MyLibrary"/>
 
 
