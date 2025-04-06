@@ -1,4 +1,6 @@
 package com.example.fumetti.activity
 
-class UserProfileActivity {
+import androidx.appcompat.app.AppCompatActivity
+
+class UserProfileActivity: AppCompatActivity() {
 }

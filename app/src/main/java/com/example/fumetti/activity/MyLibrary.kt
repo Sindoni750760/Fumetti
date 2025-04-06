@@ -1,4 +1,6 @@
 package com.example.fumetti.activity
 
-class MyLibrary {
+import androidx.appcompat.app.AppCompatActivity
+
+class MyLibrary: AppCompatActivity() {
 }
