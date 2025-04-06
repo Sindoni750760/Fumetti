@@ -32,7 +32,7 @@ class MyLibrary : AppCompatActivity() {
         }
 
         // Pulsante per accedere alla Library
-        val buttonLibrary = findViewById<Button>(R.id.buttonToLibrary)
+        val buttonLibrary = findViewById<Button>(R.id.buttonToMyLibrary)
         buttonLibrary.setOnClickListener {
             startActivity(Intent(this, Library::class.java))
             finish()

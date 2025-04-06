@@ -29,6 +29,12 @@ class Library :AppCompatActivity() {
             startActivity(Intent(this, UserHomePageActivity::class.java))
             finish()
         }
+        // Pulsante per accedere alla MyLibrary
+        val buttonMyLibrary = findViewById<Button>(R.id.buttonToMyLibrary)
+        buttonHomePage.setOnClickListener {
+            startActivity(Intent(this, MyLibrary::class.java))
+            finish()
+        }
 
         // Icona profilo per accedere al profilo utente
         val profileIcon = findViewById<ImageView>(R.id.profileIcon)
