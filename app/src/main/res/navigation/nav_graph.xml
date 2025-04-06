@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/homePageActivity">
+
+    <activity
+        android:id="@+id/homePageActivity"
+        android:name="com.example.fumetti.activity.HomePageActivity"
+        android:label="Home Page Activity"
+        tools:layout="@layout/activity_homepage">
+        <action
+            android:id="@+id/action_homePage_to_login"
+            app:destination="@id/loginActivity" />
+        <action
+            android:id="@+id/action_homePage_to_register"
+            app:destination="@id/registerActivity" />
+    </activity>
+
+    <activity
+        android:id="@+id/loginActivity"
+        android:name="com.example.fumetti.activity.LoginActivity"
+        android:label="Login Activity"
+        tools:layout="@layout/activity_login">
+        <action
+            android:id="@+id/action_login_to_userHomePage"
+            app:destination="@id/userHomePageActivity" />
+    </activity>
+
+    <activity
+        android:id="@+id/registerActivity"
+        android:name="com.example.fumetti.activity.RegisterActivity"
+        android:label="Register Activity"
+        tools:layout="@layout/activity_register">
+        <action
+            android:id="@+id/action_register_to_userHomePage"
+            app:destination="@id/userHomePageActivity" />
+    </activity>
+
+    <activity
+        android:id="@+id/userHomePageActivity"
+        android:name="com.example.fumetti.activity.UserHomePageActivity"
+        android:label="User Home Page Activity"
+        tools:layout="@layout/activity_user_homepage">
+        <action
+            android:id="@+id/action_userHomePage_to_library"
+            app:destination="@id/libraryActivity" />
+        <action
+            android:id="@+id/action_userHomePage_to_myLibrary"
+            app:destination="@id/myLibraryActivity" />
+    </activity>
+
+    <activity
+        android:id="@+id/libraryActivity"
+        android:name="com.example.fumetti.activity.Library"
+        android:label="Library Activity"
+        tools:layout="@layout/activity_library">
+        <action
+            android:id="@+id/action_library_to_comicDetail"
+            app:destination="@id/comicDetailActivity" />
+        <action
+            android:id="@+id/action_library_to_userHomePage"
+            app:destination="@id/userHomePageActivity" />
+    </activity>
+
+    <activity
+        android:id="@+id/myLibraryActivity"
+        android:name="com.example.fumetti.activity.MyLibrary"
+        android:label="My Library Activity"
+        tools:layout="@layout/activity_my_library">
+        <action
+            android:id="@+id/action_myLibrary_to_comicDetail"
+            app:destination="@id/comicDetailActivity" />
+        <action
+            android:id="@+id/action_myLibrary_to_userHomePage"
+            app:destination="@id/userHomePageActivity" />
+    </activity>
+
+    <activity
+        android:id="@+id/comicDetailActivity"
+        android:name="com.example.fumetti.activity.ComicDetailActivity"
+        android:label="Comic Detail Activity"
+        tools:layout="@layout/item_comic" />
+</navigation>
