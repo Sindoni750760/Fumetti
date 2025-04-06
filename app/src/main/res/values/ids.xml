@@ -5,4 +5,5 @@
     <item name="titleText" type="id" />
     <item name="comicTitle" type="id" />
     <item name="comicDescription" type="id" />
+    <item name="buttonToHomePage" type="id" />
 </resources>

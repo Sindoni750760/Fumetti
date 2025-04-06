@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="@drawable/wallpaper">
+
+    <!-- Barra superiore con pulsanti e icona profilo -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal">
+
+        <!-- Button per Library -->
+        <Button
+            android:id="@+id/buttonToLibrary"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="Library"
+            android:background="@drawable/legno_bianco"
+            />
+
+        <!-- Button per Homepage -->
+        <Button
+            android:id="@+id/buttonToHomePage"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="HomePage"
+            android:background="@drawable/legno_bianco"
+            />
+
+        <!-- Icona profilo -->
+        <ImageButton
+            android:id="@+id/profileIcon"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/circle_shape"
+            android:scaleType="centerCrop"
+            android:src="@drawable/profile_icon" />
+    </LinearLayout>
+
+    <!-- RecyclerView per visualizzare i fumetti prenotati -->
+    <!-- Sezione "In lettura" -->
+    <TextView
+        android:id="@+id/comixx"
+        android:layout_width="match_parent"
+        android:layout_height="28dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/legno_bianco"
+        android:text="In Lettura"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <!-- Lista dei fumetti in lettura -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:paddingTop="8dp"
+        android:scrollbars="vertical"/>
+    <!--Sezione "Disponibili" -->
+    <TextView
+        android:id="@+id/Disponibili"
+        android:layout_width="match_parent"
+        android:layout_height="31dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/legno_bianco"
+        android:text="Letti"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView2"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:paddingTop="8dp"
+        android:scrollbars="vertical"/>
+    <!--Sezione "non disponibili"-->
+    <TextView
+        android:id="@+id/NotReadTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Non Letti"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_marginTop="16dp" />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView3"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:paddingTop="8dp"
+        android:scrollbars="vertical"/>
+</LinearLayout>
