@@ -96,5 +96,9 @@
         android:id="@+id/userProfileActivity"
         android:name="com.example.fumetti.activity.UserProfileActivity"
         android:label="User Profile Activity"
-        tools:layout="@layout/activity_user_profile"/>
+        tools:layout="@layout/activity_user_profile">
+        <action
+            android:id="@+id/action_userProfile_to_homePage"
+            app:destination="@id/homePageActivity" />
+    </activity>
 </navigation>
