@@ -49,6 +49,9 @@
         <action
             android:id="@+id/action_userHomePage_to_myLibrary"
             app:destination="@id/myLibraryActivity" />
+        <action
+            android:id="@+id/action_userHomePage_to_userProfile"
+            app:destination="@id/userProfileActivity" />
     </activity>
 
     <activity
@@ -62,6 +65,9 @@
         <action
             android:id="@+id/action_library_to_userHomePage"
             app:destination="@id/userHomePageActivity" />
+        <action
+            android:id="@+id/action_library_to_userProfile"
+            app:destination="@id/userProfileActivity" />
     </activity>
 
     <activity
@@ -75,6 +81,9 @@
         <action
             android:id="@+id/action_myLibrary_to_userHomePage"
             app:destination="@id/userHomePageActivity" />
+        <action
+            android:id="@+id/action_myLibrary_to_userProfile"
+            app:destination="@id/userProfileActivity" />
     </activity>
 
     <activity
@@ -82,4 +91,10 @@
         android:name="com.example.fumetti.activity.ComicDetailActivity"
         android:label="Comic Detail Activity"
         tools:layout="@layout/item_comic" />
+
+    <activity
+        android:id="@+id/userProfileActivity"
+        android:name="com.example.fumetti.activity.UserProfileActivity"
+        android:label="User Profile Activity"
+        tools:layout="@layout/activity_user_profile"/>
 </navigation>
