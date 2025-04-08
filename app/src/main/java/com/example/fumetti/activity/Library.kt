@@ -35,7 +35,7 @@ class Library : AppCompatActivity() {
         }
 
         // Pulsante per accedere alla MyLibrary
-        val buttonMyLibrary = findViewById<Button>(R.id.buttonToMyLibrary)
+        val buttonMyLibrary = findViewById<Button>(R.id.buttonMyLibrary)
         buttonMyLibrary.setOnClickListener {
             startActivity(Intent(this, MyLibrary::class.java))
             finish()

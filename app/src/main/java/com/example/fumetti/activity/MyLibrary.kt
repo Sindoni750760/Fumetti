@@ -30,14 +30,14 @@ class MyLibrary : AppCompatActivity() {
         recyclerView.layoutManager = LinearLayoutManager(this)
 
         // Pulsante per tornare alla Home
-        val buttonHomePage = findViewById<Button>(R.id.buttonToHomePage)
+        val buttonHomePage = findViewById<Button>(R.id.buttonHomePage)
         buttonHomePage.setOnClickListener {
             startActivity(Intent(this, UserHomePageActivity::class.java))
             finish()
         }
 
         // Pulsante per accedere alla Library
-        val buttonLibrary = findViewById<Button>(R.id.buttonToMyLibrary)
+        val buttonLibrary = findViewById<Button>(R.id.buttonMyLibrary)
         buttonLibrary.setOnClickListener {
             startActivity(Intent(this, Library::class.java))
             finish()
