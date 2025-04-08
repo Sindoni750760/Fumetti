@@ -54,15 +54,34 @@
         android:background="@android:color/black"
         android:layout_marginVertical="4dp"/>
 
-    <!-- RecyclerView per la lista di fumetti -->
+    <!-- RecyclerView orizzontale per la lista di fumetti -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_weight="1"
         android:clipToPadding="false"
         android:paddingBottom="16dp"
-        android:scrollbars="vertical"/>
+        android:scrollbars="horizontal"
+        android:orientation="horizontal" />
+
+    <!-- RecyclerView per i nomi -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewNames"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10px"
+        android:maxHeight="200dp"
+        android:scrollbars="vertical" />
+
+    <!-- RecyclerView per serie e numero -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewSeriesNumbers"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10px"
+        android:maxHeight="200dp"
+        android:scrollbars="vertical" />
 
     <!-- Sezione dettagli fumetto -->
     <TextView
@@ -70,7 +89,8 @@
         android:layout_height="wrap_content"
         android:text="Serie:"
         android:textSize="18sp"
-        android:textStyle="bold"/>
+        android:textStyle="bold"
+        android:layout_marginTop="10px"/>
 
     <View
         android:layout_width="match_parent"
@@ -83,7 +103,8 @@
         android:layout_height="50dp"
         android:text="Numero:"
         android:textSize="18sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:layout_marginTop="10px" />
 
     <View
         android:layout_width="match_parent"
@@ -94,7 +115,7 @@
     <!-- Pulsante di Logout in basso a destra -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="30dp"
+        android:layout_height="36dp"
         android:gravity="end" />
 
 </LinearLayout>
