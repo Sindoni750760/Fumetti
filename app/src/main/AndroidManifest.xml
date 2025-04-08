@@ -33,6 +33,8 @@
         <activity android:name=".activity.UserProfileActivity"
             android:theme="@style/Theme.AppCompat.Dialog"/>
         <activity android:name=".activity.MyLibrary"/>
-
+        <activity android:name=".database.AddComics"/>
+        <activity android:name=".database.RemoveComics"/>
+        <activity android:name=".database.OrderedComics"/>
     </application>
 </manifest>

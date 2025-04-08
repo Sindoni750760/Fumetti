@@ -1,4 +1,4 @@
-package com.example.fumetti
+package com.example.fumetti.database
 
 import android.os.Bundle
 import android.widget.ArrayAdapter
@@ -8,7 +8,6 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.fumetti.R
 import com.example.fumetti.data.Comic
-import com.example.fumetti.database.ComicDatabase
 
 class AddComics : AppCompatActivity() {
 

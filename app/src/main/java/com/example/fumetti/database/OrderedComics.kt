@@ -1,4 +1,4 @@
-package com.example.fumetti
+package com.example.fumetti.database
 
 import android.os.Bundle
 import android.widget.ImageView
@@ -6,10 +6,10 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.fumetti.R
+import com.example.fumetti.WaitingListAdapter
 import com.example.fumetti.data.Comic
 import com.example.fumetti.data.ComicStatus
-import com.example.fumetti.database.ComicDatabase
-import com.example.fumetti.database.ComicsAdapter
 
 class OrderedComics : AppCompatActivity() {
 

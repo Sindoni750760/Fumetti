@@ -37,23 +37,16 @@
             android:src="@drawable/profile_icon"/>
     </LinearLayout>
 
-    <!-- Placeholder per il grafico -->
-    <ImageView
-        android:id="@+id/statsGraph"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/biblioteca"/>
-
     <!-- Sezione "In lettura" -->
     <TextView
         android:id="@+id/comixx"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="32dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/legno_bianco"
         android:text="fumetti fuori"
         android:textSize="18sp"
-        android:textStyle="bold"
-        android:layout_marginTop="16dp" />
+        android:textStyle="bold" />
 
     <!-- Lista dei fumetti in lettura -->
     <androidx.recyclerview.widget.RecyclerView
@@ -63,15 +56,18 @@
         android:layout_weight="1"
         android:paddingTop="8dp"
         android:scrollbars="vertical"/>
-    <!--Sezione "Disponibili" -->
+
+    <!-- Sezione "Disponibili" -->
     <TextView
         android:id="@+id/Disponibili"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="30dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/legno_bianco"
         android:text="Disponibili"
         android:textSize="18sp"
-        android:textStyle="bold"
-        android:layout_marginTop="16dp" />
+        android:textStyle="bold" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView2"
         android:layout_width="match_parent"
@@ -79,15 +75,18 @@
         android:layout_weight="1"
         android:paddingTop="8dp"
         android:scrollbars="vertical"/>
-    <!--Sezione "non disponibili"-->
+
+    <!-- Sezione "non disponibili" -->
     <TextView
         android:id="@+id/NotReadTitle"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="30dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/legno_bianco"
         android:text="Non disponibili"
         android:textSize="18sp"
-        android:textStyle="bold"
-        android:layout_marginTop="16dp" />
+        android:textStyle="bold" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView3"
         android:layout_width="match_parent"
@@ -95,4 +94,19 @@
         android:layout_weight="1"
         android:paddingTop="8dp"
         android:scrollbars="vertical"/>
+
+    <!-- Pulsanti per aggiungere e rimuovere fumetti -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center">
+
+        <Button
+            android:id="@+id/buttonOrderedComics"
+            android:layout_width="150dp"
+            android:layout_height="43dp"
+            android:background="@drawable/legno_bianco"
+            android:text="Lista d'attesa" />
+    </LinearLayout>
 </LinearLayout>

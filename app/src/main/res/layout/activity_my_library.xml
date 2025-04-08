@@ -10,47 +10,41 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
 
-        <!-- Button per Library -->
         <Button
-            android:id="@+id/buttonToMyLibrary"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="MyLibrary"
+            android:id="@+id/buttonMyLibrary"
+            android:layout_width="163dp"
+            android:layout_height="wrap_content"
             android:background="@drawable/legno_bianco"
-            />
+            android:text="My_Library"/>
 
-        <!-- Button per Homepage -->
         <Button
-            android:id="@+id/buttonToHomePage"
+            android:id="@+id/buttonHomePage"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="HomePage"
-            android:background="@drawable/legno_bianco"
-            />
+            android:background="@drawable/legno_bianco" />
 
-        <!-- Icona profilo -->
         <ImageButton
             android:id="@+id/profileIcon"
             android:layout_width="50dp"
             android:layout_height="match_parent"
             android:background="@drawable/circle_shape"
             android:scaleType="centerCrop"
-            android:src="@drawable/profile_icon" />
+            android:src="@drawable/profile_icon"/>
     </LinearLayout>
 
-    <!-- RecyclerView per visualizzare i fumetti prenotati -->
     <!-- Sezione "In lettura" -->
     <TextView
         android:id="@+id/comixx"
         android:layout_width="match_parent"
-        android:layout_height="28dp"
+        android:layout_height="41dp"
         android:layout_marginTop="16dp"
         android:background="@drawable/legno_bianco"
-        android:text="In Lettura"
+        android:text="fumetti fuori"
         android:textSize="18sp"
         android:textStyle="bold" />
 
@@ -62,16 +56,18 @@
         android:layout_weight="1"
         android:paddingTop="8dp"
         android:scrollbars="vertical"/>
-    <!--Sezione "Disponibili" -->
+
+    <!-- Sezione "Disponibili" -->
     <TextView
         android:id="@+id/Disponibili"
         android:layout_width="match_parent"
-        android:layout_height="31dp"
+        android:layout_height="40dp"
         android:layout_marginTop="16dp"
         android:background="@drawable/legno_bianco"
-        android:text="Letti"
+        android:text="Disponibili"
         android:textSize="18sp"
         android:textStyle="bold" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView2"
         android:layout_width="match_parent"
@@ -79,15 +75,18 @@
         android:layout_weight="1"
         android:paddingTop="8dp"
         android:scrollbars="vertical"/>
-    <!--Sezione "non disponibili"-->
+
+    <!-- Sezione "non disponibili" -->
     <TextView
         android:id="@+id/NotReadTitle"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Non Letti"
+        android:layout_height="39dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/legno_bianco"
+        android:text="Non disponibili"
         android:textSize="18sp"
-        android:textStyle="bold"
-        android:layout_marginTop="16dp" />
+        android:textStyle="bold" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView3"
         android:layout_width="match_parent"
@@ -95,4 +94,56 @@
         android:layout_weight="1"
         android:paddingTop="8dp"
         android:scrollbars="vertical"/>
+
+    <!-- Pulsanti per aggiungere e rimuovere fumetti -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp">
+
+            <ImageButton
+                android:id="@+id/buttonAddComics"
+                android:layout_width="124dp"
+                android:layout_height="59dp"
+                android:src="@drawable/ic_add"
+                android:background="@drawable/legno_bianco"
+                android:contentDescription="Add Comics" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Add"
+                android:textColor="@android:color/black"
+                android:textSize="16sp"
+                android:layout_centerInParent="true" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp">
+
+            <ImageButton
+                android:id="@+id/buttonRemoveComics"
+                android:layout_width="124dp"
+                android:layout_height="59dp"
+                android:src="@drawable/ic_remove"
+                android:background="@drawable/legno_bianco"
+                android:contentDescription="Remove Comics" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Remove"
+                android:textColor="@android:color/black"
+                android:textSize="16sp"
+                android:layout_centerInParent="true" />
+        </RelativeLayout>
+    </LinearLayout>
 </LinearLayout>

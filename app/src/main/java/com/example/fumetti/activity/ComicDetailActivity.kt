@@ -10,16 +10,16 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class ComicDetailActivity: AppCompatActivity() {
+class ComicDetailActivity : AppCompatActivity() {
     private val comicDatabase = ComicDatabase()
 
-    override fun onCreate(savedInstanceState: Bundle?){
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_comic)
 
-        val comicId = intent.getStringExtra("COMIC_ID")?: return
-        CoroutineScope(Dispatchers.Main).launch {
-            val comic = comicDatabase.getComic(comicId)
+        val comicId = intent.getStringExtra("COMIC_ID") ?: return
+
+        comicDatabase.getComic(comicId) { comic ->
             if (comic != null) {
                 // Popola i dettagli del fumetto nella UI
                 findViewById<TextView>(R.id.comicTitle).text = comic.name

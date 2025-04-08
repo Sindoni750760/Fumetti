@@ -3,14 +3,19 @@ package com.example.fumetti.activity
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.fumetti.database.AddComics
+import com.example.fumetti.database.OrderedComics
 import com.example.fumetti.R
 import com.example.fumetti.database.ComicDatabase
 import com.example.fumetti.database.ComicsAdapter
+import com.example.fumetti.database.RemoveComics
+import com.example.fumetti.data.Comic
 
 class MyLibrary : AppCompatActivity() {
 
@@ -38,6 +43,19 @@ class MyLibrary : AppCompatActivity() {
             finish()
         }
 
+        // Pulsante per accedere alla schermata di aggiunta fumetti
+        val buttonAddComics = findViewById<ImageButton>(R.id.buttonAddComics)
+        buttonAddComics.setOnClickListener {
+            val intent = Intent(this, AddComics::class.java)
+            startActivity(intent)
+        }
+
+        // Pulsante per accedere alla schermata di prenotazione fumetti
+        val buttonRemoveComics = findViewById<ImageButton>(R.id.buttonRemoveComics)
+        buttonRemoveComics.setOnClickListener {
+            startActivity(Intent(this, RemoveComics::class.java))
+        }
+
         // Icona profilo per accedere alla schermata profilo
         val profileIcon = findViewById<ImageView>(R.id.profileIcon)
         profileIcon.setOnClickListener {
@@ -45,7 +63,8 @@ class MyLibrary : AppCompatActivity() {
         }
 
         // Caricamento fumetti prenotati nella RecyclerView
-        comicDatabase.getAllComics { comics ->
+        val userId = "USER_ID" // Sostituisci con l'ID utente corretto
+        comicDatabase.getAllComicsByUser(userId) { comics: List<Comic> ->
             if (comics.isNotEmpty()) {
                 comicAdapter = ComicsAdapter(
                     this, comics,

@@ -74,21 +74,23 @@ class ComicsAdapter(
         )
         holder.reserveButton.setOnClickListener {
             CoroutineScope(Dispatchers.Main).launch {
-                val success = comicDatabase.reserveComic(comic.id.toString(), "userId")
-                if (success) {
-                    Toast.makeText(context, "Comic reserved!", Toast.LENGTH_SHORT).show()
-                } else {
-                    Toast.makeText(context, "Failed to reserve comic.", Toast.LENGTH_SHORT).show()
+                comicDatabase.reserveComic(comic.id.toString(), comic.name) { success ->
+                    if (success) {
+                        Toast.makeText(context, "Comic reserved!", Toast.LENGTH_SHORT).show()
+                    } else {
+                        Toast.makeText(context, "Failed to reserve comic.", Toast.LENGTH_SHORT).show()
+                    }
                 }
             }
         }
         holder.returnButton.setOnClickListener {
             CoroutineScope(Dispatchers.Main).launch {
-                val success = comicDatabase.returnComic(comic.id.toString())
-                if (success) {
-                    Toast.makeText(context, "Comic returned!", Toast.LENGTH_SHORT).show()
-                } else {
-                    Toast.makeText(context, "Failed to return comic.", Toast.LENGTH_SHORT).show()
+                comicDatabase.returnComic(comic.id.toString()) { success ->
+                    if (success) {
+                        Toast.makeText(context, "Comic returned!", Toast.LENGTH_SHORT).show()
+                    } else {
+                        Toast.makeText(context, "Failed to return comic.", Toast.LENGTH_SHORT).show()
+                    }
                 }
             }
         }
