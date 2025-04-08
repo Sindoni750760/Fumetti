@@ -25,14 +25,11 @@ class ComicsAdapter(
     private val updateStatus: (ImageView, String) -> Unit
 ) : RecyclerView.Adapter<ComicsAdapter.ComicViewHolder>() {
 
-
     class ComicViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val statusIndicator: ImageView = itemView.findViewById(R.id.statusIndicator)
         val titleText: TextView = itemView.findViewById(R.id.titleText)
-        //TODO: Creare il button reserveButton
         @SuppressLint("ResourceType")
         val reserveButton: Button = itemView.findViewById(R.drawable.reserve_button)
-        //TODO: Creare il button reserveButton
         @SuppressLint("ResourceType")
         val returnButton: Button = itemView.findViewById(R.drawable.return_button)
     }
@@ -53,11 +50,13 @@ class ComicsAdapter(
             AdapterMode.MY_LIBRARY, AdapterMode.LIBRARY -> setupLibraryMode(holder, comic)
         }
     }
+
     enum class AdapterMode {
         PREVIEW,  // Modalità scrollbar in UserHomePageActivity
         LIBRARY,  // Modalità completa in Libreria
         MY_LIBRARY // Modalità filtro libri prenotati in MyLibrary
     }
+
     private fun setupPreviewMode(holder: ComicViewHolder) {
         holder.statusIndicator.visibility = View.GONE
         holder.reserveButton.visibility = View.GONE
@@ -93,5 +92,10 @@ class ComicsAdapter(
                 }
             }
         }
+    }
+
+    fun updateData(newComicsList: List<Comic>) {
+        comicsList = newComicsList
+        notifyDataSetChanged()
     }
 }

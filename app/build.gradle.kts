@@ -14,7 +14,6 @@ android {
         targetSdk = 35
         versionCode = 1
         versionName = "1.0"
-
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -37,20 +36,20 @@ android {
 }
 
 dependencies {
-    implementation("androidx.core:core-ktx:1.7.0")
-    implementation("androidx.appcompat:appcompat:1.4.0")
-    implementation("com.google.android.material:material:1.4.0")
-    implementation("com.google.firebase:firebase-common-ktx:20.0.0")
-    implementation("com.google.firebase:firebase-firestore-ktx:24.0.0")
-    implementation("com.google.firebase:firebase-auth-ktx:21.0.0")
-    implementation("androidx.navigation:navigation-fragment-ktx:2.3.5")
-    implementation("androidx.navigation:navigation-ui-ktx:2.3.5")
-    implementation("androidx.room:room-common:2.6.1")
+    implementation(libs.androidx.core.ktx.v170)
+    implementation(libs.androidx.appcompat.v140)
+    implementation(libs.material.v140)
+    implementation(libs.firebase.common.ktx)
+    implementation(libs.firebase.firestore.ktx)
+    implementation(libs.firebase.auth.ktx)
+    implementation(libs.androidx.navigation.fragment.ktx)
+    implementation(libs.androidx.navigation.ui.ktx)
+    implementation(libs.androidx.room.common)
     testImplementation(libs.junit)
-    androidTestImplementation("androidx.test.ext:junit:1.1.3")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
-    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.6.0")
-    implementation("com.google.firebase:firebase-core:21.1.1")
-    implementation("com.google.firebase:firebase-auth:21.0.0")
-    implementation("com.google.firebase:firebase-firestore:24.0.0")
+    androidTestImplementation(libs.androidx.junit.v113)
+    androidTestImplementation(libs.androidx.espresso.core.v340)
+    implementation(libs.kotlinx.coroutines.play.services)
+    implementation("com.google.android.gms:play-services-base:17.6.0")
+    implementation("com.google.android.gms:play-services-maps:17.0.0")
+    implementation("androidx.appcompat:appcompat:1.4.0") // Versione corretta di AppCompat
 }
