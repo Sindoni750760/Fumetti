@@ -23,7 +23,7 @@
                 android:layout_width="163dp"
                 android:layout_height="match_parent"
                 android:background="@drawable/legno_bianco"
-                android:text="My Library" />
+                android:text="To Library" />
 
             <Button
                 android:id="@+id/buttonHomePage"
