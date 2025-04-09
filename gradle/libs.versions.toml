@@ -7,6 +7,7 @@ espressoCoreVersion = "3.4.0"
 firebaseCommonKtx = "21.0.0"
 firebaseCore = "21.1.1"
 firebaseFirestoreKtx = "25.1.3"
+googlePlayServicesBase = "18.3.0"
 googleServices = "4.4.2"
 kotlin = "2.0.21"
 coreKtx = "1.15.0"
@@ -52,6 +53,7 @@ material-v140 = { module = "com.google.android.material:material", version.ref =
 play-services = { module = "com.google.android.gms:play-services", version.ref = "playServices" }
 play-services-base = { module = "com.google.android.gms:play-services-base", version.ref = "playServicesBase" }
 play-services-base-v1760 = { module = "com.google.android.gms:play-services-base", version.ref = "playServicesBaseVersion" }
+play-services-base-v1830 = { module = "com.google.android.gms:play-services-base", version.ref = "googlePlayServicesBase" }
 play-services-maps = { module = "com.google.android.gms:play-services-maps", version.ref = "playServices" }
 play-services-maps-v1910 = { module = "com.google.android.gms:play-services-maps", version.ref = "playServicesMaps" }
 

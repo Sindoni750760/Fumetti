@@ -4,6 +4,7 @@ package com.example.fumetti.activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.KeyEvent
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
@@ -27,11 +28,18 @@ class RegisterActivity : AppCompatActivity() {
         val passwordEditText = findViewById<EditText>(R.id.passwordEditText)
         val registerButton = findViewById<Button>(R.id.button_register)
 
+        // Blocca inserimento newline
+        listOf(nameEditText, surnameEditText, emailEditText, passwordEditText).forEach { editText ->
+            editText.setOnKeyListener { _, keyCode, _ ->
+                keyCode == KeyEvent.KEYCODE_ENTER
+            }
+        }
+
         registerButton.setOnClickListener {
-            val name = nameEditText.text.toString().trim()
-            val surname = surnameEditText.text.toString().trim()
-            val email = emailEditText.text.toString().trim()
-            val password = passwordEditText.text.toString().trim()
+            val name = sanitizeInput(nameEditText.text.toString().trim())
+            val surname = sanitizeInput(surnameEditText.text.toString().trim())
+            val email = sanitizeInput(emailEditText.text.toString().trim())
+            val password = sanitizeInput(passwordEditText.text.toString().trim())
 
             if (name.isEmpty() || surname.isEmpty() || email.isEmpty() || password.isEmpty()) {
                 Toast.makeText(this, "Dati mancanti, inserisci tutti i campi", Toast.LENGTH_SHORT).show()
@@ -92,6 +100,10 @@ class RegisterActivity : AppCompatActivity() {
     private fun goToUserHomePage() {
         startActivity(Intent(this, UserHomePageActivity::class.java))
         finish()
+    }
+
+    private fun sanitizeInput(input: String): String {
+        return input.replace("\n", "").replace("\r", "")
     }
 
     private fun checkEmail(email: String): Boolean {

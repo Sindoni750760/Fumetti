@@ -86,8 +86,9 @@ class UserHomePageActivity : AppCompatActivity() {
                 recyclerView.adapter = ComicsAdapter(this, comics, ComicsAdapter.AdapterMode.PREVIEW, updateStatus = { _, _ -> })
 
                 recyclerViewNames.adapter = SimpleTextAdapter(comics.map { it.name }) // puoi anche combinare name + series
-                recyclerViewSeriesNumbers.adapter = SimpleTextAdapter(comics.map { "${it.series} #${it.number}" })
-            }
+                val randomTen = comics.shuffled().take(10).map{"${it.name} #${it.number}"}
+                recyclerViewSeriesNumbers.adapter = SimpleTextAdapter(randomTen) }
+
             .addOnFailureListener { exception ->
                 Log.e("FirestoreError", "Errore di caricamento", exception)
             }

@@ -18,7 +18,6 @@ class ComicDatabase {
         }
     }
 
-    // Ottieni tutti i fumetti di un utente
     fun getAllComicsByUser(userId: String? = null, callback: (List<Comic>) -> Unit) {
         firestore.collection("comics")
             .whereEqualTo("userId", userId)
@@ -32,55 +31,37 @@ class ComicDatabase {
             }
     }
 
-    // Prenota un fumetto
-    fun reserveComic(comicId: String, userId: String, callback: (Boolean) -> Unit) {
-        firestore.collection("comics").document(comicId)
-            .get()
-            .addOnSuccessListener { snapshot ->
-                val comic = snapshot.toObject(Comic::class.java)
-                if (comic != null && comic.status == ComicStatus.NON_DISPONIBILE) {
-                    firestore.collection("comics").document(comicId)
-                        .update(
-                            mapOf(
-                                "status" to ComicStatus.IN_PRENOTAZIONE.name,
-                                "userId" to userId
-                            )
-                        )
-                        .addOnSuccessListener {
-                            callback(true)
-                        }
-                        .addOnFailureListener {
-                            callback(false)
-                        }
-                } else {
-                    callback(false)
-                }
-            }
-            .addOnFailureListener {
-                callback(false)
-            }
+    fun reserveComic(comicId: String, callback: (Boolean) -> Unit) {
+        firestore.collection("comics")
+            .document(comicId)
+            .update("status", ComicStatus.IN_PRENOTAZIONE.name)
+            .addOnSuccessListener { callback(true) }
+            .addOnFailureListener { callback(false) }
     }
 
-    // Restituisci un fumetto
     fun returnComic(comicId: String, callback: (Boolean) -> Unit) {
-        firestore.collection("comics").document(comicId)
+        firestore.collection("comics")
+            .document(comicId)
             .update(
                 mapOf(
                     "status" to ComicStatus.NON_DISPONIBILE.name,
                     "userId" to null
                 )
             )
-            .addOnSuccessListener {
-                callback(true)
-            }
-            .addOnFailureListener {
-                callback(false)
-            }
+            .addOnSuccessListener { callback(true) }
+            .addOnFailureListener { callback(false) }
     }
 
-    // Ottieni un singolo fumetto
+    fun addToWaitingList(comicId: String, userId: String, callback: (Boolean) -> Unit) {
+        firestore.collection("waiting_list")
+            .add(mapOf("comicId" to comicId, "userId" to userId))
+            .addOnSuccessListener { callback(true) }
+            .addOnFailureListener { callback(false) }
+    }
+
     fun getComic(comicId: String, callback: (Comic?) -> Unit) {
-        firestore.collection("comics").document(comicId)
+        firestore.collection("comics")
+            .document(comicId)
             .get()
             .addOnSuccessListener { snapshot ->
                 val comic = snapshot.toObject(Comic::class.java)
