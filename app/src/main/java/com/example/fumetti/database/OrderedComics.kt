@@ -36,9 +36,11 @@ class OrderedComics : AppCompatActivity() {
                     this, orderedComics,
                     ComicsAdapter.AdapterMode.PREVIEW,
                     comicDatabase
-                ) { view, status ->
-                    updateComicStatus(view, status)
+                ) { comic, status ->
+                    val view = findViewById<ImageView>(R.id.statusIndicator) // Trova l'ImageView associata
+                    updateComicStatus(view, status.toString())
                 }
+
                 recyclerViewOrderedComics.adapter = orderedComicsAdapter
             } else {
                 Toast.makeText(this, "Nessun fumetto ordinato", Toast.LENGTH_SHORT).show()
