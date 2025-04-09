@@ -1,7 +1,8 @@
 package com.example.fumetti.data
 
 enum class ComicStatus {
-    PRESENTE,
+    DISPONIBILE,
     IN_PRENOTAZIONE,
-    MANCANTE
+    NON_DISPONIBILE,
+    UNKNOWN
 }
