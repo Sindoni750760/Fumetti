@@ -9,10 +9,14 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fumetti.R
+import com.example.fumetti.data.Comic
+import com.example.fumetti.data.ComicStatus
+import com.example.fumetti.database.ComicsAdapter
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
@@ -58,33 +62,38 @@ class UserHomePageActivity : AppCompatActivity() {
     }
 
     private fun loadData(collectionName: String, recyclerView: RecyclerView, recyclerViewNames: RecyclerView, recyclerViewSeriesNumbers: RecyclerView) {
-        if (collectionName.isBlank()) {
-            Log.e("FirestoreError", "Il nome della collezione non può essere vuoto.")
-            return
-        }
-
         val db = FirebaseFirestore.getInstance()
-        db.collection(collectionName)
+        db.collection("comic") // <-- Collezione Firestore giusta
             .get()
             .addOnSuccessListener { result ->
-                val data = result.map { document -> document.data }.take(5) // Limita a 5 elementi
-                recyclerView.adapter = MyAdapter(data)
-                recyclerView.adapter?.notifyDataSetChanged()
-
-                recyclerViewNames.adapter = MyAdapter(data)
-                recyclerViewNames.adapter?.notifyDataSetChanged()
-
-                recyclerViewSeriesNumbers.adapter = MyAdapter(data)
-                recyclerViewSeriesNumbers.adapter?.notifyDataSetChanged()
-
-                for (document in result) {
-                    Log.d("FirestoreData", "${document.id} => ${document.data}")
+                if (result.isEmpty) {
+                    Toast.makeText(this, "Nessun fumetto trovato", Toast.LENGTH_SHORT).show()
+                    return@addOnSuccessListener
                 }
+
+                var comics = result.map{
+                    val id = it.getLong("id")?.toInt() ?: 0
+                    val name = it.getString("name") ?: ""
+                    val series = it.getString("series")
+                    val number = it.getString("number")
+                    val description = it.getString("description") ?: ""
+                    val imageUrl = it.getString("imageUrl") ?: ""
+                    val userId = it.getLong("userId")?.toInt() ?: 0
+                    val status = ComicStatus.valueOf(it.getString("status") ?: "UNKNOWN")
+
+                    Comic(id, name, series, number, description, imageUrl, userId, status)
+                }
+                recyclerView.adapter = ComicsAdapter(this, comics, ComicsAdapter.AdapterMode.PREVIEW, updateStatus = { _, _ -> })
+
+                recyclerViewNames.adapter = SimpleTextAdapter(comics.map { it.name }) // puoi anche combinare name + series
+                recyclerViewSeriesNumbers.adapter = SimpleTextAdapter(comics.map { "${it.series} #${it.number}" })
             }
             .addOnFailureListener { exception ->
                 Log.e("FirestoreError", "Errore di caricamento", exception)
             }
     }
+
+
 
     private fun getUserId(): String {
         // Simulazione recupero ID utente (da FirebaseAuth, SharedPreferences o altro)
@@ -92,7 +101,7 @@ class UserHomePageActivity : AppCompatActivity() {
     }
 
     // Classe MyAdapter incorporata
-    inner class MyAdapter(private val dataList: List<Map<String, Any>>) : RecyclerView.Adapter<MyAdapter.ViewHolder>() {
+    inner class MyAdapter(private val dataList: List<String>) : RecyclerView.Adapter<MyAdapter.ViewHolder>() {
 
         inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
             val textView: TextView = view.findViewById(R.id.textView)
@@ -105,10 +114,26 @@ class UserHomePageActivity : AppCompatActivity() {
         }
 
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-            val item = dataList[position]
-            holder.textView.text = item["key"].toString() // Sostituisci "key" con la chiave appropriata
+            holder.textView.text = dataList[position]
         }
 
         override fun getItemCount() = dataList.size
     }
+    class SimpleTextAdapter(private val dataList: List<String>) : RecyclerView.Adapter<SimpleTextAdapter.ViewHolder>() {
+        inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+            val textView: TextView = view.findViewById(R.id.textView)
+        }
+
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+            val view = LayoutInflater.from(parent.context).inflate(R.layout.item_layout, parent, false)
+            return ViewHolder(view)
+        }
+
+        override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+            holder.textView.text = dataList[position]
+        }
+
+        override fun getItemCount() = dataList.size
+    }
+
 }

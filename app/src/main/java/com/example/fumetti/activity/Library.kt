@@ -28,37 +28,35 @@ class Library : AppCompatActivity() {
         recyclerView.layoutManager = LinearLayoutManager(this)
 
         // Pulsante per tornare alla Home
-        val buttonHomePage = findViewById<Button>(R.id.buttonHomePage)
-        buttonHomePage.setOnClickListener {
+        findViewById<Button>(R.id.buttonHomePage).setOnClickListener {
             startActivity(Intent(this, UserHomePageActivity::class.java))
             finish()
         }
 
         // Pulsante per accedere alla MyLibrary
-        val buttonMyLibrary = findViewById<Button>(R.id.buttonMyLibrary)
-        buttonMyLibrary.setOnClickListener {
+        findViewById<Button>(R.id.buttonMyLibrary).setOnClickListener {
             startActivity(Intent(this, MyLibrary::class.java))
             finish()
         }
 
         // Icona profilo per accedere al profilo utente
-        val profileIcon = findViewById<ImageView>(R.id.profileIcon)
-        profileIcon.setOnClickListener {
+        findViewById<ImageView>(R.id.profileIcon).setOnClickListener {
             startActivity(Intent(this, UserProfileActivity::class.java))
         }
 
         // Caricamento fumetti disponibili nella RecyclerView
-        //TODO: da sistemare
         val userId = "USER_ID" // Sostituisci con l'ID utente corretto
-        comicDatabase.getAllComicsByUser(userId){ comics: List<Comic> ->
-            val availableComics = comics.filter { it.status == ComicStatus.MANCANTE }
+        comicDatabase.getAllComicsByUser(userId) { comics: List<Comic> ->
+            val availableComics = comics.filter { it.status == ComicStatus.NON_DISPONIBILE }
             if (availableComics.isNotEmpty()) {
                 comicAdapter = ComicsAdapter(
                     this, availableComics,
                     ComicsAdapter.AdapterMode.PREVIEW,
                     comicDatabase
-                ) { view, status ->
-                    updateComicStatus(view, status)
+                ) { comic, status ->
+                    val view = recyclerView.findViewHolderForAdapterPosition(availableComics.indexOf(comic))
+                        ?.itemView?.findViewById<ImageView>(R.id.statusIndicator)
+                    view?.let { updateComicStatus(it, status.toString()) }
                 }
                 recyclerView.adapter = comicAdapter
             } else {
@@ -66,11 +64,11 @@ class Library : AppCompatActivity() {
             }
         }
 
-        val buttonOrderedComics = findViewById<Button>(R.id.buttonOrderedComics)
-        buttonOrderedComics.setOnClickListener {
+        findViewById<Button>(R.id.buttonOrderedComics).setOnClickListener {
             startActivity(Intent(this, OrderedComics::class.java))
         }
     }
+
     fun updateComicStatus(view: ImageView, status: String) {
         when (status) {
             "disponibile" -> view.setImageResource(R.drawable.ic_circle_green)

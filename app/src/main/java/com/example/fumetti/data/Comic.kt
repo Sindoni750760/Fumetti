@@ -8,5 +8,5 @@ data class Comic(
     val description: String = "",
     val imageUrl: String = "",
     val userId: Int,
-    val status: ComicStatus
+    var status: ComicStatus
 )

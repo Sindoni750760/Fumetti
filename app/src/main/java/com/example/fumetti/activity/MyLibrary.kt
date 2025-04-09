@@ -30,35 +30,29 @@ class MyLibrary : AppCompatActivity() {
         recyclerView.layoutManager = LinearLayoutManager(this)
 
         // Pulsante per tornare alla Home
-        val buttonHomePage = findViewById<Button>(R.id.buttonHomePage)
-        buttonHomePage.setOnClickListener {
+        findViewById<Button>(R.id.buttonHomePage).setOnClickListener {
             startActivity(Intent(this, UserHomePageActivity::class.java))
             finish()
         }
 
         // Pulsante per accedere alla Library
-        val buttonLibrary = findViewById<Button>(R.id.buttonMyLibrary)
-        buttonLibrary.setOnClickListener {
+        findViewById<Button>(R.id.buttonMyLibrary).setOnClickListener {
             startActivity(Intent(this, Library::class.java))
             finish()
         }
 
         // Pulsante per accedere alla schermata di aggiunta fumetti
-        val buttonAddComics = findViewById<ImageButton>(R.id.buttonAddComics)
-        buttonAddComics.setOnClickListener {
-            val intent = Intent(this, AddComics::class.java)
-            startActivity(intent)
+        findViewById<ImageButton>(R.id.buttonAddComics).setOnClickListener {
+            startActivity(Intent(this, AddComics::class.java))
         }
 
         // Pulsante per accedere alla schermata di prenotazione fumetti
-        val buttonRemoveComics = findViewById<ImageButton>(R.id.buttonRemoveComics)
-        buttonRemoveComics.setOnClickListener {
+        findViewById<ImageButton>(R.id.buttonRemoveComics).setOnClickListener {
             startActivity(Intent(this, RemoveComics::class.java))
         }
 
         // Icona profilo per accedere alla schermata profilo
-        val profileIcon = findViewById<ImageView>(R.id.profileIcon)
-        profileIcon.setOnClickListener {
+        findViewById<ImageView>(R.id.profileIcon).setOnClickListener {
             startActivity(Intent(this, UserProfileActivity::class.java))
         }
 
@@ -70,8 +64,10 @@ class MyLibrary : AppCompatActivity() {
                     this, comics,
                     ComicsAdapter.AdapterMode.PREVIEW,
                     comicDatabase
-                ) { view, status ->
-                    updateComicStatus(view, status)
+                ) { comic, status ->
+                    val view = recyclerView.findViewHolderForAdapterPosition(comics.indexOf(comic))
+                        ?.itemView?.findViewById<ImageView>(R.id.statusIndicator)
+                    view?.let { updateComicStatus(it, status.toString()) }
                 }
                 recyclerView.adapter = comicAdapter
             } else {

@@ -38,7 +38,7 @@ class ComicDatabase {
             .get()
             .addOnSuccessListener { snapshot ->
                 val comic = snapshot.toObject(Comic::class.java)
-                if (comic != null && comic.status == ComicStatus.MANCANTE) {
+                if (comic != null && comic.status == ComicStatus.NON_DISPONIBILE) {
                     firestore.collection("comics").document(comicId)
                         .update(
                             mapOf(
@@ -66,7 +66,7 @@ class ComicDatabase {
         firestore.collection("comics").document(comicId)
             .update(
                 mapOf(
-                    "status" to ComicStatus.MANCANTE.name,
+                    "status" to ComicStatus.NON_DISPONIBILE.name,
                     "userId" to null
                 )
             )

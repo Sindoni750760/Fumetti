@@ -58,30 +58,13 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="537dp"
         android:layout_weight="1"
         android:clipToPadding="false"
+        android:orientation="horizontal"
         android:paddingBottom="16dp"
-        android:scrollbars="horizontal"
-        android:orientation="horizontal" />
+        android:scrollbars="horizontal" />
 
-    <!-- RecyclerView per i nomi -->
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewNames"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10px"
-        android:maxHeight="200dp"
-        android:scrollbars="vertical" />
-
-    <!-- RecyclerView per serie e numero -->
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewSeriesNumbers"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10px"
-        android:maxHeight="200dp"
-        android:scrollbars="vertical" />
 
     <!-- Sezione dettagli fumetto -->
     <TextView
@@ -97,6 +80,14 @@
         android:layout_height="2dp"
         android:background="@android:color/black"
         android:layout_marginBottom="8dp"/>
+    <!-- RecyclerView per i nomi -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewNames"
+        android:layout_width="match_parent"
+        android:layout_height="141dp"
+        android:layout_marginTop="10px"
+        android:maxHeight="200dp"
+        android:scrollbars="vertical" />
 
     <TextView
         android:layout_width="match_parent"
@@ -111,6 +102,14 @@
         android:layout_height="2dp"
         android:background="@android:color/black"
         android:layout_marginBottom="8dp"/>
+    <!-- RecyclerView per serie e numero -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewSeriesNumbers"
+        android:layout_width="match_parent"
+        android:layout_height="137dp"
+        android:layout_marginTop="10px"
+        android:maxHeight="200dp"
+        android:scrollbars="vertical" />
 
     <!-- Pulsante di Logout in basso a destra -->
     <LinearLayout

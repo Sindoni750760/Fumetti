@@ -1,6 +1,5 @@
 package com.example.fumetti.database
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -22,16 +21,14 @@ class ComicsAdapter(
     private var comicsList: List<Comic>,
     private var mode: AdapterMode,
     private val comicDatabase: ComicDatabase = ComicDatabase(),
-    private val updateStatus: (ImageView, String) -> Unit
+    private val updateStatus: (Comic, ComicStatus) -> Unit // Funzione aggiornata
 ) : RecyclerView.Adapter<ComicsAdapter.ComicViewHolder>() {
 
     class ComicViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val statusIndicator: ImageView = itemView.findViewById(R.id.statusIndicator)
         val titleText: TextView = itemView.findViewById(R.id.titleText)
-        @SuppressLint("ResourceType")
-        val reserveButton: Button = itemView.findViewById(R.drawable.reserve_button)
-        @SuppressLint("ResourceType")
-        val returnButton: Button = itemView.findViewById(R.drawable.return_button)
+        val reserveButton: Button = itemView.findViewById(R.id.reserveButton)
+        val returnButton: Button = itemView.findViewById(R.id.returnButton)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ComicViewHolder {
@@ -45,9 +42,47 @@ class ComicsAdapter(
         val comic = comicsList[position]
         holder.titleText.text = comic.name
 
-        when (mode) {
-            AdapterMode.PREVIEW -> setupPreviewMode(holder)
-            AdapterMode.MY_LIBRARY, AdapterMode.LIBRARY -> setupLibraryMode(holder, comic)
+        // Imposta lo stato a "Disponibile" di default
+        holder.statusIndicator.setImageResource(
+            when (comic.status) {
+                ComicStatus.DISPONIBILE -> R.drawable.ic_circle_green
+                ComicStatus.IN_PRENOTAZIONE -> R.drawable.ic_circle_yellow
+                ComicStatus.NON_DISPONIBILE -> R.drawable.ic_circle_red
+                else -> R.drawable.ic_circle_green // Default: Disponibile
+            }
+        )
+
+        // Gestisci la visibilità dei pulsanti
+        holder.reserveButton.visibility = if (comic.status == ComicStatus.DISPONIBILE) View.VISIBLE else View.GONE
+        holder.returnButton.visibility = if (comic.status == ComicStatus.IN_PRENOTAZIONE) View.VISIBLE else View.GONE
+
+        // Listener per i pulsanti
+        holder.reserveButton.setOnClickListener {
+            CoroutineScope(Dispatchers.Main).launch {
+                comicDatabase.reserveComic(comic.id.toString(), comic.name) { success ->
+                    if (success) {
+                        Toast.makeText(context, "Fumetto prenotato!", Toast.LENGTH_SHORT).show()
+                        comic.status = ComicStatus.IN_PRENOTAZIONE
+                        notifyItemChanged(position)
+                    } else {
+                        Toast.makeText(context, "Errore nella prenotazione del fumetto.", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+        }
+
+        holder.returnButton.setOnClickListener {
+            CoroutineScope(Dispatchers.Main).launch {
+                comicDatabase.returnComic(comic.id.toString()) { success ->
+                    if (success) {
+                        Toast.makeText(context, "Fumetto restituito!", Toast.LENGTH_SHORT).show()
+                        comic.status = ComicStatus.DISPONIBILE
+                        notifyItemChanged(position)
+                    } else {
+                        Toast.makeText(context, "Errore nella restituzione del fumetto.", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
         }
     }
 
@@ -55,49 +90,5 @@ class ComicsAdapter(
         PREVIEW,  // Modalità scrollbar in UserHomePageActivity
         LIBRARY,  // Modalità completa in Libreria
         MY_LIBRARY // Modalità filtro libri prenotati in MyLibrary
-    }
-
-    private fun setupPreviewMode(holder: ComicViewHolder) {
-        holder.statusIndicator.visibility = View.GONE
-        holder.reserveButton.visibility = View.GONE
-        holder.returnButton.visibility = View.GONE
-    }
-
-    private fun setupLibraryMode(holder: ComicViewHolder, comic: Comic) {
-        holder.statusIndicator.setImageResource(
-            when (comic.status) {
-                ComicStatus.PRESENTE -> R.drawable.ic_circle_green
-                ComicStatus.IN_PRENOTAZIONE -> R.drawable.ic_circle_yellow
-                ComicStatus.MANCANTE -> R.drawable.ic_circle_red
-                else -> R.drawable.ic_circle_gray
-            }
-        )
-        holder.reserveButton.setOnClickListener {
-            CoroutineScope(Dispatchers.Main).launch {
-                comicDatabase.reserveComic(comic.id.toString(), comic.name) { success ->
-                    if (success) {
-                        Toast.makeText(context, "Comic reserved!", Toast.LENGTH_SHORT).show()
-                    } else {
-                        Toast.makeText(context, "Failed to reserve comic.", Toast.LENGTH_SHORT).show()
-                    }
-                }
-            }
-        }
-        holder.returnButton.setOnClickListener {
-            CoroutineScope(Dispatchers.Main).launch {
-                comicDatabase.returnComic(comic.id.toString()) { success ->
-                    if (success) {
-                        Toast.makeText(context, "Comic returned!", Toast.LENGTH_SHORT).show()
-                    } else {
-                        Toast.makeText(context, "Failed to return comic.", Toast.LENGTH_SHORT).show()
-                    }
-                }
-            }
-        }
-    }
-
-    fun updateData(newComicsList: List<Comic>) {
-        comicsList = newComicsList
-        notifyDataSetChanged()
     }
 }
