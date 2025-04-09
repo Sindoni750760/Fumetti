@@ -10,6 +10,7 @@ import com.example.fumetti.R
 import com.example.fumetti.WaitingListAdapter
 import com.example.fumetti.data.Comic
 import com.example.fumetti.data.ComicStatus
+import com.example.fumetti.database.adapter.ComicsAdapter
 
 class OrderedComics : AppCompatActivity() {
 
@@ -37,7 +38,8 @@ class OrderedComics : AppCompatActivity() {
                     ComicsAdapter.AdapterMode.PREVIEW,
                     comicDatabase
                 ) { comic, status ->
-                    val view = findViewById<ImageView>(R.id.statusIndicator) // Trova l'ImageView associata
+                    val view =
+                        findViewById<ImageView>(R.id.statusIndicator) // Trova l'ImageView associata
                     updateComicStatus(view, status.toString())
                 }
 

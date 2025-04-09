@@ -52,4 +52,6 @@ dependencies {
     implementation("com.google.android.gms:play-services-base:17.6.0")
     implementation("com.google.android.gms:play-services-maps:17.0.0")
     implementation("androidx.appcompat:appcompat:1.4.0") // Versione corretta di AppCompat
+    implementation ("com.google.android.gms:play-services-base:18.3.0")
+
 }

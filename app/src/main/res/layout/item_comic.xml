@@ -1,57 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="8dp"
-    android:background="@drawable/wallpaper">
+    android:orientation="vertical"
+    android:padding="12dp">
 
-    <!-- Immagine del fumetto -->
-    <ImageView
-        android:id="@+id/comicImage"
-        android:layout_width="80dp"
-        android:layout_height="100dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/ic_placeholder_comic"
-        android:contentDescription="Immagine del fumetto"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent" />
-
-    <!-- Nome del fumetto -->
-    <TextView
-        android:id="@+id/comicName"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Nome del Fumetto"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        android:paddingStart="8dp"
-        app:layout_constraintStart_toEndOf="@id/comicImage"
-        app:layout_constraintTop_toTopOf="@id/comicImage"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <!-- Serie e numero del fumetto -->
-    <TextView
-        android:id="@+id/comicDetails"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Serie #Numero"
-        android:textSize="14sp"
-        android:paddingTop="4dp"
-        app:layout_constraintStart_toStartOf="@id/comicName"
-        app:layout_constraintTop_toBottomOf="@id/comicName"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <!-- Indicatore dello stato -->
+    <!-- Stato visivo (es. colore) -->
     <ImageView
         android:id="@+id/statusIndicator"
         android:layout_width="20dp"
         android:layout_height="20dp"
-        android:src="@drawable/ic_circle_green"
-        android:contentDescription="Stato del fumetto"
-        app:layout_constraintStart_toStartOf="@id/comicName"
-        app:layout_constraintTop_toBottomOf="@id/comicDetails" />
+        android:layout_gravity="end"
+        android:layout_marginBottom="4dp"
+        android:contentDescription="Stato fumetto"
+        android:src="@drawable/ic_circle_gray" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <!-- Titolo -->
+    <TextView
+        android:id="@+id/titleText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Titolo del Fumetto"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="8dp" />
+
+    <!-- Pulsanti -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_marginTop="4dp">
+
+        <Button
+            android:id="@+id/reserveButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Prenota" />
+
+        <Button
+            android:id="@+id/returnButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Restituisci"
+            android:layout_marginStart="8dp"/>
+    </LinearLayout>
+</LinearLayout>

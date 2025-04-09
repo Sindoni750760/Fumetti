@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.fumetti.R
 import com.example.fumetti.data.Comic
 import com.example.fumetti.data.ComicStatus
-import com.example.fumetti.database.ComicsAdapter
+import com.example.fumetti.database.adapter.ComicsAdapter
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
@@ -135,5 +135,4 @@ class UserHomePageActivity : AppCompatActivity() {
 
         override fun getItemCount() = dataList.size
     }
-
 }

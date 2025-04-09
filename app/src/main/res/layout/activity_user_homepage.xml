@@ -1,120 +1,120 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="8dp"
+    android:fillViewport="true"
     android:background="@drawable/wallpaper">
 
-    <!-- Barra superiore con pulsanti -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:weightSum="3">
+        android:orientation="vertical"
+        android:padding="8dp">
 
-        <Button
-            android:id="@+id/buttonToLibrary"
-            android:layout_width="106dp"
-            android:layout_height="50dp"
-            android:layout_weight="1"
-            android:background="@drawable/legno_bianco"
-            android:text="Library" />
-
-        <Button
-            android:id="@+id/buttonToMyLibrary"
-            android:layout_width="97dp"
-            android:layout_height="50dp"
-            android:layout_weight="1"
-            android:background="@drawable/legno_bianco"
-            android:text="MyLibrary" />
+        <!-- Barra superiore -->
         <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:gravity="center">
+            android:weightSum="3">
 
-            <!-- Icona Profilo -->
-            <ImageButton
-                android:id="@+id/profileIcon"
-                android:layout_width="50dp"
-                android:layout_height="match_parent"
-                android:background="@drawable/circle_shape"
-                android:scaleType="centerCrop"
-                android:src="@drawable/profile_icon"
-                android:contentDescription="@drawable/profile_icon_default"/>
+            <Button
+                android:id="@+id/buttonToLibrary"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:background="@drawable/legno_bianco"
+                android:text="Library" />
+
+            <Button
+                android:id="@+id/buttonToMyLibrary"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:background="@drawable/legno_bianco"
+                android:text="MyLibrary" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/profileIcon"
+                    android:layout_width="50dp"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/circle_shape"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/profile_icon"
+                    android:contentDescription="Profile Icon" />
+            </LinearLayout>
         </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginVertical="4dp"
+            android:background="@android:color/black" />
+
+        <!-- RecyclerView Orizzontale -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:orientation="horizontal"
+            android:paddingBottom="16dp"
+            android:scrollbars="horizontal" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Serie:"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginTop="10dp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginBottom="8dp"
+            android:background="@android:color/black" />
+
+        <!-- RecyclerView Nomi -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewNames"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxHeight="200dp"
+            android:scrollbars="vertical" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Numero:"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginTop="10dp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginBottom="8dp"
+            android:background="@android:color/black" />
+
+        <!-- RecyclerView Serie e Numero -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewSeriesNumbers"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxHeight="200dp"
+            android:scrollbars="vertical" />
+
+        <!-- Spazio per logout o altro -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="36dp"
+            android:gravity="end" />
     </LinearLayout>
-
-    <!-- Linea divisoria -->
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:background="@android:color/black"
-        android:layout_marginVertical="4dp"/>
-
-    <!-- RecyclerView orizzontale per la lista di fumetti -->
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="537dp"
-        android:layout_weight="1"
-        android:clipToPadding="false"
-        android:orientation="horizontal"
-        android:paddingBottom="16dp"
-        android:scrollbars="horizontal" />
-
-
-    <!-- Sezione dettagli fumetto -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Serie:"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:layout_marginTop="10px"/>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:background="@android:color/black"
-        android:layout_marginBottom="8dp"/>
-    <!-- RecyclerView per i nomi -->
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewNames"
-        android:layout_width="match_parent"
-        android:layout_height="141dp"
-        android:layout_marginTop="10px"
-        android:maxHeight="200dp"
-        android:scrollbars="vertical" />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:text="Numero:"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:layout_marginTop="10px" />
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:background="@android:color/black"
-        android:layout_marginBottom="8dp"/>
-    <!-- RecyclerView per serie e numero -->
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewSeriesNumbers"
-        android:layout_width="match_parent"
-        android:layout_height="137dp"
-        android:layout_marginTop="10px"
-        android:maxHeight="200dp"
-        android:scrollbars="vertical" />
-
-    <!-- Pulsante di Logout in basso a destra -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="36dp"
-        android:gravity="end" />
-
-</LinearLayout>
+</ScrollView>
