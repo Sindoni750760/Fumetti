@@ -1,54 +1,67 @@
 package com.example.fumetti.database
 
 import android.os.Bundle
-import android.widget.ArrayAdapter
-import android.widget.Button
-import android.widget.Spinner
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.example.fumetti.R
 import com.example.fumetti.data.Comic
 import com.example.fumetti.data.ComicStatus
+import com.google.firebase.auth.FirebaseAuth
 
 class RemoveComics : AppCompatActivity() {
 
     private val comicDatabase = ComicDatabase()
+    private lateinit var spinnerComics: Spinner
+    private lateinit var buttonRemoveComic: Button
+    private lateinit var comicsInPrenotazione: List<Comic>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_remove_comics)
 
-        val spinnerComics = findViewById<Spinner>(R.id.spinnerComics)
-        val buttonRemoveComic = findViewById<Button>(R.id.buttonRemoveComic)
+        spinnerComics = findViewById(R.id.spinnerComics)
+        buttonRemoveComic = findViewById(R.id.buttonRemoveComic)
 
-        // Carica i fumetti presenti nella libreria personale nel Spinner
-        val userId = "USER_ID" // Sostituisci con l'ID utente corretto
-        comicDatabase.getAllComicsByUser(userId) { comics: List<Comic> ->
-            val comicTitles = comics.filter { it.status == ComicStatus.IN_PRENOTAZIONE }.map { it.name }
-            val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, comicTitles)
+        val userId = FirebaseAuth.getInstance().currentUser?.uid ?: return showError("Utente non autenticato")
+
+        comicDatabase.getAllComicsByUser(userId) { comics ->
+            comicsInPrenotazione = comics.filter { it.status == ComicStatus.IN_PRENOTAZIONE }
+
+            if (comicsInPrenotazione.isEmpty()) {
+                showError("Nessun fumetto in prenotazione trovato")
+                return@getAllComicsByUser
+            }
+
+            val titles = comicsInPrenotazione.map { it.name }
+            val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, titles)
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             spinnerComics.adapter = adapter
         }
 
         buttonRemoveComic.setOnClickListener {
-            val selectedComicTitle = spinnerComics.selectedItem as String
-            removeComicFromLibrary(selectedComicTitle)
+            val position = spinnerComics.selectedItemPosition
+            if (position >= 0 && position < comicsInPrenotazione.size) {
+                val comicToRemove = comicsInPrenotazione[position]
+                removeComicFromLibrary(userId, comicToRemove.name)
+            } else {
+                showError("Seleziona un fumetto valido")
+            }
         }
     }
 
-    private fun removeComicFromLibrary(comicTitle: String) {
-        // Logica per rimuovere il fumetto dalla libreria personale e rimetterlo disponibile
-        comicDatabase.getAllComicsByUser { comics: List<Comic> ->
-            val comic = comics.find { it.name == comicTitle }
-            comic?.let {
-                comicDatabase.returnComic(it.name) { success ->
-                    if (success) {
-                        Toast.makeText(this, "$comicTitle rimosso dalla tua libreria e reso disponibile", Toast.LENGTH_SHORT).show()
-                    } else {
-                        Toast.makeText(this, "Errore durante la rimozione del fumetto", Toast.LENGTH_SHORT).show()
-                    }
-                }
+    private fun removeComicFromLibrary(userId: String, comicTitle: String) {
+        comicDatabase.removeComicFromUserLibrary(userId, comicTitle) { success ->
+            val message = if (success) {
+                "$comicTitle rimosso dalla tua libreria"
+            } else {
+                "Errore durante la rimozione di $comicTitle"
             }
+            Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
         }
+    }
+
+    private fun showError(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show()
+        finish()
     }
 }

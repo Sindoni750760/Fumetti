@@ -14,6 +14,7 @@ import com.example.fumetti.R
 import com.example.fumetti.data.Comic
 import com.example.fumetti.data.ComicStatus
 import com.example.fumetti.database.ComicDatabase
+import com.example.fumetti.database.AddComics
 import com.example.fumetti.database.OrderedComics
 import com.example.fumetti.database.adapter.ComicsAdapter
 import com.google.firebase.auth.FirebaseAuth

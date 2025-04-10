@@ -22,12 +22,10 @@ class WaitingListAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val comic = comics[position]
         holder.textViewComicTitle.text = comic.name
-        holder.textViewUserId.text = (comic.userId ?: "N/A") as CharSequence?
+        holder.textViewUserId.text = (comic.userId ?: "Utente sconosciuto") as CharSequence?
     }
 
-    override fun getItemCount(): Int {
-        return comics.size
-    }
+    override fun getItemCount(): Int = comics.size
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val textViewComicTitle: TextView = view.findViewById(R.id.textViewComicTitle)

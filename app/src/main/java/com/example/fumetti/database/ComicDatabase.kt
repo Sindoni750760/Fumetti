@@ -71,10 +71,20 @@ class ComicDatabase {
                 callback(null)
             }
     }
-    fun addComicToUserLibrary(userId: String, comicTitle: String, onResult: (Boolean) -> Unit) {
+    fun getAllComics(callback: (List<Comic>) -> Unit) {
+        firestore.collection("comics")
+            .get()
+            .addOnSuccessListener { snapshot ->
+                val comics = snapshot.documents.mapNotNull { it.toObject(Comic::class.java) }
+                callback(comics)
+            }
+            .addOnFailureListener {
+                callback(emptyList())
+            }
+    }
+    fun removeComicFromUserLibrary(userId: String, comicTitle: String, onResult: (Boolean) -> Unit) {
         val db = FirebaseFirestore.getInstance()
 
-        // Cerca il fumetto per nome
         db.collection("comic")
             .whereEqualTo("name", comicTitle)
             .limit(1)
@@ -82,19 +92,22 @@ class ComicDatabase {
             .addOnSuccessListener { result ->
                 if (!result.isEmpty) {
                     val comicDoc = result.documents.first()
-                    val comicData = comicDoc.data
-                    if (comicData != null) {
-                        // Salva nella libreria dell'utente
-                        db.collection("users")
-                            .document(userId)
-                            .collection("user_library")
-                            .document(comicDoc.id)
-                            .set(comicData)
-                            .addOnSuccessListener { onResult(true) }
-                            .addOnFailureListener { onResult(false) }
-                    } else {
-                        onResult(false)
-                    }
+
+                    // 1. Rimuove dalla libreria personale
+                    db.collection("users")
+                        .document(userId)
+                        .collection("user_library")
+                        .document(comicDoc.id)
+                        .delete()
+                        .addOnSuccessListener {
+                            // 2. Aggiorna lo status del fumetto globale
+                            db.collection("comic")
+                                .document(comicDoc.id)
+                                .update("status", ComicStatus.DISPONIBILE.name)
+                                .addOnSuccessListener { onResult(true) }
+                                .addOnFailureListener { onResult(false) }
+                        }
+                        .addOnFailureListener { onResult(false) }
                 } else {
                     onResult(false)
                 }
@@ -103,5 +116,4 @@ class ComicDatabase {
                 onResult(false)
             }
     }
-
 }

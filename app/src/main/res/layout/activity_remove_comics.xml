@@ -1,26 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:padding="16dp"
     android:background="@drawable/wallpaper">
 
     <Spinner
         android:id="@+id/spinnerComics"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="52dp"
-        android:layout_marginBottom="16dp"
-        android:text="@string/seleziona_fumetto_da_rimuovere"
         android:background="@drawable/legno_bianco"
-        android:textColor = "@color/black"/>
+        android:textColor="@color/black"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
     <Button
         android:id="@+id/buttonRemoveComic"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="60dp"
-        android:background="@drawable/legno_bianco"
+        android:layout_marginTop="32dp"
         android:text="@string/rimuovi_fumetto"
-        android:layout_marginTop = "100dp"
-        android:textColor = "@color/black"/>
-</LinearLayout>
+        android:textColor="@color/black"
+        android:background="@drawable/legno_bianco"
+        app:layout_constraintTop_toBottomOf="@id/spinnerComics"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+</androidx.constraintlayout.widget.ConstraintLayout>
