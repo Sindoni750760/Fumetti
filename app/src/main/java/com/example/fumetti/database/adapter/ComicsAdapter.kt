@@ -1,6 +1,7 @@
 package com.example.fumetti.database.adapter
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +11,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fumetti.R
+import com.example.fumetti.activity.ComicDetailActivity
 import com.example.fumetti.data.Comic
 import com.example.fumetti.data.ComicStatus
 import com.example.fumetti.database.ComicDatabase
@@ -22,7 +24,8 @@ class ComicsAdapter(
     private var comicsList: List<Comic>,
     private var mode: AdapterMode,
     private val comicDatabase: ComicDatabase = ComicDatabase(),
-    private val updateStatus: (Comic, ComicStatus) -> Unit
+    private val updateStatus: (Comic, ComicStatus) -> Unit,
+    private val onComicClick: (Comic) -> Unit
 ) : RecyclerView.Adapter<ComicsAdapter.ComicViewHolder>() {
 
     class ComicViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -58,52 +61,66 @@ class ComicsAdapter(
             }
         )
 
-        holder.reserveButton.visibility = if (comic.status == ComicStatus.DISPONIBILE) View.VISIBLE else View.GONE
-        holder.returnButton.visibility = if (comic.status == ComicStatus.IN_PRENOTAZIONE) View.VISIBLE else View.GONE
-        holder.waitlistButton.visibility = if (comic.status == ComicStatus.NON_DISPONIBILE) View.VISIBLE else View.GONE
+        when (mode) {
+            AdapterMode.MY_LIBRARY -> {
+                // Solo visualizzazione, tutti i bottoni disabilitati
+                holder.reserveButton.visibility = View.GONE
+                holder.returnButton.visibility = View.GONE
+                holder.waitlistButton.visibility = View.GONE
+                holder.titleText.setTextColor(context?.getColor(R.color.gray) ?: 0)
+            }
 
-        holder.reserveButton.setOnClickListener {
-            CoroutineScope(Dispatchers.Main).launch {
-                comicDatabase.reserveComic(comic.id.toString()) { success ->
-                    if (success) {
-                        Toast.makeText(context, "Fumetto prenotato!", Toast.LENGTH_SHORT).show()
-                        comic.status = ComicStatus.IN_PRENOTAZIONE
-                        notifyItemChanged(position)
-                        updateStatus(comic, ComicStatus.IN_PRENOTAZIONE)
-                    } else {
-                        Toast.makeText(context, "Errore nella prenotazione del fumetto.", Toast.LENGTH_SHORT).show()
+            AdapterMode.LIBRARY, AdapterMode.PREVIEW -> {
+                holder.reserveButton.visibility = if (comic.status == ComicStatus.DISPONIBILE) View.VISIBLE else View.GONE
+                holder.returnButton.visibility = if (comic.status == ComicStatus.IN_PRENOTAZIONE) View.VISIBLE else View.GONE
+                holder.waitlistButton.visibility = if (comic.status == ComicStatus.NON_DISPONIBILE) View.VISIBLE else View.GONE
+
+                holder.reserveButton.setOnClickListener {
+                    CoroutineScope(Dispatchers.Main).launch {
+                        comicDatabase.reserveComic(comic.id.toString()) { success ->
+                            if (success) {
+                                Toast.makeText(context, "Fumetto prenotato!", Toast.LENGTH_SHORT).show()
+                                comic.status = ComicStatus.IN_PRENOTAZIONE
+                                notifyItemChanged(position)
+                                updateStatus(comic, ComicStatus.IN_PRENOTAZIONE)
+                            } else {
+                                Toast.makeText(context, "Errore nella prenotazione del fumetto.", Toast.LENGTH_SHORT).show()
+                            }
+                        }
+                    }
+                }
+
+                holder.returnButton.setOnClickListener {
+                    CoroutineScope(Dispatchers.Main).launch {
+                        comicDatabase.returnComic(comic.id.toString()) { success ->
+                            if (success) {
+                                Toast.makeText(context, "Fumetto restituito!", Toast.LENGTH_SHORT).show()
+                                comic.status = ComicStatus.NON_DISPONIBILE
+                                notifyItemChanged(position)
+                                updateStatus(comic, ComicStatus.NON_DISPONIBILE)
+                            } else {
+                                Toast.makeText(context, "Errore nella restituzione del fumetto.", Toast.LENGTH_SHORT).show()
+                            }
+                        }
+                    }
+                }
+
+                holder.waitlistButton.setOnClickListener {
+                    CoroutineScope(Dispatchers.Main).launch {
+                        val userId = "USER_ID"
+                        comicDatabase.addToWaitingList(comic.id.toString(), userId) { success ->
+                            if (success) {
+                                Toast.makeText(context, "Aggiunto alla lista d'attesa!", Toast.LENGTH_SHORT).show()
+                            } else {
+                                Toast.makeText(context, "Errore nell'aggiunta alla lista d'attesa.", Toast.LENGTH_SHORT).show()
+                            }
+                        }
                     }
                 }
             }
         }
-
-        holder.returnButton.setOnClickListener {
-            CoroutineScope(Dispatchers.Main).launch {
-                comicDatabase.returnComic(comic.id.toString()) { success ->
-                    if (success) {
-                        Toast.makeText(context, "Fumetto restituito!", Toast.LENGTH_SHORT).show()
-                        comic.status = ComicStatus.NON_DISPONIBILE
-                        notifyItemChanged(position)
-                        updateStatus(comic, ComicStatus.NON_DISPONIBILE)
-                    } else {
-                        Toast.makeText(context, "Errore nella restituzione del fumetto.", Toast.LENGTH_SHORT).show()
-                    }
-                }
-            }
-        }
-
-        holder.waitlistButton.setOnClickListener {
-            CoroutineScope(Dispatchers.Main).launch {
-                // Presume che l’ID utente sia disponibile globalmente (es. sessione o app)
-                val userId = "USER_ID"
-                comicDatabase.addToWaitingList(comic.id.toString(), userId) { success ->
-                    if (success) {
-                        Toast.makeText(context, "Aggiunto alla lista d'attesa!", Toast.LENGTH_SHORT).show()
-                    } else {
-                        Toast.makeText(context, "Errore nell'aggiunta alla lista d'attesa.", Toast.LENGTH_SHORT).show()
-                    }
-                }
-            }
+        holder.itemView.setOnClickListener {
+            onComicClick(comic)
         }
     }
 

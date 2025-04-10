@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.fumetti.R
 import com.example.fumetti.data.Comic
+import com.google.firebase.auth.FirebaseAuth
 
 class AddComics : AppCompatActivity() {
 
@@ -34,9 +35,15 @@ class AddComics : AppCompatActivity() {
             addComicToLibrary(selectedComicTitle)
         }
     }
-
     private fun addComicToLibrary(comicTitle: String) {
-        // Logica per aggiungere il fumetto alla libreria personale
-        Toast.makeText(this, "$comicTitle aggiunto alla tua libreria", Toast.LENGTH_SHORT).show()
+        val userId = FirebaseAuth.getInstance().currentUser?.uid ?: "defaultUser"
+        comicDatabase.addComicToUserLibrary(userId, comicTitle) { success ->
+            if (success) {
+                Toast.makeText(this, "$comicTitle aggiunto alla tua libreria!", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(this, "Errore durante l'aggiunta del fumetto.", Toast.LENGTH_SHORT).show()
+            }
+        }
     }
+
 }

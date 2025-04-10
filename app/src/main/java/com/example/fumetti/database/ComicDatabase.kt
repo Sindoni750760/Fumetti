@@ -71,4 +71,37 @@ class ComicDatabase {
                 callback(null)
             }
     }
+    fun addComicToUserLibrary(userId: String, comicTitle: String, onResult: (Boolean) -> Unit) {
+        val db = FirebaseFirestore.getInstance()
+
+        // Cerca il fumetto per nome
+        db.collection("comic")
+            .whereEqualTo("name", comicTitle)
+            .limit(1)
+            .get()
+            .addOnSuccessListener { result ->
+                if (!result.isEmpty) {
+                    val comicDoc = result.documents.first()
+                    val comicData = comicDoc.data
+                    if (comicData != null) {
+                        // Salva nella libreria dell'utente
+                        db.collection("users")
+                            .document(userId)
+                            .collection("user_library")
+                            .document(comicDoc.id)
+                            .set(comicData)
+                            .addOnSuccessListener { onResult(true) }
+                            .addOnFailureListener { onResult(false) }
+                    } else {
+                        onResult(false)
+                    }
+                } else {
+                    onResult(false)
+                }
+            }
+            .addOnFailureListener {
+                onResult(false)
+            }
+    }
+
 }

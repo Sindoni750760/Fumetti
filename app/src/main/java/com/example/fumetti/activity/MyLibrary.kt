@@ -35,12 +35,6 @@ class MyLibrary : AppCompatActivity() {
         recyclerAvailable.layoutManager = LinearLayoutManager(this)
         recyclerUnavailable.layoutManager = LinearLayoutManager(this)
 
-        // Adapter iniziali vuoti per evitare warning
-        recyclerOut.adapter = ComicsAdapter(this, emptyList(), ComicsAdapter.AdapterMode.PREVIEW, comicDatabase) { _, _ -> }
-        recyclerAvailable.adapter = ComicsAdapter(this, emptyList(), ComicsAdapter.AdapterMode.PREVIEW, comicDatabase) { _, _ -> }
-        recyclerUnavailable.adapter = ComicsAdapter(this, emptyList(), ComicsAdapter.AdapterMode.PREVIEW, comicDatabase) { _, _ -> }
-
-        // Navigazione
         findViewById<Button>(R.id.buttonHomePage).setOnClickListener {
             startActivity(Intent(this, UserHomePageActivity::class.java))
             finish()
@@ -71,22 +65,40 @@ class MyLibrary : AppCompatActivity() {
             val comicsUnavailable = comics.filter { it.status == ComicStatus.IN_PRENOTAZIONE }
 
             recyclerOut.adapter = ComicsAdapter(
-                this, comicsOut, ComicsAdapter.AdapterMode.PREVIEW, comicDatabase
-            ) { comic, status ->
-                updateStatusVisual(recyclerOut, comicsOut.indexOf(comic), status)
-            }
+                this, comicsOut, ComicsAdapter.AdapterMode.PREVIEW, comicDatabase,
+                updateStatus = { comic, status ->
+                    updateStatusVisual(recyclerOut, comicsOut.indexOf(comic), status)
+                },
+                onComicClick = { comic ->
+                    val intent = Intent(this, ComicDetailActivity::class.java)
+                    intent.putExtra("COMIC_ID", comic.id)
+                    startActivity(intent)
+                }
+            )
 
             recyclerAvailable.adapter = ComicsAdapter(
-                this, comicsAvailable, ComicsAdapter.AdapterMode.PREVIEW, comicDatabase
-            ) { comic, status ->
-                updateStatusVisual(recyclerAvailable, comicsAvailable.indexOf(comic), status)
-            }
+                this, comicsAvailable, ComicsAdapter.AdapterMode.PREVIEW, comicDatabase,
+                updateStatus = { comic, status ->
+                    updateStatusVisual(recyclerAvailable, comicsAvailable.indexOf(comic), status)
+                },
+                onComicClick = { comic ->
+                    val intent = Intent(this, ComicDetailActivity::class.java)
+                    intent.putExtra("COMIC_ID", comic.id)
+                    startActivity(intent)
+                }
+            )
 
             recyclerUnavailable.adapter = ComicsAdapter(
-                this, comicsUnavailable, ComicsAdapter.AdapterMode.PREVIEW, comicDatabase
-            ) { comic, status ->
-                updateStatusVisual(recyclerUnavailable, comicsUnavailable.indexOf(comic), status)
-            }
+                this, comicsUnavailable, ComicsAdapter.AdapterMode.PREVIEW, comicDatabase,
+                updateStatus = { comic, status ->
+                    updateStatusVisual(recyclerUnavailable, comicsUnavailable.indexOf(comic), status)
+                },
+                onComicClick = { comic ->
+                    val intent = Intent(this, ComicDetailActivity::class.java)
+                    intent.putExtra("COMIC_ID", comic.id)
+                    startActivity(intent)
+                }
+            )
         }
     }
 

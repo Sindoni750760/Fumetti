@@ -1,70 +1,56 @@
 package com.example.fumetti.database
 
 import android.os.Bundle
-import android.widget.ImageView
+import android.widget.ArrayAdapter
+import android.widget.Button
+import android.widget.Spinner
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.fumetti.R
 import com.example.fumetti.data.Comic
-import com.example.fumetti.data.ComicStatus
-import com.example.fumetti.database.adapter.ComicsAdapter
+import com.example.fumetti.database.ComicDatabase
+import com.google.firebase.auth.FirebaseAuth
 
-class OrderedComics : AppCompatActivity() {
+class AddComics : AppCompatActivity() {
 
     private val comicDatabase = ComicDatabase()
-    private lateinit var orderedComicsAdapter: ComicsAdapter
-    private lateinit var waitingListAdapter: WaitingListAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_ordered_comics)
+        setContentView(R.layout.activity_add_comics)
 
-        val recyclerViewOrderedComics = findViewById<RecyclerView>(R.id.recyclerViewOrderedComics)
-        recyclerViewOrderedComics.layoutManager = LinearLayoutManager(this)
+        val spinnerComics = findViewById<Spinner>(R.id.spinnerComics)
+        val buttonAddComic = findViewById<Button>(R.id.buttonAddComic)
 
-        val recyclerViewWaitingList = findViewById<RecyclerView>(R.id.recyclerViewWaitingList)
-        recyclerViewWaitingList.layoutManager = LinearLayoutManager(this)
+        val userId = FirebaseAuth.getInstance().currentUser?.uid ?: "defaultUser"
 
-        // Caricamento fumetti ordinati nella RecyclerView
-        val userId = "USER_ID" // Sostituisci con l'ID utente corretto
         comicDatabase.getAllComicsByUser(userId) { comics: List<Comic> ->
-            val orderedComics = comics.filter { it.status == ComicStatus.IN_PRENOTAZIONE }
-            if (orderedComics.isNotEmpty()) {
-                orderedComicsAdapter = ComicsAdapter(
-                    this, orderedComics,
-                    ComicsAdapter.AdapterMode.PREVIEW,
-                    comicDatabase
-                ) { comic, status ->
-                    val view =
-                        findViewById<ImageView>(R.id.statusIndicator) // Trova l'ImageView associata
-                    updateComicStatus(view, status.toString())
-                }
+            if (comics.isEmpty()) {
+                Toast.makeText(this, "Nessun fumetto disponibile", Toast.LENGTH_SHORT).show()
+                return@getAllComicsByUser
+            }
 
-                recyclerViewOrderedComics.adapter = orderedComicsAdapter
-            } else {
-                Toast.makeText(this, "Nessun fumetto ordinato", Toast.LENGTH_SHORT).show()
+            val comicTitles = comics.map { it.name }
+            val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, comicTitles)
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            runOnUiThread {
+                spinnerComics.adapter = adapter
             }
         }
 
-        // Caricamento lista di attesa nella RecyclerView
-        comicDatabase.getAllComicsByUser { comics: List<Comic> ->
-            val waitingList = comics.filter { it.status == ComicStatus.IN_PRENOTAZIONE }
-            if (waitingList.isNotEmpty()) {
-                waitingListAdapter = WaitingListAdapter(this, waitingList)
-                recyclerViewWaitingList.adapter = waitingListAdapter
+        buttonAddComic.setOnClickListener {
+            val selectedItem = spinnerComics.selectedItem
+            if (selectedItem != null) {
+                val selectedComicTitle = selectedItem.toString()
+                addComicToLibrary(selectedComicTitle)
             } else {
-                Toast.makeText(this, "Nessuna persona in attesa", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Seleziona un fumetto!", Toast.LENGTH_SHORT).show()
             }
         }
     }
 
-    fun updateComicStatus(view: ImageView, status: String) {
-        when (status) {
-            "disponibile" -> view.setImageResource(R.drawable.ic_circle_green)
-            "in prestito" -> view.setImageResource(R.drawable.ic_circle_yellow)
-            "occupato" -> view.setImageResource(R.drawable.ic_circle_red)
-        }
+    private fun addComicToLibrary(comicTitle: String) {
+        // Qui va la logica vera per aggiungerlo a Firestore se vuoi
+        Toast.makeText(this, "$comicTitle aggiunto alla tua libreria", Toast.LENGTH_SHORT).show()
     }
 }

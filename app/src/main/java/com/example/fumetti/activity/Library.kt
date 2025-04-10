@@ -34,21 +34,10 @@ class Library : AppCompatActivity() {
         val comicsDisponibiliRecycler = findViewById<RecyclerView>(R.id.comicsDisponibili)
         val comicsNonDisponibiliRecycler = findViewById<RecyclerView>(R.id.recyclerView3)
 
-        // Configura layout manager per i RecyclerView
         comicsOutRecycler.layoutManager = LinearLayoutManager(this)
         comicsDisponibiliRecycler.layoutManager = LinearLayoutManager(this)
         comicsNonDisponibiliRecycler.layoutManager = LinearLayoutManager(this)
 
-        // Inizializza e assegna gli adapter
-        comicAdapterOut = ComicsAdapter(this, emptyList(), ComicsAdapter.AdapterMode.LIBRARY, comicDatabase) { _, _ -> }
-        comicAdapterDisponibili = ComicsAdapter(this, emptyList(), ComicsAdapter.AdapterMode.LIBRARY, comicDatabase) { _, _ -> }
-        comicAdapterNonDisponibili = ComicsAdapter(this, emptyList(), ComicsAdapter.AdapterMode.LIBRARY, comicDatabase) { _, _ -> }
-
-        comicsOutRecycler.adapter = comicAdapterOut
-        comicsDisponibiliRecycler.adapter = comicAdapterDisponibili
-        comicsNonDisponibiliRecycler.adapter = comicAdapterNonDisponibili
-
-        // Navigazione tra le schermate
         findViewById<Button>(R.id.buttonHomePage).setOnClickListener {
             startActivity(Intent(this, UserHomePageActivity::class.java))
             finish()
@@ -67,8 +56,6 @@ class Library : AppCompatActivity() {
             startActivity(Intent(this, UserProfileActivity::class.java))
         }
 
-        // Caricamento dati fumetti dall'utente corrente
-        val userId = getUserId()
         loadData()
     }
 
@@ -83,41 +70,58 @@ class Library : AppCompatActivity() {
                 }
 
                 val comics = result.map {
-                    val id = it.getString("id")?: ""
+                    val id = it.getString("id") ?: ""
                     val name = it.getString("name") ?: ""
-                    val series = it.getString("series").toString()
+                    val series = it.getString("series") ?: ""
                     val number = it.getString("number")?.toIntOrNull() ?: 0
                     val description = it.getString("description") ?: ""
                     val imageUrl = it.getString("imageUrl") ?: ""
                     val userIdFromDb = it.getLong("userId")?.toInt() ?: 0
                     val status = ComicStatus.valueOf(it.getString("status") ?: "UNKNOWN")
 
-                    Comic(id, name, imageUrl, number, series, description, status, userIdFromDb)                }
+                    Comic(id, name, imageUrl, number, series, description, status, userIdFromDb)
+                }
 
                 val comicsOut = comics.filter { it.status == ComicStatus.IN_PRENOTAZIONE }
                 val comicsDisponibili = comics.filter { it.status == ComicStatus.DISPONIBILE }
                 val comicsNonDisponibili = comics.filter { it.status == ComicStatus.NON_DISPONIBILE }
 
-                comicAdapterOut.updateList(comicsOut)
-                comicAdapterDisponibili.updateList(comicsDisponibili)
-                comicAdapterNonDisponibili.updateList(comicsNonDisponibili)
+                comicAdapterOut = ComicsAdapter(
+                    this, comicsOut, ComicsAdapter.AdapterMode.LIBRARY, comicDatabase,
+                    updateStatus = { _, _ -> },
+                    onComicClick = { comic ->
+                        val intent = Intent(this, ComicDetailActivity::class.java)
+                        intent.putExtra("COMIC_ID", comic.id)
+                        startActivity(intent)
+                    }
+                )
+
+                comicAdapterDisponibili = ComicsAdapter(
+                    this, comicsDisponibili, ComicsAdapter.AdapterMode.LIBRARY, comicDatabase,
+                    updateStatus = { _, _ -> },
+                    onComicClick = { comic ->
+                        val intent = Intent(this, ComicDetailActivity::class.java)
+                        intent.putExtra("COMIC_ID", comic.id)
+                        startActivity(intent)
+                    }
+                )
+
+                comicAdapterNonDisponibili = ComicsAdapter(
+                    this, comicsNonDisponibili, ComicsAdapter.AdapterMode.LIBRARY, comicDatabase,
+                    updateStatus = { _, _ -> },
+                    onComicClick = { comic ->
+                        val intent = Intent(this, ComicDetailActivity::class.java)
+                        intent.putExtra("COMIC_ID", comic.id)
+                        startActivity(intent)
+                    }
+                )
+
+                findViewById<RecyclerView>(R.id.comicsOut).adapter = comicAdapterOut
+                findViewById<RecyclerView>(R.id.comicsDisponibili).adapter = comicAdapterDisponibili
+                findViewById<RecyclerView>(R.id.recyclerView3).adapter = comicAdapterNonDisponibili
             }
             .addOnFailureListener { exception ->
                 Log.e("FirestoreError", "Errore di caricamento", exception)
             }
-    }
-
-    private fun getUserId(): String {
-        return FirebaseAuth.getInstance().currentUser?.uid ?: "defaultUser"
-    }
-
-    // Metodo per aggiornare lo stato grafico del fumetto
-    private fun updateComicStatus(view: ImageView, status: String) {
-        when (status) {
-            "DISPONIBILE" -> view.setImageResource(R.drawable.ic_circle_green)
-            "IN_PRENOTAZIONE" -> view.setImageResource(R.drawable.ic_circle_yellow)
-            "NON_DISPONIBILE" -> view.setImageResource(R.drawable.ic_circle_red)
-            else -> view.setImageResource(R.drawable.ic_circle_gray)
-        }
     }
 }
