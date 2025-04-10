@@ -78,6 +78,7 @@ class RegisterActivity : AppCompatActivity() {
                 )
                 saveUserToDatabase(newUser)
                 startActivity(Intent(this, UserHomePageActivity::class.java))
+                finish()
             }
             .addOnFailureListener { exception ->
                 Log.e("RegisterActivity", "Registrazione fallita", exception)

@@ -14,12 +14,10 @@ class HomePageActivity: AppCompatActivity() {
         val loginButton = findViewById<Button>(R.id.loginButton)
         loginButton.setOnClickListener{
             startActivity(Intent(this,LoginActivity::class.java))
-            finish()
         }
         val registerButton = findViewById<Button>(R.id.registerButton)
         registerButton.setOnClickListener{
             startActivity(Intent(this,RegisterActivity::class.java))
-            finish()
         }
     }
 }
