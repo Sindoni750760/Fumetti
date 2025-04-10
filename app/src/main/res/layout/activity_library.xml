@@ -35,7 +35,7 @@
             android:layout_width="50dp"
             android:layout_height="match_parent"
             android:background="@drawable/circle_shape"
-            android:src="@drawable/profile_icon"
+            android:src="@drawable/profile_icon_default"
             android:contentDescription="Profile Icon" />
     </LinearLayout>
 

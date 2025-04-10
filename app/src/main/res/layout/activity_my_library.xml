@@ -39,7 +39,7 @@
                 android:layout_height="match_parent"
                 android:background="@drawable/circle_shape"
                 android:scaleType="centerCrop"
-                android:src="@drawable/profile_icon" />
+                android:src="@drawable/profile_icon_default" />
         </LinearLayout>
 
         <!-- Fumetti fuori -->
