@@ -15,7 +15,7 @@
         android:layout_marginBottom="10dp"
         android:background="@drawable/legno_bianco"
         android:hint="Name"
-        android:textColor="@android:color/white"/>
+        android:textColor="@android:color/black"/>
     <EditText
         android:id="@+id/surnameEditText"
         android:layout_width="match_parent"
@@ -25,7 +25,8 @@
         android:layout_marginTop="30dp"
         android:layout_marginEnd="15dp"
         android:layout_marginBottom="10dp"
-        android:background="@drawable/legno_bianco"/>
+        android:background="@drawable/legno_bianco"
+        android:textColor="@android:color/black"/>
     <EditText
         android:id="@+id/emailEditText"
         android:layout_width="match_parent"
@@ -35,7 +36,8 @@
         android:layout_marginTop="30dp"
         android:layout_marginEnd="15dp"
         android:layout_marginBottom="10dp"
-        android:background="@drawable/legno_bianco"/>
+        android:background="@drawable/legno_bianco"
+        android:textColor="@android:color/black"/>
 
     <EditText
         android:id="@+id/passwordEditText"
@@ -46,14 +48,16 @@
         android:layout_marginTop="30dp"
         android:layout_marginEnd="15dp"
         android:layout_marginBottom="10dp"
-        android:background="@drawable/legno_bianco"/>
+        android:background="@drawable/legno_bianco"
+        android:textColor="@android:color/black"/>
 
     <Button
         android:id="@+id/button_register"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Register"
+        android:layout_width="178dp"
+        android:layout_height="73dp"
+        android:layout_gravity="end"
         android:layout_marginTop="30dp"
         android:layout_marginEnd="50dp"
-        android:layout_gravity="end"/>
+        android:background="@drawable/legno_bianco"
+        android:text="Register" />
 </LinearLayout>
