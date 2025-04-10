@@ -49,7 +49,7 @@
             android:layout_marginTop="16dp"
             android:background="@drawable/legno_bianco"
             android:padding="8dp"
-            android:text="Fumetti fuori"
+            android:text="Fumetti Letti"
             android:textSize="18sp"
             android:textStyle="bold" />
 
@@ -67,7 +67,7 @@
             android:layout_marginTop="16dp"
             android:background="@drawable/legno_bianco"
             android:padding="8dp"
-            android:text="Disponibili"
+            android:text="Fumetti in Lettura"
             android:textSize="18sp"
             android:textStyle="bold" />
 
@@ -85,7 +85,7 @@
             android:layout_marginTop="16dp"
             android:background="@drawable/legno_bianco"
             android:padding="8dp"
-            android:text="Non Disponibili"
+            android:text="Fumetti non letti"
             android:textSize="18sp"
             android:textStyle="bold" />
 
@@ -137,7 +137,8 @@
                     android:layout_height="59dp"
                     android:background="@drawable/legno_bianco"
                     android:contentDescription="Remove Comics"
-                    android:src="@drawable/ic_remove" />
+                    android:src="@drawable/ic_remove"
+                    android:textColor = "@color/black"/>
 
                 <TextView
                     android:layout_width="wrap_content"

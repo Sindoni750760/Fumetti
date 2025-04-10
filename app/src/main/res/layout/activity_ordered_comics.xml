@@ -3,30 +3,39 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:padding="16dp"
+    android:background="@drawable/wallpaper">
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="38dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/legno_bianco"
         android:text="Fumetti Ordinati"
         android:textSize="18sp"
-        android:layout_marginBottom="8dp" />
+        android:textColor="@color/black"/>
 
-    <RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewOrderedComics"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp" />
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginBottom="16dp"
+        android:layout_gravity ="center_horizontal"/>
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="52dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/legno_bianco"
         android:text="Lista di Attesa"
         android:textSize="18sp"
-        android:layout_marginBottom="8dp" />
+        android:textColor="@color/black"/>
 
-    <RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewWaitingList"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_gravity ="center_horizontal"/>
 </LinearLayout>

@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Fumetti</string>
     <string name="login" />
+    <string name="seleziona_fumetto_da_rimuovere">seleziona fumetto da rimuovere</string>
 </resources>

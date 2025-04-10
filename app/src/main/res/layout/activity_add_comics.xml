@@ -3,17 +3,25 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:padding="16dp"
+    android:background="@drawable/wallpaper">
 
     <Spinner
         android:id="@+id/spinnerComics"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp" />
+        android:layout_height="62dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/legno_bianco"
+        android:textColor = "@color/black"
+        />
+
 
     <Button
         android:id="@+id/buttonAddComic"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Aggiungi Fumetto" />
+        android:layout_height="84dp"
+        android:layout_marginTop="100dp"
+        android:background="@drawable/legno_bianco"
+        android:text="Aggiungi Fumetto"
+        android:textColor = "@color/black"/>
 </LinearLayout>
