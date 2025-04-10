@@ -20,7 +20,7 @@
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:background="@drawable/legno_bianco"
-        android:text="Rimuovi Fumetto"
+        android:text="@string/rimuovi_fumetto"
         android:layout_marginTop = "100dp"
         android:textColor = "@color/black"/>
 </LinearLayout>

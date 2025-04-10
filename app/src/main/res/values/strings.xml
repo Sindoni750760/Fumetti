@@ -2,4 +2,7 @@
     <string name="app_name">Fumetti</string>
     <string name="login" />
     <string name="seleziona_fumetto_da_rimuovere">seleziona fumetto da rimuovere</string>
+    <string name="lista_di_attesa">Lista di Attesa</string>
+    <string name="aggiungi_fumetto">Aggiungi Fumetto</string>
+    <string name="rimuovi_fumetto">Rimuovi Fumetto</string>
 </resources>

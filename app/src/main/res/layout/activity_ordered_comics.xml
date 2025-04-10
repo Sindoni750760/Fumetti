@@ -28,7 +28,7 @@
         android:layout_height="52dp"
         android:layout_marginBottom="8dp"
         android:background="@drawable/legno_bianco"
-        android:text="Lista di Attesa"
+        android:text="@string/lista_di_attesa"
         android:textSize="18sp"
         android:textColor="@color/black"/>
 

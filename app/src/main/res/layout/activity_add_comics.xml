@@ -22,6 +22,6 @@
         android:layout_height="84dp"
         android:layout_marginTop="100dp"
         android:background="@drawable/legno_bianco"
-        android:text="Aggiungi Fumetto"
+        android:text="@string/aggiungi_fumetto"
         android:textColor = "@color/black"/>
 </LinearLayout>
