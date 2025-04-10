@@ -15,6 +15,7 @@
         android:contentDescription="Stato fumetto"
         android:src="@drawable/ic_circle_gray" />
 
+
     <!-- Titolo -->
     <TextView
         android:id="@+id/titleText"
