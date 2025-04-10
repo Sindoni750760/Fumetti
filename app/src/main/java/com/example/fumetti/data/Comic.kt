@@ -1,12 +1,12 @@
 package com.example.fumetti.data
 
 data class Comic(
-    val id: Int = 0,
-    val name: String = "",
-    val series: String? = "",
-    val number: String? = "",
-    val description: String = "",
-    val imageUrl: String = "",
-    val userId: Int,
-    var status: ComicStatus
+    var id: String = "",
+    var name: String = "",
+    var imageUrl: String = "",
+    var number: Int? = null,
+    val series: String = "",
+    var description: String = "",
+    var status: ComicStatus = ComicStatus.DISPONIBILE,
+    var userId: Int?= null,
 )

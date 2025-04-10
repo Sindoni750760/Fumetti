@@ -19,7 +19,7 @@ class ComicDatabase {
     }
 
     fun getAllComicsByUser(userId: String? = null, callback: (List<Comic>) -> Unit) {
-        firestore.collection("comics")
+        firestore.collection("comic")
             .whereEqualTo("userId", userId)
             .get()
             .addOnSuccessListener { snapshot ->
@@ -32,7 +32,7 @@ class ComicDatabase {
     }
 
     fun reserveComic(comicId: String, callback: (Boolean) -> Unit) {
-        firestore.collection("comics")
+        firestore.collection("comic")
             .document(comicId)
             .update("status", ComicStatus.IN_PRENOTAZIONE.name)
             .addOnSuccessListener { callback(true) }
@@ -40,7 +40,7 @@ class ComicDatabase {
     }
 
     fun returnComic(comicId: String, callback: (Boolean) -> Unit) {
-        firestore.collection("comics")
+        firestore.collection("comic")
             .document(comicId)
             .update(
                 mapOf(
@@ -60,7 +60,7 @@ class ComicDatabase {
     }
 
     fun getComic(comicId: String, callback: (Comic?) -> Unit) {
-        firestore.collection("comics")
+        firestore.collection("comic")
             .document(comicId)
             .get()
             .addOnSuccessListener { snapshot ->

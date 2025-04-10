@@ -72,16 +72,16 @@ class UserHomePageActivity : AppCompatActivity() {
                 }
 
                 var comics = result.map{
-                    val id = it.getLong("id")?.toInt() ?: 0
+                    val id = it.getString("id")?:""
                     val name = it.getString("name") ?: ""
-                    val series = it.getString("series")
-                    val number = it.getString("number")
+                    val series = it.getString("series") ?: ""
+                    val number = it.getLong("number")?.toInt() ?: 0
                     val description = it.getString("description") ?: ""
                     val imageUrl = it.getString("imageUrl") ?: ""
                     val userId = it.getLong("userId")?.toInt() ?: 0
                     val status = ComicStatus.valueOf(it.getString("status") ?: "UNKNOWN")
 
-                    Comic(id, name, series, number, description, imageUrl, userId, status)
+                    Comic(id, name, imageUrl, number, series, description, status, userId)
                 }
                 recyclerView.adapter = ComicsAdapter(this, comics, ComicsAdapter.AdapterMode.PREVIEW, updateStatus = { _, _ -> })
 

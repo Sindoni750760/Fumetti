@@ -83,17 +83,16 @@ class Library : AppCompatActivity() {
                 }
 
                 val comics = result.map {
-                    val id = it.getLong("id")?.toInt() ?: 0
+                    val id = it.getString("id")?: ""
                     val name = it.getString("name") ?: ""
-                    val series = it.getString("series")
-                    val number = it.getString("number")
+                    val series = it.getString("series").toString()
+                    val number = it.getString("number")?.toIntOrNull() ?: 0
                     val description = it.getString("description") ?: ""
                     val imageUrl = it.getString("imageUrl") ?: ""
                     val userIdFromDb = it.getLong("userId")?.toInt() ?: 0
                     val status = ComicStatus.valueOf(it.getString("status") ?: "UNKNOWN")
 
-                    Comic(id, name, series, number, description, imageUrl, userIdFromDb, status)
-                }
+                    Comic(id, name, imageUrl, number, series, description, status, userIdFromDb)                }
 
                 val comicsOut = comics.filter { it.status == ComicStatus.IN_PRENOTAZIONE }
                 val comicsDisponibili = comics.filter { it.status == ComicStatus.DISPONIBILE }
