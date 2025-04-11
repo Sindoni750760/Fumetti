@@ -1,4 +1,4 @@
-package com.example.fumetti.database
+package com.example.fumetti.activity
 
 import android.content.Context
 import android.view.LayoutInflater

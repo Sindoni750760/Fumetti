@@ -1,4 +1,4 @@
-package com.example.fumetti.database
+package com.example.fumetti.activity
 
 import android.os.Bundle
 import android.widget.Toast
@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fumetti.R
 import com.example.fumetti.data.ComicStatus
+import com.example.fumetti.database.ComicDatabase
 import com.example.fumetti.database.adapter.ComicsAdapter
 import com.google.firebase.auth.FirebaseAuth
 

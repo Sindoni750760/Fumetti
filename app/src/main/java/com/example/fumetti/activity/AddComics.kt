@@ -1,4 +1,4 @@
-package com.example.fumetti.database
+package com.example.fumetti.activity
 
 import android.os.Bundle
 import android.widget.ArrayAdapter
@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.fumetti.R
 import com.example.fumetti.data.Comic
 import com.example.fumetti.data.ComicStatus
+import com.example.fumetti.database.ComicDatabase
 import com.google.firebase.auth.FirebaseAuth
 
 class AddComics : AppCompatActivity() {
