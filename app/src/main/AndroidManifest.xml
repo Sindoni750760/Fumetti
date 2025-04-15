@@ -29,15 +29,8 @@
         <activity android:name=".activity.LoginActivity"/>
         <activity android:name=".activity.RegisterActivity"/>
         <activity android:name=".activity.UserHomePageActivity"/>
-        <activity android:name=".activity.Library"/>
         <activity android:name=".activity.UserProfileActivity"
             android:theme="@style/Theme.AppCompat.Dialog"/>
-        <activity android:name=".activity.MyLibrary"/>
-        <activity android:name=".database.AddComics"
-            android:theme="@style/Theme.AppCompat.Dialog"/>
-        <activity android:name=".database.RemoveComics"
-            android:theme="@style/Theme.AppCompat.Dialog"/>
-        <activity android:name=".database.OrderedComics"
-            android:theme="@style/Theme.AppCompat.Dialog"/>
+        <activity android:name=".activity.LibraryActivity"/>
     </application>
 </manifest>

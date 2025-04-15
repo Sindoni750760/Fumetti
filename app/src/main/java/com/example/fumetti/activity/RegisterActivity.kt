@@ -70,11 +70,11 @@ class RegisterActivity : AppCompatActivity() {
                 val userId = auth.currentUser?.uid ?: return@addOnSuccessListener
 
                 val newUser = User(
+                    email = email,
                     id = userId,
                     name = name,
-                    surname = surname,
-                    email = email,
-                    password = "" // Non salvare la password in chiaro!
+                    password = "",
+                    surname = surname // Non salvare la password in chiaro!
                 )
                 saveUserToDatabase(newUser)
                 startActivity(Intent(this, UserHomePageActivity::class.java))

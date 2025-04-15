@@ -5,35 +5,78 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.fumetti.database.AddComics
-import com.example.fumetti.database.OrderedComics
 import com.example.fumetti.R
 import com.example.fumetti.database.ComicDatabase
 import com.example.fumetti.database.adapter.ComicsAdapter
-import com.example.fumetti.database.RemoveComics
-import com.example.fumetti.data.Comic
 import com.example.fumetti.data.ComicStatus
 import com.google.firebase.auth.FirebaseAuth
 
-class MyLibrary : AppCompatActivity() {
+/*class MyLibrary : AppCompatActivity() {
 
     private val comicDatabase = ComicDatabase()
+
+    private lateinit var recyclerOut: RecyclerView
+    private lateinit var recyclerAvailable: RecyclerView
+    private lateinit var recyclerUnavailable: RecyclerView
+
+    private lateinit var adapterOut: ComicsAdapter
+    private lateinit var adapterAvailable: ComicsAdapter
+    private lateinit var adapterUnavailable: ComicsAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_my_library)
 
-        val recyclerOut = findViewById<RecyclerView>(R.id.recyclerViewOut)
-        val recyclerAvailable = findViewById<RecyclerView>(R.id.recyclerViewAvailable)
-        val recyclerUnavailable = findViewById<RecyclerView>(R.id.recyclerViewUnavailable)
+        recyclerOut = findViewById(R.id.recyclerViewOut)
+        recyclerAvailable = findViewById(R.id.recyclerViewAvailable)
+        recyclerUnavailable = findViewById(R.id.recyclerViewUnavailable)
 
         recyclerOut.layoutManager = LinearLayoutManager(this)
         recyclerAvailable.layoutManager = LinearLayoutManager(this)
         recyclerUnavailable.layoutManager = LinearLayoutManager(this)
+
+        adapterOut = ComicsAdapter(
+            this, listOf(), ComicsAdapter.AdapterMode.PREVIEW, comicDatabase,
+            updateStatus = { comic, status ->
+                updateStatusVisual(recyclerOut, adapterOut.getPositionFromComic(comic), status)
+            },
+            onComicClick = { comic ->
+                startActivity(Intent(this, ComicDetailActivity::class.java).apply {
+                    putExtra("COMIC_ID", comic.id)
+                })
+            }
+        )
+
+        adapterAvailable = ComicsAdapter(
+            this, listOf(), ComicsAdapter.AdapterMode.PREVIEW, comicDatabase,
+            updateStatus = { comic, status ->
+                updateStatusVisual(recyclerAvailable, adapterAvailable.getPositionFromComic(comic), status)
+            },
+            onComicClick = { comic ->
+                startActivity(Intent(this, ComicDetailActivity::class.java).apply {
+                    putExtra("COMIC_ID", comic.id)
+                })
+            }
+        )
+
+        adapterUnavailable = ComicsAdapter(
+            this, listOf(), ComicsAdapter.AdapterMode.PREVIEW, comicDatabase,
+            updateStatus = { comic, status ->
+                updateStatusVisual(recyclerUnavailable, adapterUnavailable.getPositionFromComic(comic), status)
+            },
+            onComicClick = { comic ->
+                startActivity(Intent(this, ComicDetailActivity::class.java).apply {
+                    putExtra("COMIC_ID", comic.id)
+                })
+            }
+        )
+
+        recyclerOut.adapter = adapterOut
+        recyclerAvailable.adapter = adapterAvailable
+        recyclerUnavailable.adapter = adapterUnavailable
 
         findViewById<Button>(R.id.buttonHomePage).setOnClickListener {
             startActivity(Intent(this, UserHomePageActivity::class.java))
@@ -59,46 +102,10 @@ class MyLibrary : AppCompatActivity() {
 
         val userId = FirebaseAuth.getInstance().currentUser?.uid ?: "defaultUser"
 
-        comicDatabase.getAllComicsByUser(userId) { comics: List<Comic> ->
-            val comicsOut = comics.filter { it.status == ComicStatus.NON_DISPONIBILE }
-            val comicsAvailable = comics.filter { it.status == ComicStatus.DISPONIBILE }
-            val comicsUnavailable = comics.filter { it.status == ComicStatus.IN_PRENOTAZIONE }
-
-            recyclerOut.adapter = ComicsAdapter(
-                this, comicsOut, ComicsAdapter.AdapterMode.PREVIEW, comicDatabase,
-                updateStatus = { comic, status ->
-                    updateStatusVisual(recyclerOut, comicsOut.indexOf(comic), status)
-                },
-                onComicClick = { comic ->
-                    val intent = Intent(this, ComicDetailActivity::class.java)
-                    intent.putExtra("COMIC_ID", comic.id)
-                    startActivity(intent)
-                }
-            )
-
-            recyclerAvailable.adapter = ComicsAdapter(
-                this, comicsAvailable, ComicsAdapter.AdapterMode.PREVIEW, comicDatabase,
-                updateStatus = { comic, status ->
-                    updateStatusVisual(recyclerAvailable, comicsAvailable.indexOf(comic), status)
-                },
-                onComicClick = { comic ->
-                    val intent = Intent(this, ComicDetailActivity::class.java)
-                    intent.putExtra("COMIC_ID", comic.id)
-                    startActivity(intent)
-                }
-            )
-
-            recyclerUnavailable.adapter = ComicsAdapter(
-                this, comicsUnavailable, ComicsAdapter.AdapterMode.PREVIEW, comicDatabase,
-                updateStatus = { comic, status ->
-                    updateStatusVisual(recyclerUnavailable, comicsUnavailable.indexOf(comic), status)
-                },
-                onComicClick = { comic ->
-                    val intent = Intent(this, ComicDetailActivity::class.java)
-                    intent.putExtra("COMIC_ID", comic.id)
-                    startActivity(intent)
-                }
-            )
+        comicDatabase.getAllComicsByUser(userId) { comics ->
+            adapterOut.updateList(comics.filter { it.status == ComicStatus.NON_DISPONIBILE })
+            adapterAvailable.updateList(comics.filter { it.status == ComicStatus.DISPONIBILE })
+            adapterUnavailable.updateList(comics.filter { it.status == ComicStatus.IN_PRENOTAZIONE })
         }
     }
 
@@ -117,3 +124,4 @@ class MyLibrary : AppCompatActivity() {
         }
     }
 }
+*/

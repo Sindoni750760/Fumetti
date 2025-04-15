@@ -4,5 +4,5 @@ enum class ComicStatus {
     DISPONIBILE,
     IN_PRENOTAZIONE,
     NON_DISPONIBILE,
-    UNKNOWN
+    UNKOWN,
 }

@@ -13,17 +13,10 @@
         android:orientation="horizontal"
         android:gravity="center_vertical">
 
-        <Button
-            android:id="@+id/buttonMyLibrary"
-            android:layout_width="163dp"
-            android:layout_height="wrap_content"
-            android:background="@drawable/legno_bianco"
-            android:text="My Library"
-            android:textAllCaps="false" />
 
         <Button
             android:id="@+id/buttonHomePage"
-            android:layout_width="0dp"
+            android:layout_width="299dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@drawable/legno_bianco"
@@ -46,14 +39,14 @@
         android:layout_height="32dp"
         android:layout_marginTop="16dp"
         android:background="@drawable/legno_bianco"
-        android:text="Fumetti fuori"
+        android:text="Fumetti in prestito"
         android:textSize="18sp"
         android:textStyle="bold"
         android:gravity="center_vertical|start"
         android:paddingStart="8dp" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/comicsOut"
+        android:id="@+id/recyclerViewOut"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
@@ -74,7 +67,7 @@
         android:paddingStart="8dp" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/comicsDisponibili"
+        android:id="@+id/recyclerViewAvailable"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
@@ -88,14 +81,14 @@
         android:layout_height="30dp"
         android:layout_marginTop="16dp"
         android:background="@drawable/legno_bianco"
-        android:text="Fumetti in prenotazione"
+        android:text="Fumetti non disponibili"
         android:textSize="18sp"
         android:textStyle="bold"
         android:gravity="center_vertical|start"
         android:paddingStart="8dp" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView3"
+        android:id="@+id/recyclerViewUnavailable"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
@@ -103,18 +96,4 @@
         android:scrollbars="horizontal" />
 
     <!-- Pulsanti aggiuntivi -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center">
-
-        <Button
-            android:id="@+id/buttonOrderedComics"
-            android:layout_width="150dp"
-            android:layout_height="43dp"
-            android:background="@drawable/legno_bianco"
-            android:text="Lista d'attesa"
-            android:textAllCaps="false" />
-    </LinearLayout>
 </LinearLayout>
