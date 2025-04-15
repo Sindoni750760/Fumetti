@@ -14,9 +14,6 @@ import com.example.fumetti.data.Comic
 import com.example.fumetti.data.ComicStatus
 import com.example.fumetti.database.ComicDatabase
 import com.google.firebase.auth.FirebaseAuth
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
 class ComicsAdapter(
     private val context: Context?,
@@ -87,48 +84,6 @@ class ComicsAdapter(
         }
     }
 
-    /**
-     * Aggiorna l'elenco dei fumetti.
-     *
-     * Alternativa all'utilizzo di DiffUtil:
-     * - Se il numero di elementi varia, si usa notifyDataSetChanged().
-     * - Se le liste hanno la stessa lunghezza, vengono confrontati gli elementi uno per uno e,
-     *   se necessario, si invoca notifyItemChanged() per l'elemento modificato.
-     */
-    fun updateList(newList: List<Comic>) {
-        if (newList.size != comicsList.size) {
-            comicsList = newList
-            notifyDataSetChanged()
-        } else {
-            for (i in newList.indices) {
-                if (!areItemsTheSame(comicsList[i], newList[i])) {
-                    // Aggiorna l'elemento e notifica il cambiamento
-                    comicsList = comicsList.toMutableList().also { it[i] = newList[i] }
-                    notifyItemChanged(i)
-                }
-            }
-        }
-    }
-
-    // Funzione helper per confrontare due oggetti Comic.
-    private fun areItemsTheSame(oldItem: Comic, newItem: Comic): Boolean {
-        return oldItem.id == newItem.id &&
-                oldItem.name == newItem.name &&
-                //oldItem.imageUrl == newItem.imageUrl &&
-                oldItem.number == newItem.number &&
-                oldItem.series == newItem.series &&
-                oldItem.description == newItem.description &&
-                oldItem.status == newItem.status &&
-                oldItem.userId == newItem.userId
-    }
-
-    /**
-     * Restituisce la posizione di un fumetto nella lista, basata sul confronto degli id.
-     */
-    fun getPositionFromComic(comic: Comic): Int {
-        return comicsList.indexOfFirst { it.id == comic.id }
-    }
-
     // Metodi dedicati per gestire le operazioni di prenotazione, restituzione e aggiunta alla lista d'attesa.
     private fun handleReserveComic(comic: Comic, position: Int) {
         val currentUserId = FirebaseAuth.getInstance().currentUser?.uid ?: return
@@ -167,20 +122,6 @@ class ComicsAdapter(
                 Toast.makeText(context, "Errore nell'aggiunta alla lista d'attesa.", Toast.LENGTH_SHORT).show()
             }
         }
-    }
-    fun removeComics(comic: Comic) {
-        val position = comicsList.indexOfFirst { it.id == comic.id }
-        if (position != -1) {
-            comicsList = comicsList.toMutableList().apply { removeAt(position) }
-            notifyItemRemoved(position)
-        } else {
-            Toast.makeText(context, "Fumetto non trovato nella lista.", Toast.LENGTH_SHORT).show()
-        }
-    }
-
-    fun addComics(comic: Comic) {
-        comicsList = comicsList.toMutableList().apply { add(comic) }
-        notifyItemInserted(comicsList.size - 1)
     }
 
 

@@ -24,7 +24,7 @@ class AddComics : AppCompatActivity() {
         val spinnerComics = findViewById<Spinner>(R.id.spinnerComics)
         val buttonAddComic = findViewById<Button>(R.id.buttonAddComic)
 
-        val userId = FirebaseAuth.getInstance().currentUser?.uid ?: return showError("Utente non autenticato")
+        FirebaseAuth.getInstance().currentUser?.uid ?: return showError("Utente non autenticato")
 
         // Carica solo fumetti DISPONIBILI da Firestore
         comicDatabase.getAllComics { allComics ->
