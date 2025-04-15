@@ -15,7 +15,6 @@ import com.example.fumetti.R
 import com.example.fumetti.data.Comic
 import com.example.fumetti.data.ComicStatus
 import com.example.fumetti.database.ComicDatabase
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
 class UserHomePageActivity : AppCompatActivity() {
@@ -56,12 +55,10 @@ class UserHomePageActivity : AppCompatActivity() {
         recyclerViewSeriesNumbers.adapter = MyAdapter(emptyList())
 
         // L'uso di una collection utente (opzionale) in base all'uid corrente
-        val userCollection = "user_${getUserId()}"
-        loadData(userCollection, recyclerView, recyclerViewNames, recyclerViewSeriesNumbers)
+        loadData(recyclerView, recyclerViewNames, recyclerViewSeriesNumbers)
     }
 
     private fun loadData(
-        collectionName: String,
         recyclerView: RecyclerView,
         recyclerViewNames: RecyclerView,
         recyclerViewSeriesNumbers: RecyclerView
@@ -158,10 +155,6 @@ class UserHomePageActivity : AppCompatActivity() {
             .addOnFailureListener { exception ->
                 Log.e("FirestoreError", "Errore di caricamento", exception)
             }
-    }
-
-    private fun getUserId(): String {
-        return FirebaseAuth.getInstance().currentUser?.uid ?: "defaultUser"
     }
 
     // Adapter semplice per mostrare del testo in un RecyclerView (usato per recyclerView e recyclerViewNames)

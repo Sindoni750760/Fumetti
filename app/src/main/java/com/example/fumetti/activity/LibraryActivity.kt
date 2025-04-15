@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
-import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,21 +14,10 @@ import com.example.fumetti.data.ComicStatus
 import com.example.fumetti.database.ComicDatabase
 import com.example.fumetti.database.adapter.ComicsAdapter
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
-
 class LibraryActivity : AppCompatActivity() {
 
     private val comicDatabase = ComicDatabase()
-
-    private lateinit var recyclerOut: RecyclerView
-    private lateinit var recyclerAvailable: RecyclerView
-    private lateinit var recyclerUnavailable: RecyclerView
-
-    private lateinit var adapterOut: ComicsAdapter
-    private lateinit var adapterAvailable: ComicsAdapter
-    private lateinit var adapterUnavailable: ComicsAdapter
-
     companion object {
         const val TAG = "LibraryActivity"
         const val EXTRA_USER_ID = "EXTRA_USER_ID"
@@ -41,221 +29,161 @@ class LibraryActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_library)
 
-        logStartupMode()
-        initViews()
-        setupRecyclerViews()
-        setupNavigationButtons()
-        loadData()
-    }
+        Log.d(TAG, "Activity avviata in modalità ${if (userId != null) "utente" else "globale"}")
 
-    private fun logStartupMode() {
-        Log.d(TAG, "onCreate: Avvio LibraryActivity")
-        if (userId != null) {
-            Log.d(TAG, "Modalità Libreria Personale: userId = $userId")
-        } else {
-            Log.d(TAG, "Modalità Libreria Globale")
-        }
-    }
-
-    private fun initViews() {
-        recyclerOut = findViewById(R.id.recyclerViewOut)
-        recyclerAvailable = findViewById(R.id.recyclerViewAvailable)
-        recyclerUnavailable = findViewById(R.id.recyclerViewUnavailable)
-    }
-
-    private fun setupRecyclerViews() {
+        // Initialize RecyclerViews
+        val recyclerOut = findViewById<RecyclerView>(R.id.recyclerViewOut)
         recyclerOut.layoutManager = LinearLayoutManager(this)
+        recyclerOut.adapter = ComicsAdapter(this, emptyList(), ComicsAdapter.AdapterMode.LIBRARY, comicDatabase, { _, _ -> }, { })
+
+        val recyclerAvailable = findViewById<RecyclerView>(R.id.recyclerViewAvailable)
         recyclerAvailable.layoutManager = LinearLayoutManager(this)
+        recyclerAvailable.adapter = ComicsAdapter(this, emptyList(), ComicsAdapter.AdapterMode.LIBRARY, comicDatabase, { _, _ -> }, { })
+
+        val recyclerUnavailable = findViewById<RecyclerView>(R.id.recyclerViewUnavailable)
         recyclerUnavailable.layoutManager = LinearLayoutManager(this)
+        recyclerUnavailable.adapter = ComicsAdapter(this, emptyList(), ComicsAdapter.AdapterMode.LIBRARY, comicDatabase, { _, _ -> }, { })
 
-        adapterOut = createAdapter(recyclerOut) { adapterOut }
-        adapterAvailable = createAdapter(recyclerAvailable) { adapterAvailable }
-        adapterUnavailable = createAdapter(recyclerUnavailable) { adapterUnavailable }
-    }
-
-    private fun createAdapter(
-        recycler: RecyclerView,
-        adapterRef: () -> ComicsAdapter
-    ): ComicsAdapter {
-        val adapter = ComicsAdapter(
-            this, mutableListOf(), ComicsAdapter.AdapterMode.PREVIEW, comicDatabase,
-            updateStatus = { comic, status ->
-                updateStatusVisual(recycler, adapterRef().getPositionFromComic(comic), status)
-            },
-            onComicClick = { comic ->
-                val currentUserId = FirebaseAuth.getInstance().currentUser?.uid
-                if (comic.userId.isNullOrEmpty() || comic.userId == "undefined") {
-                    prenotaComic(comic)
-                } else if (comic.userId == currentUserId) {
-                    rilasciaComic(comic)
-                } else {
-                    Toast.makeText(this, "Fumetto non disponibile: prenotato da un altro utente", Toast.LENGTH_SHORT).show()
-                }
-            }
-        )
-        recycler.adapter = adapter
-        return adapter
-    }
-
-    private fun setupNavigationButtons() {
         findViewById<Button>(R.id.buttonHomePage).setOnClickListener {
             startActivity(Intent(this, UserHomePageActivity::class.java))
             finish()
         }
+        loadData(recyclerOut, recyclerAvailable, recyclerUnavailable)
     }
-
-    private fun loadData() {
-        if (userId != null) {
-            loadUserLibrary()
-        } else {
-            loadGlobalLibrary()
-        }
-    }
-
-    private fun loadUserLibrary() {
-        comicDatabase.getAllComicsByUser(userId!!) { comics ->
-            refreshAdapters(comics)
-        }
-    }
-
-    private fun loadGlobalLibrary() {
+    private fun loadData(
+        recyclerViewOut: RecyclerView,
+        recyclerViewAvailable: RecyclerView,
+        recyclerViewUnavailable: RecyclerView
+    ) {
         val db = FirebaseFirestore.getInstance()
-        db.collection("comic").get()
+        db.collection("comic")
+            .get()
             .addOnSuccessListener { result ->
-                val currentUserId = FirebaseAuth.getInstance().currentUser?.uid
-                val comics = result.map { document ->
-                    parseComicFromDocument(document, currentUserId)
+                if (result.isEmpty) {
+                    Toast.makeText(this, "Nessun fumetto trovato", Toast.LENGTH_SHORT).show()
+                    return@addOnSuccessListener
                 }
-                refreshAdapters(comics)
+
+                val currentUserId = FirebaseAuth.getInstance().currentUser?.uid
+
+                val comics = result.map { document ->
+                    val id = document.getString("id") ?: document.id
+                    val name = document.getString("name") ?: ""
+                    val imageUrl = document.getString("imageUrl") ?: ""
+                    val number = document.getLong("number")?.toInt()
+                        ?: (document.getString("number")?.toIntOrNull() ?: 0)
+                    val series = document.getString("series") ?: " "
+                    val description = document.getString("description") ?: " "
+                    val numericId = document.getLong("numericId")?.toString()
+                        ?: document.getString("numericId") ?: " "
+                    val userIdFromDb = document.getString("userId")
+                        ?: document.getLong("userId")?.toString() ?: "undefined"
+                    val statusStr = document.getString("status")
+                    val status = try {
+                        if (statusStr != null) ComicStatus.valueOf(statusStr)
+                        else ComicStatus.DISPONIBILE
+                    } catch (e: Exception) {
+                        Log.e(TAG, "Stato non valido per il fumetto $id ($statusStr)", e)
+                        ComicStatus.UNKOWN
+                    }
+                    val seriesNumber = document.getLong("seriesNumber")?.toInt()
+                        ?: (document.getString("seriesNumber")?.toIntOrNull() ?: 0)
+
+                    Comic(
+                        description,
+                        id,
+                        imageUrl,
+                        name,
+                        number,
+                        numericId,
+                        series,
+                        seriesNumber,
+                        status,
+                        userIdFromDb
+                    )
+                }
+
+                // Filtra i fumetti per stato
+                val comicsOut = comics.filter { it.status == ComicStatus.IN_PRENOTAZIONE && it.userId == currentUserId }
+                val comicsAvailable = comics.filter { it.status == ComicStatus.DISPONIBILE }
+                val comicsUnavailable = comics.filter { it.status == ComicStatus.NON_DISPONIBILE }
+
+                // Popola i RecyclerView con gli adapter aggiornati
+                recyclerViewOut.adapter = ComicsAdapter(
+                    this, comicsOut, ComicsAdapter.AdapterMode.LIBRARY,
+                    comicDatabase = comicDatabase,
+                    updateStatus = { comic, newStatus ->
+                        if (comic.status == ComicStatus.IN_PRENOTAZIONE && newStatus == ComicStatus.DISPONIBILE) {
+                            comicDatabase.updateComicStatus(comic.id, newStatus,
+                                onSuccess = {
+                                    Toast.makeText(this, "Stato aggiornato con successo", Toast.LENGTH_SHORT).show()
+                                },
+                                onFailure = { exception ->
+                                    Toast.makeText(this, "Errore nell'aggiornamento: ${exception.message}", Toast.LENGTH_SHORT).show()
+                                }
+                            )
+                        } else {
+                            Toast.makeText(
+                                this,
+                                "Transizione non valida per lo stato del fumetto",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    },
+                    onComicClick = { comic ->
+                        val intent = Intent(this, ComicDetailActivity::class.java)
+                        intent.putExtra("COMIC_ID", comic.id)
+                        startActivity(intent)
+                    }
+                )
+
+                recyclerViewAvailable.adapter = ComicsAdapter(
+                    this, comicsAvailable, ComicsAdapter.AdapterMode.LIBRARY,
+                    comicDatabase = comicDatabase,
+                    updateStatus = { comic, newStatus ->
+                        if (comic.status == ComicStatus.DISPONIBILE && newStatus == ComicStatus.IN_PRENOTAZIONE) {
+                            comicDatabase.updateComicStatus(comic.id, newStatus,
+                                onSuccess = {
+                                    Toast.makeText(this, "Stato aggiornato con successo", Toast.LENGTH_SHORT).show()
+                                },
+                                onFailure = { exception ->
+                                    Toast.makeText(this, "Errore nell'aggiornamento: ${exception.message}", Toast.LENGTH_SHORT).show()
+                                }
+                            )
+                        } else {
+                            Toast.makeText(
+                                this,
+                                "Transizione non valida per lo stato del fumetto",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    },
+                    onComicClick = { comic ->
+                        val intent = Intent(this, ComicDetailActivity::class.java)
+                        intent.putExtra("COMIC_ID", comic.id)
+                        startActivity(intent)
+                    }
+                )
+
+                recyclerViewUnavailable.adapter = ComicsAdapter(
+                    this, comicsUnavailable, ComicsAdapter.AdapterMode.LIBRARY,
+                    comicDatabase = comicDatabase,
+                    updateStatus = { _, _ ->
+                        Toast.makeText(
+                            this,
+                            "I fumetti non disponibili non possono essere aggiornati",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    },
+                    onComicClick = { comic ->
+                        val intent = Intent(this, ComicDetailActivity::class.java)
+                        intent.putExtra("COMIC_ID", comic.id)
+                        startActivity(intent)
+                    }
+                )
             }
             .addOnFailureListener { exception ->
                 Log.e(TAG, "Errore nel recupero dei fumetti: ${exception.message}", exception)
             }
-    }
-
-    private fun parseComicFromDocument(document: DocumentSnapshot, currentUserId: String?): Comic {
-        val id = document.getString("id") ?: document.id
-        val name = document.getString("name") ?: ""
-        val imageUrl = document.getString("imageUrl") ?: ""
-        val number = document.getLong("number")?.toInt()
-            ?: document.getString("number")?.toIntOrNull() ?: 0
-        val series = document.getString("series") ?: ""
-        val description = document.getString("description") ?: ""
-        val numericId = document.getLong("numericId")?.toString()
-            ?: document.getString("numericId") ?: ""
-        val userIdFromDb = document.getString("userId")
-            ?: document.getLong("userId")?.toString()
-            ?: "undefined"
-        val seriesNumber = document.getLong("seriesNumber")?.toInt()
-            ?: document.getString("seriesNumber")?.toIntOrNull() ?: 0
-
-        val status = when {
-            userIdFromDb.isBlank() || userIdFromDb == "undefined" -> ComicStatus.DISPONIBILE
-            userIdFromDb == currentUserId -> ComicStatus.IN_PRENOTAZIONE
-            else -> ComicStatus.NON_DISPONIBILE
-        }
-
-        return Comic(
-            description = description,
-            id = id,
-            imageUrl = imageUrl,
-            name = name,
-            number = number,
-            numericId = numericId,
-            series = series,
-            seriesNumber = seriesNumber,
-            status = status,
-            userId = userIdFromDb
-        )
-    }
-
-    private fun refreshAdapters(comics: List<Comic>) {
-        val currentUserId = FirebaseAuth.getInstance().currentUser?.uid
-
-        val comicsOut = comics.filter { it.status == ComicStatus.IN_PRENOTAZIONE && it.userId == currentUserId }
-        val comicsAvailable = comics.filter { it.status == ComicStatus.DISPONIBILE }
-        val comicsUnavailable = comics.filter { it.status == ComicStatus.NON_DISPONIBILE }
-
-        adapterOut = createAndSetAdapter(recyclerOut, comicsOut, { adapterOut = it }, { adapterOut })
-        adapterAvailable = createAndSetAdapter(recyclerAvailable, comicsAvailable, { adapterAvailable = it }, { adapterAvailable })
-        adapterUnavailable = createAndSetAdapter(recyclerUnavailable, comicsUnavailable, { adapterUnavailable = it }, { adapterUnavailable })
-    }
-
-    private fun createAndSetAdapter(
-        recycler: RecyclerView,
-        comics: List<Comic>,
-        adapterSetter: (ComicsAdapter) -> Unit,
-        adapterGetter: () -> ComicsAdapter
-    ): ComicsAdapter {
-        val adapter = ComicsAdapter(
-            this, comics.toMutableList(), ComicsAdapter.AdapterMode.PREVIEW, comicDatabase,
-            updateStatus = { comic, status ->
-                updateStatusVisual(recycler, adapterGetter().getPositionFromComic(comic), status)
-            },
-            onComicClick = { comic ->
-                val currentUserId = FirebaseAuth.getInstance().currentUser?.uid
-                if (comic.userId.isNullOrEmpty() || comic.userId == "undefined") {
-                    prenotaComic(comic)
-                } else if (comic.userId == currentUserId) {
-                    rilasciaComic(comic)
-                } else {
-                    Toast.makeText(this, "Fumetto non disponibile", Toast.LENGTH_SHORT).show()
-                }
-            }
-        )
-        recycler.adapter = adapter
-        adapterSetter(adapter)
-        return adapter
-    }
-
-    private fun prenotaComic(comic: Comic) {
-        val currentUserId = FirebaseAuth.getInstance().currentUser?.uid ?: return
-        FirebaseFirestore.getInstance().collection("comic").document(comic.id)
-            .update("userId", currentUserId)
-            .addOnSuccessListener {
-                comic.userId = currentUserId
-                comic.status = ComicStatus.IN_PRENOTAZIONE
-                spostaComic(comic)
-            }
-    }
-
-    private fun rilasciaComic(comic: Comic) {
-        FirebaseFirestore.getInstance().collection("comic").document(comic.id)
-            .update("userId", null)
-            .addOnSuccessListener {
-                comic.userId = null
-                comic.status = ComicStatus.DISPONIBILE
-                spostaComic(comic)
-            }
-    }
-
-    private fun spostaComic(comic: Comic) {
-        adapterAvailable.removeComics(comic)
-        adapterOut.removeComics(comic)
-        adapterUnavailable.removeComics(comic)
-
-        when (comic.status) {
-            ComicStatus.DISPONIBILE -> adapterAvailable.addComics(comic)
-            ComicStatus.IN_PRENOTAZIONE -> adapterOut.addComics(comic)
-            ComicStatus.NON_DISPONIBILE -> adapterUnavailable.addComics(comic)
-            else -> {}
-        }
-    }
-
-    private fun updateStatusVisual(recyclerView: RecyclerView, position: Int, status: ComicStatus) {
-        val viewHolder = recyclerView.findViewHolderForAdapterPosition(position)
-        val view = viewHolder?.itemView?.findViewById<ImageView>(R.id.statusIndicator)
-        if (view != null) {
-            updateComicStatus(view, status.name.lowercase())
-        }
-    }
-
-    private fun updateComicStatus(view: ImageView, status: String) {
-        when (status) {
-            "disponibile" -> view.setImageResource(R.drawable.ic_circle_green)
-            "in_prestito" -> view.setImageResource(R.drawable.ic_circle_yellow)
-            "occupato" -> view.setImageResource(R.drawable.ic_circle_red)
-            else -> view.setImageResource(R.drawable.ic_circle_gray)
-        }
     }
 }

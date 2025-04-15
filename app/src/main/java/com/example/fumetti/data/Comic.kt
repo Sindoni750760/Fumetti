@@ -25,5 +25,5 @@ data class Comic(
     val series: String? = "",
     val seriesNumber: Int = 0,
     var status: ComicStatus,
-    var userId: String? = null,
+    var userId: String? = "",
 )

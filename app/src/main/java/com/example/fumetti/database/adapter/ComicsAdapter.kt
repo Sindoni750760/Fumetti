@@ -13,6 +13,7 @@ import com.example.fumetti.R
 import com.example.fumetti.data.Comic
 import com.example.fumetti.data.ComicStatus
 import com.example.fumetti.database.ComicDatabase
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -130,7 +131,8 @@ class ComicsAdapter(
 
     // Metodi dedicati per gestire le operazioni di prenotazione, restituzione e aggiunta alla lista d'attesa.
     private fun handleReserveComic(comic: Comic, position: Int) {
-        comicDatabase.reserveComic(comic.id.toString()) { success ->
+        val currentUserId = FirebaseAuth.getInstance().currentUser?.uid ?: return
+        comicDatabase.reserveComic(comic.id.toString(), currentUserId) { success ->
             if (success) {
                 Toast.makeText(context, "Fumetto prenotato!", Toast.LENGTH_SHORT).show()
                 comic.status = ComicStatus.IN_PRENOTAZIONE

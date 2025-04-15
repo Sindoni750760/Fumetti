@@ -54,7 +54,7 @@ class AddComics : AppCompatActivity() {
 
     private fun prenotaComic(comic: Comic) {
         val userId = FirebaseAuth.getInstance().currentUser?.uid ?: return
-        comicDatabase.reserveComic(comic.id) { success ->
+        comicDatabase.reserveComic(comic.id.toString(), userId) { success ->
             if (success) {
                 Toast.makeText(this, "${comic.name} aggiunto alla tua libreria", Toast.LENGTH_SHORT).show()
             } else {
