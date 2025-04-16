@@ -1,7 +1,5 @@
 package com.example.fumetti.activity
 
-import android.view.ViewGroup
-import com.example.fumetti.database.adapter.ComicsAdapter
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -15,11 +13,12 @@ import com.example.fumetti.R
 import com.example.fumetti.data.Comic
 import com.example.fumetti.data.ComicStatus
 import com.example.fumetti.database.ComicDatabase
+import com.example.fumetti.database.adapter.ComicsAdapter
 import com.google.firebase.firestore.FirebaseFirestore
 
 class UserHomePageActivity : AppCompatActivity() {
 
-    companion object {
+    companion object{
         const val TAG = "UserHomePageActivity"
     }
 
@@ -42,17 +41,14 @@ class UserHomePageActivity : AppCompatActivity() {
         // Setup RecyclerView orizzontale (es. per fumetti)
         val recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
         recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-        recyclerView.adapter = MyAdapter(emptyList())
 
         // Setup RecyclerView per nomi
         val recyclerViewNames = findViewById<RecyclerView>(R.id.recyclerViewNames)
-        recyclerViewNames.layoutManager = LinearLayoutManager(this)
-        recyclerViewNames.adapter = MyAdapter(emptyList())
+        recyclerViewNames.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
 
         // Setup RecyclerView per numeri di serie
         val recyclerViewSeriesNumbers = findViewById<RecyclerView>(R.id.recyclerViewSeriesNumbers)
-        recyclerViewSeriesNumbers.layoutManager = LinearLayoutManager(this)
-        recyclerViewSeriesNumbers.adapter = MyAdapter(emptyList())
+        recyclerViewSeriesNumbers.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
 
         // L'uso di una collection utente (opzionale) in base all'uid corrente
         loadData(recyclerView, recyclerViewNames, recyclerViewSeriesNumbers)
@@ -135,10 +131,9 @@ class UserHomePageActivity : AppCompatActivity() {
                         userIdFromDb
                     )
                 }
-
-                // Imposta gli adapter sui RecyclerView
+                // Setup RecyclerView orizzontale (es. per fumetti)
                 recyclerView.adapter = ComicsAdapter(
-                    this, comics, ComicsAdapter.AdapterMode.PREVIEW,
+                    this, comics, ComicsAdapter.AdapterMode.LIBRARY,
                     comicDatabase = ComicDatabase(),
                     updateStatus = { _, _ -> },
                     onComicClick = { comic ->
@@ -148,50 +143,37 @@ class UserHomePageActivity : AppCompatActivity() {
                     }
                 )
 
-                recyclerViewNames.adapter = SimpleTextAdapter(comics.map { it.name })
-                val randomTen = comics.shuffled().take(10).map { "${it.name} #${it.number}" }
-                recyclerViewSeriesNumbers.adapter = SimpleTextAdapter(randomTen)
+                // Setup RecyclerView per nomi
+                // Filtra e ordina i fumetti per nome
+                // Configura la RecyclerView per mostrare i fumetti ordinati per nome
+                val comicsSortedByName = comics.sortedBy { it.name } // Ordina alfabeticamente per nome
+                recyclerViewNames.adapter = ComicsAdapter(
+                    this, comicsSortedByName, ComicsAdapter.AdapterMode.LIBRARY,
+                    comicDatabase = ComicDatabase(),
+                    updateStatus = { _, _ -> },
+                    onComicClick = { comic ->
+                        val intent = Intent(this, ComicDetailActivity::class.java)
+                        intent.putExtra("COMIC_ID", comic.id)
+                        startActivity(intent)
+                    }
+                )
+
+
+                // Setup RecyclerView per numeri di serie
+                val comicsSortedBySeriesNumber = comics.sortedBy{it.seriesNumber}
+                recyclerViewSeriesNumbers.adapter = ComicsAdapter(
+                    this, comicsSortedBySeriesNumber, ComicsAdapter.AdapterMode.LIBRARY,
+                    comicDatabase = ComicDatabase(),
+                    updateStatus = { _, _ -> },
+                    onComicClick = { comic ->
+                        val intent = Intent(this, ComicDetailActivity::class.java)
+                        intent.putExtra("COMIC_ID", comic.id)
+                        startActivity(intent)
+                    }
+                )
             }
             .addOnFailureListener { exception ->
                 Log.e("FirestoreError", "Errore di caricamento", exception)
             }
-    }
-
-    // Adapter semplice per mostrare del testo in un RecyclerView (usato per recyclerView e recyclerViewNames)
-    inner class MyAdapter(private val dataList: List<String>) : RecyclerView.Adapter<MyAdapter.ViewHolder>() {
-        inner class ViewHolder(view: android.view.View) : RecyclerView.ViewHolder(view) {
-            val textView: android.widget.TextView = view.findViewById(R.id.textView)
-        }
-
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-            val view = android.view.LayoutInflater.from(parent.context)
-                .inflate(R.layout.item_layout, parent, false)
-            return ViewHolder(view)
-        }
-
-        override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-            holder.textView.text = dataList[position]
-        }
-
-        override fun getItemCount() = dataList.size
-    }
-
-    // Adapter semplice per mostrare una lista di stringhe in un RecyclerView
-    class SimpleTextAdapter(private val dataList: List<String>) : RecyclerView.Adapter<SimpleTextAdapter.ViewHolder>() {
-        inner class ViewHolder(view: android.view.View) : RecyclerView.ViewHolder(view) {
-            val textView: android.widget.TextView = view.findViewById(R.id.textView)
-        }
-
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-            val view = android.view.LayoutInflater.from(parent.context)
-                .inflate(R.layout.item_layout, parent, false)
-            return ViewHolder(view)
-        }
-
-        override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-            holder.textView.text = dataList[position]
-        }
-
-        override fun getItemCount() = dataList.size
     }
 }

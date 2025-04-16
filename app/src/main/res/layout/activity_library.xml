@@ -7,29 +7,33 @@
     android:background="@drawable/wallpaper">
 
     <!-- Barra superiore con pulsanti e icona profilo -->
+    <!-- Barra superiore -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:orientation="horizontal"
-        android:gravity="center_vertical">
+        android:orientation="horizontal">
 
-
+        <!-- Button a sinistra -->
         <Button
             android:id="@+id/buttonHomePage"
-            android:layout_width="299dp"
+            android:layout_width="213dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@drawable/legno_bianco"
-            android:text="HomePage"
-            android:textAllCaps="false" />
+            android:gravity="center"
+            android:text="Library"
+            android:layout_marginRight = "100px"/>
 
+        <!-- ImageButton a destra -->
         <ImageButton
             android:id="@+id/profileIcon"
             android:layout_width="50dp"
             android:layout_height="match_parent"
             android:background="@drawable/circle_shape"
-            android:src="@drawable/profile_icon_default"
-            android:contentDescription="Profile Icon" />
+            android:scaleType="centerCrop"
+            android:src="@drawable/profile_icon"
+            android:contentDescription="Profile Icon"
+            android:layout_gravity="end" />
     </LinearLayout>
 
     <!-- Sezione "Fumetti fuori" -->

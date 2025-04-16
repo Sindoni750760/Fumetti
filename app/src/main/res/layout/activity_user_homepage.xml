@@ -14,35 +14,32 @@
         <!-- Barra superiore -->
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="3">
+            android:layout_height="50dp"
+            android:orientation="horizontal">
 
+            <!-- Button a sinistra -->
             <Button
                 android:id="@+id/buttonToLibrary"
-                android:layout_width="216dp"
-                android:layout_height="50dp"
+                android:layout_width="213dp"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@drawable/legno_bianco"
-                android:text="Library" />
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="50dp"
-                android:layout_weight="1"
                 android:gravity="center"
-                android:orientation="horizontal">
+                android:text="Library"
+                android:layout_marginRight = "100px"/>
 
-                <ImageButton
-                    android:id="@+id/profileIcon"
-                    android:layout_width="50dp"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/circle_shape"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/profile_icon"
-                    android:contentDescription="Profile Icon" />
-            </LinearLayout>
+            <!-- ImageButton a destra -->
+            <ImageButton
+                android:id="@+id/profileIcon"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/circle_shape"
+                android:scaleType="centerCrop"
+                android:src="@drawable/profile_icon"
+                android:contentDescription="Profile Icon"
+                android:layout_gravity="end" />
         </LinearLayout>
+
 
         <View
             android:layout_width="match_parent"
@@ -79,7 +76,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:maxHeight="200dp"
-            android:scrollbars="vertical" />
+            android:scrollbars="horizontal" />
 
         <TextView
             android:layout_width="match_parent"
@@ -101,12 +98,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:maxHeight="200dp"
-            android:scrollbars="vertical" />
+            android:scrollbars="horizontal" />
 
-        <!-- Spazio per logout o altro -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="36dp"
-            android:gravity="end" />
     </LinearLayout>
 </ScrollView>

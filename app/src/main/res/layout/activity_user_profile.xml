@@ -5,7 +5,8 @@
     android:orientation="vertical"
     android:gravity="center_horizontal"
     android:padding="16dp"
-    android:background="@color/white">
+    android:background="@drawable/legno_bianco">
+
 
     <!-- Icona Profilo -->
     <ImageView
@@ -25,7 +26,8 @@
         android:text="Nome Utente"
         android:textSize="18sp"
         android:textStyle="bold"
-        android:layout_marginBottom="8dp" />
+        android:layout_marginBottom="8dp"
+        android:textColor="@android:color/black"/>
 
     <TextView
         android:id="@+id/userEmail"
@@ -33,7 +35,8 @@
         android:layout_height="wrap_content"
         android:text="Email Utente"
         android:textSize="16sp"
-        android:layout_marginBottom="24dp" />
+        android:layout_marginBottom="24dp"
+        android:textColor="@android:color/black"/>
 
     <!-- Pulsante Logout -->
     <Button
