@@ -46,10 +46,10 @@ class ComicsAdapter(
         // Aggiorna l'indicatore di stato in base al valore di comic.status
         holder.statusIndicator.setImageResource(
             when (comic.status) {
-                ComicStatus.DISPONIBILE     -> R.drawable.ic_circle_green
+                ComicStatus.DISPONIBILE -> R.drawable.ic_circle_green
                 ComicStatus.IN_PRENOTAZIONE -> R.drawable.ic_circle_yellow
-                ComicStatus.NON_DISPONIBILE   -> R.drawable.ic_circle_red
-                else                        -> R.drawable.ic_circle_gray
+                ComicStatus.NON_DISPONIBILE -> R.drawable.ic_circle_red
+                else -> R.drawable.ic_circle_gray
             }
         )
 
@@ -61,9 +61,12 @@ class ComicsAdapter(
             holder.waitlistButton.visibility = View.GONE
             holder.titleText.setTextColor(context?.getColor(R.color.gray) ?: 0)
         } else {
-            holder.reserveButton.visibility = if (comic.status == ComicStatus.DISPONIBILE) View.VISIBLE else View.GONE
-            holder.returnButton.visibility  = if (comic.status == ComicStatus.IN_PRENOTAZIONE) View.VISIBLE else View.GONE
-            holder.waitlistButton.visibility  = if (comic.status == ComicStatus.NON_DISPONIBILE) View.VISIBLE else View.GONE
+            holder.reserveButton.visibility =
+                if (comic.status == ComicStatus.DISPONIBILE) View.VISIBLE else View.GONE
+            holder.returnButton.visibility =
+                if (comic.status == ComicStatus.IN_PRENOTAZIONE) View.VISIBLE else View.GONE
+            holder.waitlistButton.visibility =
+                if (comic.status == ComicStatus.NON_DISPONIBILE) View.VISIBLE else View.GONE
 
             // Imposto i listener sui pulsanti, delegando la logica a metodi privati dedicati;
             // in questo modo la gestione delle operazioni diventa centralizzata.
@@ -91,10 +94,15 @@ class ComicsAdapter(
             if (success) {
                 Toast.makeText(context, "Fumetto prenotato!", Toast.LENGTH_SHORT).show()
                 comic.status = ComicStatus.IN_PRENOTAZIONE
+                comic.userId = currentUserId
                 notifyItemChanged(position)
                 updateStatus(comic, ComicStatus.IN_PRENOTAZIONE)
             } else {
-                Toast.makeText(context, "Errore nella prenotazione del fumetto.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    context,
+                    "Errore nella prenotazione del fumetto.",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
     }
@@ -107,19 +115,27 @@ class ComicsAdapter(
                 notifyItemChanged(position)
                 updateStatus(comic, ComicStatus.DISPONIBILE)
             } else {
-                Toast.makeText(context, "Errore nella restituzione del fumetto.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    context,
+                    "Errore nella restituzione del fumetto.",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
     }
 
     private fun handleAddToWaitingList(comic: Comic) {
         // In un'applicazione reale, l'userId andrebbe estrapolato da una fonte attendibile
-        val userId = "USER_ID"
+        val userId = FirebaseAuth.getInstance().currentUser?.uid ?: return
         comicDatabase.addToWaitingList(comic.id.toString(), userId) { success ->
             if (success) {
                 Toast.makeText(context, "Aggiunto alla lista d'attesa!", Toast.LENGTH_SHORT).show()
             } else {
-                Toast.makeText(context, "Errore nell'aggiunta alla lista d'attesa.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    context,
+                    "Errore nell'aggiunta alla lista d'attesa.",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
     }
