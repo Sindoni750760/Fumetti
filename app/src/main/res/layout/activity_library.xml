@@ -1,19 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="16dp"
     android:background="@drawable/wallpaper">
 
-    <!-- Barra superiore con pulsanti e icona profilo -->
     <!-- Barra superiore -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:orientation="horizontal">
 
-        <!-- Button a sinistra -->
         <Button
             android:id="@+id/buttonHomePage"
             android:layout_width="213dp"
@@ -21,10 +20,9 @@
             android:layout_weight="1"
             android:background="@drawable/legno_bianco"
             android:gravity="center"
-            android:text="Library"
-            android:layout_marginRight = "100px"/>
+            android:text="HomePage"
+            android:layout_marginRight="100px" />
 
-        <!-- ImageButton a destra -->
         <ImageButton
             android:id="@+id/profileIcon"
             android:layout_width="50dp"
@@ -36,68 +34,22 @@
             android:layout_gravity="end" />
     </LinearLayout>
 
-    <!-- Sezione "Fumetti fuori" -->
-    <TextView
-        android:id="@+id/textComicsOut"
+    <!-- TabLayout per navigazione fragment -->
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabLayout"
         android:layout_width="match_parent"
-        android:layout_height="32dp"
-        android:layout_marginTop="16dp"
+        android:layout_height="wrap_content"
+        app:tabMode="fixed"
+        app:tabGravity="fill"
+        android:layout_marginTop="8dp"
         android:background="@drawable/legno_bianco"
-        android:text="Fumetti in prestito"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:gravity="center_vertical|start"
-        android:paddingStart="8dp" />
+        android:elevation="4dp"/>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewOut"
+    <!-- ViewPager2 per contenere i fragment -->
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/viewPager"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:paddingTop="8dp"
-        android:scrollbars="horizontal" />
-
-    <!-- Sezione "Disponibili" -->
-    <TextView
-        android:id="@+id/textComicsDisponibili"
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/legno_bianco"
-        android:text="Fumetti Disponibili"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:gravity="center_vertical|start"
-        android:paddingStart="8dp" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewAvailable"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:paddingTop="8dp"
-        android:scrollbars="horizontal" />
-
-    <!-- Sezione "Non disponibili" -->
-    <TextView
-        android:id="@+id/textComicsNonDisponibili"
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/legno_bianco"
-        android:text="Fumetti non disponibili"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:gravity="center_vertical|start"
-        android:paddingStart="8dp" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewUnavailable"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:paddingTop="8dp"
-        android:scrollbars="horizontal" />
-
-    <!-- Pulsanti aggiuntivi -->
+        android:layout_marginTop="8dp"/>
 </LinearLayout>

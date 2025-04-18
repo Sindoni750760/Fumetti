@@ -10,4 +10,5 @@
     <item name="waitlistButton" type="id" />
     <item name="textViewComicTitle" type="id" />
     <item name="textViewUserId" type="id" />
+    <item name="searchView" type="id" />
 </resources>

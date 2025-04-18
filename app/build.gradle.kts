@@ -33,6 +33,9 @@ android {
     kotlinOptions {
         jvmTarget = "11"
     }
+    buildFeatures{
+        viewBinding;
+    }
 }
 
 dependencies {
@@ -53,5 +56,4 @@ dependencies {
     implementation(libs.play.services.maps.v1910)
     implementation(libs.androidx.appcompat) // Versione corretta di AppCompat
     implementation (libs.play.services.base.v1830)
-
 }

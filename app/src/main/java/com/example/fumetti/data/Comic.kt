@@ -4,7 +4,7 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 
 @Entity(
-    tableName = "comics",
+    tableName = "comic",
     foreignKeys = [
         ForeignKey(
             entity = User::class,
@@ -25,5 +25,5 @@ data class Comic(
     val series: String? = "",
     val seriesNumber: Int = 0,
     var status: ComicStatus,
-    var userId: String? = "",
+    var userId: String? = ""
 )

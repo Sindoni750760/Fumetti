@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="BlackTextSearchView" parent="Theme.AppCompat.Light">
+        <!-- Colore testo input -->
+        <item name="android:textColor">@color/black</item>
+
+        <!-- Colore testo hint -->
+        <item name="android:textColorHint">@color/gray</item>
+
+        <!-- Colore icona chiusura -->
+        <item name="closeIconTint">@color/black</item>
+    </style></resources>

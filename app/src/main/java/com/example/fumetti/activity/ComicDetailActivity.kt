@@ -5,14 +5,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.RecyclerView
 import com.example.fumetti.R
-import com.example.fumetti.database.ComicDatabase
-import com.example.fumetti.database.adapter.ComicsAdapter
 import com.google.firebase.firestore.FirebaseFirestore
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
 class ComicDetailActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?){

@@ -13,7 +13,7 @@ import com.example.fumetti.R
 import com.example.fumetti.data.Comic
 import com.example.fumetti.data.ComicStatus
 import com.example.fumetti.database.ComicDatabase
-import com.example.fumetti.database.adapter.ComicsAdapter
+import com.example.fumetti.database.Utility.ComicsAdapter
 import com.google.firebase.firestore.FirebaseFirestore
 
 class UserHomePageActivity : AppCompatActivity() {

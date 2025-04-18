@@ -3,7 +3,13 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="12dp">
+    android:padding="12dp"
+    android:background="@drawable/legno_bianco"
+    android:layout_marginStart = "50px"
+    android:layout_marginEnd = "50px"
+    android:layout_marginTop = "100px"
+    android:layout_marginBottom = "70px"
+    >
 
     <!-- Stato visivo (es. colore) -->
     <ImageView
@@ -13,7 +19,9 @@
         android:layout_gravity="end"
         android:layout_marginBottom="4dp"
         android:contentDescription="Stato fumetto"
-        android:src="@drawable/ic_circle_gray" />
+        android:src="@drawable/ic_circle_gray"
+        android:layout_marginStart = "20px"
+        />
 
 
     <!-- Titolo -->
