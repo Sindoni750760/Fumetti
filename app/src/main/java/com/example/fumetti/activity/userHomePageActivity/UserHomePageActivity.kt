@@ -1,4 +1,4 @@
-package com.example.fumetti.activity
+package com.example.fumetti.activity.userHomePageActivity
 
 import android.content.Intent
 import android.os.Bundle
@@ -7,13 +7,22 @@ import android.widget.Button
 import android.widget.ImageButton
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager2.widget.ViewPager2
 import com.example.fumetti.R
+import com.example.fumetti.activity.ComicDetailActivity
+import com.example.fumetti.activity.UserProfileActivity
+import com.example.fumetti.activity.libraryActivity.LibraryActivity
+import com.example.fumetti.activity.libraryActivity.LibraryPagerAdapter
+import com.example.fumetti.activity.libraryActivity.LibraryViewModel
 import com.example.fumetti.data.Comic
 import com.example.fumetti.data.ComicStatus
 import com.example.fumetti.database.ComicDatabase
 import com.example.fumetti.database.Utility.ComicsAdapter
+import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
 import com.google.firebase.firestore.FirebaseFirestore
 
 class UserHomePageActivity : AppCompatActivity() {
@@ -21,7 +30,7 @@ class UserHomePageActivity : AppCompatActivity() {
     companion object{
         const val TAG = "UserHomePageActivity"
     }
-
+    /*
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_user_homepage)
@@ -40,17 +49,19 @@ class UserHomePageActivity : AppCompatActivity() {
 
         // Setup RecyclerView orizzontale (es. per fumetti)
         val recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
-        recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        recyclerView.layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
 
         // Setup RecyclerView per nomi
         val recyclerViewNames = findViewById<RecyclerView>(R.id.recyclerViewNames)
-        recyclerViewNames.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        recyclerViewNames.layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
 
         // Setup RecyclerView per numeri di serie
         val recyclerViewSeriesNumbers = findViewById<RecyclerView>(R.id.recyclerViewSeriesNumbers)
-        recyclerViewSeriesNumbers.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        recyclerViewSeriesNumbers.layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
 
-        // L'uso di una collection utente (opzionale) in base all'uid corrente
         loadData(recyclerView, recyclerViewNames, recyclerViewSeriesNumbers)
     }
 
@@ -175,5 +186,30 @@ class UserHomePageActivity : AppCompatActivity() {
             .addOnFailureListener { exception ->
                 Log.e("FirestoreError", "Errore di caricamento", exception)
             }
+    }*/
+    private lateinit var viewModel: LibraryViewModel
+
+    override fun onCreate(savedInstanceState: Bundle?){
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_user_homepage)
+
+        viewModel = ViewModelProvider(this)[LibraryViewModel::class.java]
+        viewModel.loadComics()
+
+        findViewById<Button>(R.id.buttonToLibrary).setOnClickListener {
+            startActivity(Intent(this, LibraryActivity::class.java))
+            finish()
+        }
+        val viewPager = findViewById<ViewPager2>(R.id.viewPager)
+        viewPager.adapter = LibraryPagerAdapter(this)
+
+        val tabLayout = findViewById<TabLayout>(R.id.tabLayout)
+        TabLayoutMediator(tabLayout, viewPager){tab, position ->
+            tab.text = when(position){
+                0 -> "NOME"
+                1 -> "SERIE"
+                else -> "NUMERO"
+            }
+        }
     }
 }
