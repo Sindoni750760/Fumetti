@@ -44,6 +44,13 @@ class ComicsAdapter(
 
     override fun onBindViewHolder(holder: ComicViewHolder, position: Int) {
         val comic = comicsList[position]
+
+        if(mode != AdapterMode.MY_LIBRARY){
+            comic.status = when{
+                isAvailable(comic.userId) -> ComicStatus.DISPONIBILE
+                else -> ComicStatus.NON_DISPONIBILE
+            }
+        }
         holder.titleText.text = comic.name
 
         holder.statusIndicator.setImageResource(
@@ -122,12 +129,6 @@ class ComicsAdapter(
         }
     }
 
-    fun updateList(newList: List<Comic>) {
-        originalList = newList
-        comicsList = newList
-        notifyDataSetChanged()
-    }
-
     fun restoreOriginal() {
         comicsList = originalList
         notifyDataSetChanged()
@@ -136,6 +137,10 @@ class ComicsAdapter(
     fun filter(predicate: (Comic) -> Boolean) {
         comicsList = originalList.filter(predicate)
         notifyDataSetChanged()
+    }
+
+    private fun isAvailable(userId: String?): Boolean{
+        return userId.isNullOrBlank() || userId == "null"
     }
 
     enum class AdapterMode {

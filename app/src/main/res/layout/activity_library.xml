@@ -42,7 +42,6 @@
         app:tabMode="fixed"
         app:tabGravity="fill"
         android:layout_marginTop="8dp"
-        android:background="@drawable/legno_bianco"
         android:elevation="4dp"/>
 
     <!-- ViewPager2 per contenere i fragment -->

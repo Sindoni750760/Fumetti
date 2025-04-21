@@ -40,7 +40,7 @@
 
     <activity
         android:id="@+id/userHomePageActivity"
-        android:name="com.example.fumetti.activity.UserHomePageActivity"
+        android:name="com.example.fumetti.activity.userHomePageActivity.UserHomePageActivity"
         android:label="User Home Page Activity"
         tools:layout="@layout/activity_user_homepage">
         <action

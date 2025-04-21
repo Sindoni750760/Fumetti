@@ -10,10 +10,10 @@
         android:id="@+id/emailInput"
         android:layout_width="388dp"
         android:layout_height="52dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginBottom="10dp"
         android:layout_marginStart="10dp"
+        android:layout_marginTop="30dp"
         android:layout_marginEnd="15dp"
+        android:layout_marginBottom="10dp"
         android:background="@drawable/legno_bianco"
         android:hint="Inserisci l'Email"
         />

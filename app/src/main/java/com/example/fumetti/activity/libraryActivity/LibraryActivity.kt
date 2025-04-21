@@ -7,7 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.widget.ViewPager2
 import com.example.fumetti.R
-import com.example.fumetti.activity.UserHomePageActivity
+import com.example.fumetti.activity.userHomePageActivity.UserHomePageActivity
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 
@@ -18,7 +18,6 @@ class LibraryActivity : AppCompatActivity() {
         const val EXTRA_USER_ID = "EXTRA_USER_ID"
     }
 
-    private val userId: String? by lazy { intent.getStringExtra(EXTRA_USER_ID) }
     private lateinit var viewModel: LibraryViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,7 +38,7 @@ class LibraryActivity : AppCompatActivity() {
         val tabLayout = findViewById<TabLayout>(R.id.tabLayout)
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
             tab.text = when (position) {
-                0 -> "Prenotati"
+                0 -> "Fuori"
                 1 -> "Disponibili"
                 else -> "Non disponibili"
             }
