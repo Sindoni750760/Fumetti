@@ -30,9 +30,9 @@ class OrderedComicsAdapter(
         holder.titleText.text = comic.name
         holder.statusIndicator.setImageResource(
             when (comic.status) {
-                ComicStatus.DISPONIBILE -> R.drawable.ic_circle_green
-                ComicStatus.IN_PRENOTAZIONE -> R.drawable.ic_circle_yellow
-                ComicStatus.NON_DISPONIBILE -> R.drawable.ic_circle_red
+                ComicStatus.IN -> R.drawable.ic_circle_green
+                ComicStatus.TAKEN -> R.drawable.ic_circle_yellow
+                ComicStatus.OUT -> R.drawable.ic_circle_red
                 else -> R.drawable.ic_circle_gray
             }
         )

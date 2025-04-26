@@ -5,7 +5,7 @@ import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.fumetti.R
-import com.example.fumetti.activity.libraryActivity.ComicsAvailableFragment
+import com.example.fumetti.activity.libraryActivity.ComicsTakenFragment
 import com.example.fumetti.activity.libraryActivity.ComicsOutFragment
 
 class MancoListActivity : AppCompatActivity() {
@@ -18,7 +18,7 @@ class MancoListActivity : AppCompatActivity() {
         val btnComicsOut = findViewById<Button>(R.id.btn_comics_out)
 
         btnComicsAvaiable.setOnClickListener {
-            replaceFragment(ComicsAvailableFragment())
+            replaceFragment(ComicsTakenFragment())
         }
 
         btnComicsOut.setOnClickListener {
@@ -27,7 +27,7 @@ class MancoListActivity : AppCompatActivity() {
 
         // Load default fragment
         if (savedInstanceState == null) {
-            replaceFragment(ComicsAvailableFragment())
+            replaceFragment(ComicsTakenFragment())
         }
     }
 

@@ -1,4 +1,4 @@
-package com.example.fumetti.database.Utility
+package com.example.fumetti.database.utility
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -47,17 +47,17 @@ class ComicsAdapter(
 
         if(mode != AdapterMode.MY_LIBRARY){
             comic.status = when{
-                isAvailable(comic.userId) -> ComicStatus.DISPONIBILE
-                else -> ComicStatus.NON_DISPONIBILE
+                isAvailable(comic.userId) -> ComicStatus.IN
+                else -> ComicStatus.OUT
             }
         }
         holder.titleText.text = comic.name
 
         holder.statusIndicator.setImageResource(
             when (comic.status) {
-                ComicStatus.DISPONIBILE     -> R.drawable.ic_circle_green
-                ComicStatus.IN_PRENOTAZIONE -> R.drawable.ic_circle_yellow
-                ComicStatus.NON_DISPONIBILE -> R.drawable.ic_circle_red
+                ComicStatus.IN     -> R.drawable.ic_circle_green
+                ComicStatus.TAKEN -> R.drawable.ic_circle_yellow
+                ComicStatus.OUT -> R.drawable.ic_circle_red
                 else                        -> R.drawable.ic_circle_gray
             }
         )
@@ -69,11 +69,11 @@ class ComicsAdapter(
             holder.titleText.setTextColor(context?.getColor(R.color.gray) ?: 0)
         } else {
             holder.reserveButton.visibility =
-                if (comic.status == ComicStatus.DISPONIBILE) View.VISIBLE else View.GONE
+                if (comic.status == ComicStatus.IN) View.VISIBLE else View.GONE
             holder.returnButton.visibility =
-                if (comic.status == ComicStatus.IN_PRENOTAZIONE) View.VISIBLE else View.GONE
+                if (comic.status == ComicStatus.TAKEN) View.VISIBLE else View.GONE
             holder.waitlistButton.visibility =
-                if (comic.status == ComicStatus.NON_DISPONIBILE) View.VISIBLE else View.GONE
+                if (comic.status == ComicStatus.OUT) View.VISIBLE else View.GONE
 
             holder.reserveButton.setOnClickListener {
                 handleReserveComic(comic, position)
@@ -96,9 +96,9 @@ class ComicsAdapter(
         comicDatabase.reserveComic(comic.id.toString(), currentUserId) { success ->
             if (success) {
                 Toast.makeText(context, "Fumetto prenotato!", Toast.LENGTH_SHORT).show()
-                comic.status = ComicStatus.IN_PRENOTAZIONE
+                comic.status = ComicStatus.TAKEN
                 notifyItemChanged(position)
-                updateStatus(comic, ComicStatus.IN_PRENOTAZIONE)
+                updateStatus(comic, ComicStatus.TAKEN)
             } else {
                 Toast.makeText(context, "Errore nella prenotazione del fumetto.", Toast.LENGTH_SHORT).show()
             }
@@ -109,9 +109,9 @@ class ComicsAdapter(
         comicDatabase.returnComic(comic.id.toString()) { success ->
             if (success) {
                 Toast.makeText(context, "Fumetto restituito!", Toast.LENGTH_SHORT).show()
-                comic.status = ComicStatus.DISPONIBILE
+                comic.status = ComicStatus.IN
                 notifyItemChanged(position)
-                updateStatus(comic, ComicStatus.DISPONIBILE)
+                updateStatus(comic, ComicStatus.IN)
             } else {
                 Toast.makeText(context, "Errore nella restituzione del fumetto.", Toast.LENGTH_SHORT).show()
             }

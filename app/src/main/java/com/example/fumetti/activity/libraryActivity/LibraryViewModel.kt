@@ -1,5 +1,5 @@
 package com.example.fumetti.activity.libraryActivity
-import androidx.lifecycle.LiveData
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.fumetti.data.Comic
@@ -10,13 +10,10 @@ import com.google.firebase.firestore.FirebaseFirestore
 class LibraryViewModel : ViewModel() {
 
     private val _comicsOut = MutableLiveData<List<Comic>>()
-    val comicsOut: LiveData<List<Comic>> get() = _comicsOut
 
     private val _comicsAvailable = MutableLiveData<List<Comic>>()
-    val comicsAvailable: LiveData<List<Comic>> get() = _comicsAvailable
 
     private val _comicsUnavailable = MutableLiveData<List<Comic>>()
-    val comicsUnavailable: LiveData<List<Comic>> get() = _comicsUnavailable
 
     fun loadComics() {
         val db = FirebaseFirestore.getInstance()
@@ -25,37 +22,62 @@ class LibraryViewModel : ViewModel() {
         db.collection("comic")
             .get()
             .addOnSuccessListener { result ->
-                val comics = result.map { document ->
+                val comics = result.mapNotNull { document ->
                     val id = document.getString("id") ?: document.id
-                    val name = document.getString("name") ?: ""
+                    val name = document.getString("name") ?: return@mapNotNull null
                     val imageUrl = document.getString("imageUrl") ?: ""
-                    val number = document.getLong("number")?.toInt()
-                        ?: (document.getString("number")?.toIntOrNull() ?: 0)
-                    val series = document.getString("series") ?: " "
-                    val description = document.getString("description") ?: " "
+                    val numberField = document.get("number")
+                    val number = when (numberField) {
+                        is Number -> numberField.toLong()
+                        is String -> numberField.toLongOrNull() ?: 0L
+                        else -> 0L
+                    }
+                    val series = document.getString("series") ?: ""
+                    val description = document.getString("description") ?: ""
                     val numericId = document.getLong("numericId")?.toString()
-                        ?: document.getString("numericId") ?: " "
-                    val userIdFromDb = document.getString("userId")
+                        ?: document.getString("numericId") ?: ""
+                    val userId = document.getString("userId")
                         ?: document.getLong("userId")?.toString() ?: "undefined"
+                    val seriesNumberField = document.get("seriesNumber")
+                    val seriesNumber = when (seriesNumberField) {
+                        is Number -> seriesNumberField.toInt()
+                        is String -> seriesNumberField.toIntOrNull() ?: 0
+                        else -> 0
+                    }
                     val status = try {
                         ComicStatus.valueOf(document.getString("status") ?: "DISPONIBILE")
                     } catch (e: Exception) {
                         ComicStatus.UNKOWN
                     }
-                    val seriesNumber = document.getLong("seriesNumber")?.toInt()
-                        ?: (document.getString("seriesNumber")?.toIntOrNull() ?: 0)
 
                     Comic(
-                        description, id, imageUrl, name, number, numericId,
-                        series, seriesNumber, status, userIdFromDb
+                        description = description,
+                        id = id,
+                        imageUrl = imageUrl,
+                        name = name,
+                        number = number,
+                        numericId = numericId,
+                        series = series,
+                        seriesNumber = seriesNumber,
+                        status = status,
+                        userId = userId
                     )
                 }
 
                 _comicsOut.value = comics.filter {
-                    it.status == ComicStatus.IN_PRENOTAZIONE && it.userId == currentUserId
-                }
-                _comicsAvailable.value = comics.filter { it.status == ComicStatus.DISPONIBILE }
-                _comicsUnavailable.value = comics.filter { it.status == ComicStatus.NON_DISPONIBILE }
+                    it.status == ComicStatus.TAKEN && it.userId == currentUserId
+                }.sortedBy { it.id }
+
+                _comicsAvailable.value = comics.filter {
+                    it.status == ComicStatus.IN
+                }.sortedBy { it.id }
+
+                _comicsUnavailable.value = comics.filter {
+                    it.status == ComicStatus.OUT
+                }.sortedBy { it.id }
+            }
+            .addOnFailureListener { exception ->
+                Log.e("LibraryViewModel", "Errore nel caricamento dei fumetti: ${exception.message}", exception)
             }
     }
 }

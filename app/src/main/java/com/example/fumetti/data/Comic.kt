@@ -20,7 +20,7 @@ data class Comic(
     val id: String,
     val imageUrl: String,
     val name: String,
-    val number: Int? = 0,
+    val number: Long = 0,
     val numericId: String,
     val series: String? = "",
     val seriesNumber: Int = 0,

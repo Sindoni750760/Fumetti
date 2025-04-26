@@ -2,28 +2,16 @@ package com.example.fumetti.activity.userHomePageActivity
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
-import android.widget.ImageButton
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.example.fumetti.R
-import com.example.fumetti.activity.ComicDetailActivity
-import com.example.fumetti.activity.UserProfileActivity
 import com.example.fumetti.activity.libraryActivity.LibraryActivity
 import com.example.fumetti.activity.libraryActivity.LibraryPagerAdapter
 import com.example.fumetti.activity.libraryActivity.LibraryViewModel
-import com.example.fumetti.data.Comic
-import com.example.fumetti.data.ComicStatus
-import com.example.fumetti.database.ComicDatabase
-import com.example.fumetti.database.Utility.ComicsAdapter
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
-import com.google.firebase.firestore.FirebaseFirestore
 
 class UserHomePageActivity : AppCompatActivity() {
 

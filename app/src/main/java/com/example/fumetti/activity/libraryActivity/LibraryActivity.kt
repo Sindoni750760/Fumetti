@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.widget.ViewPager2
 import com.example.fumetti.R
 import com.example.fumetti.activity.userHomePageActivity.UserHomePageActivity
+import com.example.fumetti.database.utility.ComicLoader
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 

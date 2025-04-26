@@ -10,8 +10,8 @@ class LibraryPagerAdapter(activity: FragmentActivity) : FragmentStateAdapter(act
     override fun createFragment(position: Int): Fragment {
         return when (position) {
             0 -> ComicsOutFragment()
-            1 -> ComicsAvailableFragment()
-            2 -> ComicsUnavailableFragment()
+            1 -> ComicsTakenFragment()
+            2 -> ComicsInFragment()
             else -> throw IllegalStateException("Tab position non valida: $position")
         }
     }

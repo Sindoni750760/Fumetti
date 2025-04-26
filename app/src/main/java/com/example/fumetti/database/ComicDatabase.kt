@@ -43,7 +43,7 @@ class ComicDatabase {
             .update(
                 mapOf(
                     "userId" to userId,
-                    "status" to ComicStatus.IN_PRENOTAZIONE.name
+                    "status" to ComicStatus.TAKEN.name
                 )
             )
             .addOnSuccessListener{callback(true)}
@@ -61,7 +61,7 @@ class ComicDatabase {
             .update(
                 mapOf(
                     "userId" to FieldValue.delete(),
-                    "status" to ComicStatus.DISPONIBILE.name
+                    "status" to ComicStatus.IN.name
                 )
             )
             .addOnSuccessListener { callback(true) }

@@ -1,51 +1,53 @@
-package com.example.fumetti.activity.userHomePageActivity
+package com.example.fumetti.activity.libraryActivity
 
-import android.content.Intent
+import SearchHandler
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fumetti.R
-import com.example.fumetti.activity.ComicDetailActivity
-import com.example.fumetti.data.Comic
 import com.example.fumetti.data.ComicStatus
 import com.example.fumetti.database.ComicDatabase
 import com.example.fumetti.database.utility.ComicLoader
-import com.example.fumetti.database.utility.ComicsAdapter
-import com.google.firebase.firestore.FirebaseFirestore
 
-class ComicsNumberFragment : Fragment() {
+class ComicsInFragment : Fragment() {
 
     private lateinit var comicDatabase: ComicDatabase
+    private var searchHandler: SearchHandler? = null
     private lateinit var recyclerView: RecyclerView
-    private lateinit var loader: ComicLoader
+    private lateinit var searchView: SearchView
+    private lateinit var comicLoader: ComicLoader
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View = inflater.inflate(R.layout.fragment_comic_display, container, false)
+    ): View = inflater.inflate(R.layout.fragment_comic_list, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         comicDatabase = ComicDatabase()
-        loader = ComicLoader(requireContext()) // <<< QUI! Devi inizializzarlo
 
+        comicLoader = ComicLoader(requireContext())
         recyclerView = view.findViewById(R.id.recyclerView)
+        searchView = view.findViewById(R.id.searchView)
         recyclerView.layoutManager = LinearLayoutManager(context)
 
-        loadData()
+        loadComics()
     }
 
-    private fun loadData() {
-        loader.loadComics(
+    private fun loadComics() {
+        comicLoader.loadComics(
             recyclerView = recyclerView,
-            filter = { comic -> comic.number != 0L }, // <<< QUI! `number` non `numero`
-            sort = { comics -> comics.sortedBy { it.number } }
+            filter = { comic -> comic.status == ComicStatus.TAKEN },
         )
+    }
+
+    override fun onDestroyView() {
+        searchHandler = null
+        super.onDestroyView()
     }
 }

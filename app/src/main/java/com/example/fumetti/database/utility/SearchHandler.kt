@@ -1,6 +1,5 @@
 import androidx.appcompat.widget.SearchView
-import com.example.fumetti.data.Comic
-import com.example.fumetti.database.Utility.ComicsAdapter
+import com.example.fumetti.database.utility.ComicsAdapter
 
 class SearchHandler(
     private val searchView: SearchView,
