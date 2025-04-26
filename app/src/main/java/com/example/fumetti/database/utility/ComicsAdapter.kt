@@ -148,4 +148,9 @@ class ComicsAdapter(
         LIBRARY,
         MY_LIBRARY
     }
+    fun updateList(newList: List<Comic>) {
+        originalList = newList
+        comicsList = newList
+        notifyDataSetChanged()
+    }
 }

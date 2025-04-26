@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.util.Log
 import android.widget.Toast
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fumetti.activity.ComicDetailActivity
 import com.example.fumetti.data.Comic
@@ -22,6 +23,33 @@ class ComicLoader(private val context: Context) {
         filter: (Comic) -> Boolean = { true },
         sort: (List<Comic>) -> List<Comic> = { it.sortedBy { comic -> comic.seriesNumber } }
     ) {
+        if (recyclerView.layoutManager == null) {
+            recyclerView.layoutManager = LinearLayoutManager(context)
+        }
+
+        val comicsAdapter = ComicsAdapter(
+            context = context,
+            comics = emptyList(), // lista iniziale vuota
+            mode = adapterMode,
+            comicDatabase = comicDatabase,
+            updateStatus = { _, _ ->
+                Toast.makeText(
+                    context,
+                    "I fumetti non disponibili non possono essere aggiornati",
+                    Toast.LENGTH_SHORT
+                ).show()
+            },
+            onComicClick = { comic ->
+                context.startActivity(
+                    Intent(context, ComicDetailActivity::class.java).apply {
+                        putExtra("COMIC_ID", comic.id)
+                    }
+                )
+            }
+        )
+
+        recyclerView.adapter = comicsAdapter // assegno SUBITO l'adapter, anche se vuoto
+
         FirebaseFirestore.getInstance().collection("comic")
             .get()
             .addOnSuccessListener { result ->
@@ -60,28 +88,10 @@ class ComicLoader(private val context: Context) {
                 val sortedComics = sort(comics)
                 val filteredComics = sortedComics.filter(filter)
 
-                recyclerView.adapter = ComicsAdapter(
-                    context,
-                    filteredComics,
-                    adapterMode,
-                    comicDatabase = comicDatabase,
-                    updateStatus = { _, _ ->
-                        Toast.makeText(context, "I fumetti non disponibili non possono essere aggiornati", Toast.LENGTH_SHORT).show()
-                    },
-                    onComicClick = { comic ->
-                        context.startActivity(
-                            Intent(context, ComicDetailActivity::class.java).apply{
-                                putExtra("COMIC_ID", comic.id)
-                            }
-                        )
-                    }
-                )
+                comicsAdapter.updateList(filteredComics) // aggiorno l'adapter esistente
             }
             .addOnFailureListener { exception ->
                 Log.e("FirestoreError", "Errore di caricamento", exception)
             }
-    }
-    fun getCurrentUserId(): String? {
-        return com.google.firebase.auth.FirebaseAuth.getInstance().currentUser?.uid
     }
 }
