@@ -3,10 +3,12 @@ package com.example.fumetti.activity.libraryActivity
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
+import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.widget.ViewPager2
 import com.example.fumetti.R
+import com.example.fumetti.activity.UserProfileActivity
 import com.example.fumetti.activity.userHomePageActivity.UserHomePageActivity
 import com.example.fumetti.database.utility.ComicLoader
 import com.google.android.material.tabs.TabLayout
@@ -24,6 +26,11 @@ class LibraryActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_library)
+
+        findViewById<ImageButton>(R.id.profileIcon).setOnClickListener {
+            val intent = Intent(this, UserProfileActivity::class.java)
+            startActivity(intent)
+        }
 
         viewModel = ViewModelProvider(this)[LibraryViewModel::class.java]
         viewModel.loadComics()

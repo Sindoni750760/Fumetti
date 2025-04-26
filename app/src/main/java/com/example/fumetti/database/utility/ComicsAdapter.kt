@@ -145,7 +145,6 @@ class ComicsAdapter(
 
     enum class AdapterMode {
         PREVIEW,
-        LIBRARY,
         MY_LIBRARY
     }
     fun updateList(newList: List<Comic>) {
