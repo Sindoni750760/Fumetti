@@ -1,4 +1,4 @@
-# Fumetti
+# Progetti Dispositivi Mobili | Fumetti: traccia 8
 ## Introduzione
 L'applicazione è un'applicazione sviluppata per il corso di Dispositivi Mobili, A.A. 2024/2025.
 L'obiettivo ultimo dell'applicazione è quello di gestire una collezione di fumetti, aiutando l'utente a tracciare gli acquisti dell'utente.
