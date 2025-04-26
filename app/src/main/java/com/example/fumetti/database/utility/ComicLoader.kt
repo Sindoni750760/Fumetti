@@ -78,7 +78,7 @@ class ComicLoader(private val context: Context) {
 
                     val status = try {
                         ComicStatus.valueOf(document.getString("status") ?: "DISPONIBILE")
-                    } catch (e: Exception) {
+                    } catch (_: Exception) {
                         ComicStatus.UNKOWN
                     }
 
