@@ -19,17 +19,23 @@ class UserProfileActivity: AppCompatActivity(){
         val userEmail = findViewById<TextView>(R.id.userEmail)
         val logOutButton = findViewById<Button>(R.id.logoutButton)
         val profileImage = findViewById<ImageView>(R.id.profileIcon)
+        val mancoList = findViewById<Button>(R.id.mancoListButton)
 
         val user = FirebaseAuth.getInstance().currentUser
 
         if(user != null){
             userEmail.text = user.email
             fetchUserName(user.uid, userName)
+
         }
 
         logOutButton.setOnClickListener {
             FirebaseAuth.getInstance().signOut()
             startActivity(Intent(this, HomePageActivity::class.java))
+            finish()
+        }
+        mancoList.setOnClickListener{
+            startActivity(Intent(this, MancoListActivity::class.java))
             finish()
         }
     }

@@ -75,7 +75,7 @@ class RegisterActivity : AppCompatActivity() {
                     id = userId,
                     name = name,
                     password = "",
-                    surname = surname // Non salvare la password in chiaro!
+                    surname = surname
                 )
                 saveUserToDatabase(newUser)
                 startActivity(Intent(this, UserHomePageActivity::class.java))
