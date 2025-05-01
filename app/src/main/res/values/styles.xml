@@ -10,4 +10,5 @@
 
         <!-- Colore icona chiusura -->
         <item name="closeIconTint">@color/black</item>
-    </style></resources>
+    </style>
+</resources>

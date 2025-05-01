@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@drawable/wallpaper">
+    android:background="#1b2b3b">
 
     <EditText
         android:id="@+id/nameEditText"
@@ -13,9 +13,9 @@
         android:layout_marginTop="30dp"
         android:layout_marginEnd="15dp"
         android:layout_marginBottom="10dp"
-        android:background="@drawable/legno_bianco"
+        android:background="@drawable/input_bg"
         android:hint="Name"
-        android:textColor="@android:color/black"/>
+        android:textColor="@android:color/white"/>
     <EditText
         android:id="@+id/surnameEditText"
         android:layout_width="match_parent"
@@ -25,8 +25,8 @@
         android:layout_marginTop="30dp"
         android:layout_marginEnd="15dp"
         android:layout_marginBottom="10dp"
-        android:background="@drawable/legno_bianco"
-        android:textColor="@android:color/black"/>
+        android:background="@drawable/input_bg"
+        android:textColor="@android:color/white"/>
     <EditText
         android:id="@+id/emailEditText"
         android:layout_width="match_parent"
@@ -36,8 +36,8 @@
         android:layout_marginTop="30dp"
         android:layout_marginEnd="15dp"
         android:layout_marginBottom="10dp"
-        android:background="@drawable/legno_bianco"
-        android:textColor="@android:color/black"/>
+        android:background="@drawable/input_bg"
+        android:textColor="@android:color/white"/>
 
     <EditText
         android:id="@+id/passwordEditText"
@@ -48,8 +48,8 @@
         android:layout_marginTop="30dp"
         android:layout_marginEnd="15dp"
         android:layout_marginBottom="10dp"
-        android:background="@drawable/legno_bianco"
-        android:textColor="@android:color/black"/>
+        android:background="@drawable/input_bg"
+        android:textColor="@android:color/white"/>
 
     <Button
         android:id="@+id/button_register"
@@ -58,6 +58,6 @@
         android:layout_gravity="end"
         android:layout_marginTop="30dp"
         android:layout_marginEnd="50dp"
-        android:background="@drawable/legno_bianco"
+        android:background="@drawable/button"
         android:text="Register" />
 </LinearLayout>

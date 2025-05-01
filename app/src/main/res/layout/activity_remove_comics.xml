@@ -5,14 +5,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
-    android:background="@drawable/wallpaper">
+    android:background="#1b2b3b">
 
     <Spinner
         android:id="@+id/spinnerComics"
         android:layout_width="0dp"
         android:layout_height="52dp"
-        android:background="@drawable/legno_bianco"
-        android:textColor="@color/black"
+        android:background="@drawable/bg_spinner_dark"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp"
+        android:popupBackground="#2a3b4c"
+        android:theme="@style/SpinnerThemeDark"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
@@ -20,11 +23,12 @@
     <Button
         android:id="@+id/buttonRemoveComic"
         android:layout_width="0dp"
-        android:layout_height="60dp"
-        android:layout_marginTop="32dp"
+        android:layout_height="52dp"
+        android:layout_marginTop="24dp"
         android:text="@string/rimuovi_fumetto"
-        android:textColor="@color/black"
-        android:background="@drawable/legno_bianco"
+        android:textColor="#ffffff"
+        android:backgroundTint="#ef5350"
+        android:textStyle="bold"
         app:layout_constraintTop_toBottomOf="@id/spinnerComics"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>

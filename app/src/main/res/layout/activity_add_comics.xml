@@ -3,25 +3,31 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp"
-    android:background="@drawable/wallpaper">
+    android:background="#1b2838"
+    android:padding="24dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Seleziona un fumetto"
+        android:textColor="#C7D5E0"
+        android:textSize="16sp"
+        android:layout_marginBottom="8dp"/>
 
     <Spinner
         android:id="@+id/spinnerComics"
         android:layout_width="match_parent"
-        android:layout_height="62dp"
-        android:layout_marginBottom="16dp"
-        android:background="@drawable/legno_bianco"
-        android:textColor = "@color/black"
-        />
-
+        android:layout_height="56dp"
+        android:background="@drawable/spinner_bg"
+        android:padding="12dp"
+        android:popupBackground="#2a475e"
+        android:layout_marginBottom="24dp"/>
 
     <Button
         android:id="@+id/buttonAddComic"
         android:layout_width="match_parent"
-        android:layout_height="84dp"
-        android:layout_marginTop="100dp"
-        android:background="@drawable/legno_bianco"
+        android:layout_height="64dp"
         android:text="@string/aggiungi_fumetto"
-        android:textColor = "@color/black"/>
+        android:textColor="#FFFFFF"
+        android:background="@drawable/button"/>
 </LinearLayout>

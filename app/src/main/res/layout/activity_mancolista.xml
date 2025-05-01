@@ -5,29 +5,37 @@
     android:layout_height="match_parent">
 
     <LinearLayout
+        style="?android:attr/buttonBarStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:weightSum="2">
+        android:weightSum="2"
+        android:background="#1b2b3b">
 
         <Button
             android:id="@+id/btn_comics_avaiable"
+            style="?android:attr/buttonBarButtonStyle"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="Disponibili" />
-
+            android:text="@string/disponibili"
+            android:background="@drawable/button"
+            android:textColor = "@color/white"/>
         <Button
             android:id="@+id/btn_comics_out"
+            style="?android:attr/buttonBarButtonStyle"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="Mancanti" />
+            android:text="@string/mancanti"
+            android:background="@drawable/button"
+            android:textColor = "@color/white"/>
     </LinearLayout>
 
     <FrameLayout
         android:id="@+id/fragment_container"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"/>
+        android:layout_weight="1"
+        />
 </LinearLayout>

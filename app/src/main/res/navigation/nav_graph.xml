@@ -47,21 +47,16 @@
             android:id="@+id/action_userHomePage_to_library"
             app:destination="@id/libraryActivity" />
         <action
-            android:id="@+id/action_userHomePage_to_myLibrary"
-            app:destination="@id/myLibraryActivity" />
-        <action
             android:id="@+id/action_userHomePage_to_userProfile"
             app:destination="@id/userProfileActivity" />
     </activity>
 
     <activity
         android:id="@+id/libraryActivity"
-        android:name="com.example.fumetti.activity.Library"
+        android:name="com.example.fumetti.activity.libraryActivity.LibraryActivity"
         android:label="Library Activity"
         tools:layout="@layout/activity_library">
-        <action
-            android:id="@+id/action_library_to_comicDetail"
-            app:destination="@id/comicDetailActivity" />
+
         <action
             android:id="@+id/action_library_to_userHomePage"
             app:destination="@id/userHomePageActivity" />
@@ -69,28 +64,6 @@
             android:id="@+id/action_library_to_userProfile"
             app:destination="@id/userProfileActivity" />
     </activity>
-
-    <activity
-        android:id="@+id/myLibraryActivity"
-        android:name="com.example.fumetti.activity.MyLibrary"
-        android:label="My Library Activity"
-        tools:layout="@layout/activity_my_library">
-        <action
-            android:id="@+id/action_myLibrary_to_comicDetail"
-            app:destination="@id/comicDetailActivity" />
-        <action
-            android:id="@+id/action_myLibrary_to_userHomePage"
-            app:destination="@id/userHomePageActivity" />
-        <action
-            android:id="@+id/action_myLibrary_to_userProfile"
-            app:destination="@id/userProfileActivity" />
-    </activity>
-
-    <activity
-        android:id="@+id/comicDetailActivity"
-        android:name="com.example.fumetti.activity.ComicDetailActivity"
-        android:label="Comic Detail Activity"
-        tools:layout="@layout/item_comic" />
 
     <activity
         android:id="@+id/userProfileActivity"

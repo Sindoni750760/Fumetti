@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center_horizontal"
-    android:padding="16dp"
-    android:background="@drawable/legno_bianco">
-
+    android:padding="24dp"
+    android:background="#263645">
 
     <!-- Icona Profilo -->
     <ImageView
@@ -16,41 +16,49 @@
         android:layout_marginBottom="24dp"
         android:background="@drawable/circle_shape"
         android:scaleType="centerCrop"
-        android:src="@drawable/profile_icon"/>
+        android:src="@drawable/profile_icon"
+        android:contentDescription="@string/profile_picture" />
 
-    <!-- Informazioni Utente -->
+    <!-- Nome Utente -->
     <TextView
         android:id="@+id/userName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Nome Utente"
-        android:textSize="18sp"
+        android:text="@string/nome_utente"
+        android:textSize="20sp"
         android:textStyle="bold"
-        android:layout_marginBottom="8dp"
-        android:textColor="@android:color/black"/>
+        android:textColor="#ffffff"
 
+        android:layout_marginBottom="8dp"/>
+
+    <!-- Email Utente -->
     <TextView
         android:id="@+id/userEmail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Email Utente"
+        android:text="@string/email_example_com"
         android:textSize="16sp"
-        android:layout_marginBottom="24dp"
-        android:textColor="@android:color/black"/>
+        android:textColor="#CCCCCC"
+        android:layout_marginBottom="32dp"/>
 
     <!-- Pulsante Logout -->
     <Button
         android:id="@+id/logoutButton"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:text="Logout"
-        android:background="@drawable/legno_bianco"
-        android:textColor="@android:color/black"/>
+        android:layout_height="48dp"
+        android:text="@string/logout"
+        android:textStyle="bold"
+        android:textColor="#ffffff"
+        android:backgroundTint="#ef5350"
+        android:layout_marginBottom="16dp"/>
+
+    <!-- Pulsante Lista Manco -->
     <Button
         android:id="@+id/mancoListButton"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:text="Logout"
-        android:background="@drawable/legno_bianco"
-        android:textColor="@android:color/black"/>
+        android:layout_height="48dp"
+        android:text="@string/lista_manco"
+        android:textStyle="bold"
+        android:textColor="#ffffff"
+        android:backgroundTint="#42a5f5"/>
 </LinearLayout>

@@ -1,50 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp"
-    android:background="@drawable/wallpaper">
+    android:background="#1b2b3b">
 
     <!-- Barra superiore -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:orientation="horizontal">
+        android:layout_height="56dp"
+        android:orientation="horizontal"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp"
+        android:gravity="center_vertical"
+        android:background="#101820">
 
         <Button
             android:id="@+id/buttonToLibrary"
-            android:layout_width="213dp"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@drawable/legno_bianco"
-            android:gravity="center"
-            android:text="Libreria"
-            android:layout_marginRight="100px" />
+            android:background="#101820"
+            android:text="Library"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold"
+            android:textSize="16sp" />
 
         <ImageButton
             android:id="@+id/profileIcon"
-            android:layout_width="50dp"
-            android:layout_height="match_parent"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:background="@drawable/circle_shape"
-            android:scaleType="centerCrop"
             android:src="@drawable/profile_icon"
-            android:contentDescription="Profile Icon"
-            android:layout_gravity="end" />
+            android:scaleType="centerCrop"
+            android:contentDescription="Profile Icon"/>
     </LinearLayout>
 
-    <!-- TabLayout per navigazione fragment -->
+    <!-- TabLayout -->
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:tabTextColor="#CCCCCC"
+        app:tabSelectedTextColor="#ffffff"
+        app:tabIndicatorColor="#42a5f5"
         app:tabMode="fixed"
         app:tabGravity="fill"
-        android:layout_marginTop="8dp"
-        android:elevation="4dp"/>
+        android:background="#263645"/>
 
-    <!-- ViewPager2 per contenere i fragment -->
+    <!-- ViewPager2 -->
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/viewPager"
         android:layout_width="match_parent"

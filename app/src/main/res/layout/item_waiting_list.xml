@@ -4,23 +4,27 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
+    android:background="?android:selectableItemBackground"
     android:padding="16dp"
-    android:background="?android:selectableItemBackground">
+    android:layout_marginBottom="8dp"
+    android:backgroundTintMode="src_in"
+    android:backgroundTint="#2a475e"
+    android:elevation="2dp">
 
     <TextView
         android:id="@+id/textViewComicTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Titolo Fumetto"
+        android:text="@string/titolo_fumetto"
         android:textStyle="bold"
         android:textSize="16sp"
-        android:textColor="@android:color/black" />
+        android:textColor="#C7D5E0" />
 
     <TextView
         android:id="@+id/textViewUserId"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Utente"
+        android:text="@string/utente"
         android:textSize="14sp"
-        android:textColor="@android:color/darker_gray" />
+        android:textColor="#7d8997" />
 </LinearLayout>

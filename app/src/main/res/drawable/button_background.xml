@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<selector xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <!-- Stato quando il bottone è premuto -->
-    <item android:state_pressed="true" android:drawable="@drawable/legno_nero"/>
-    <!-- Stato normale del bottone -->
-    <item android:drawable="@drawable/legno_bianco"/>
-</selector>

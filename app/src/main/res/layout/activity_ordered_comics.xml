@@ -4,16 +4,16 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="16dp"
-    android:background="@drawable/wallpaper">
+    android:background="#1b2b3b">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="38dp"
         android:layout_marginBottom="8dp"
-        android:background="@drawable/legno_bianco"
         android:text="Fumetti Ordinati"
         android:textSize="18sp"
-        android:textColor="@color/black"/>
+        android:textColor="@color/white"
+        android:background="@drawable/input_bg"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewOrderedComics"
@@ -27,10 +27,10 @@
         android:layout_width="match_parent"
         android:layout_height="52dp"
         android:layout_marginBottom="8dp"
-        android:background="@drawable/legno_bianco"
+        android:background="@drawable/input_bg"
         android:text="@string/lista_di_attesa"
         android:textSize="18sp"
-        android:textColor="@color/black"/>
+        android:textColor="@color/white"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewWaitingList"

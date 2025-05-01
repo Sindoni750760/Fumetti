@@ -1,19 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:background="#1b2b3b"
+    android:padding="16dp">
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="#263645"
+        android:padding="24dp">
 
-    <TextView
-        android:id="@+id/comicTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Comic Title"/>
+        <TextView
+            android:id="@+id/comicTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Comic Title"
+            android:textColor="#C7D5E0"
+            android:textSize="20sp"
+            android:layout_marginBottom="24dp"
+            android:background="#263645" />
 
-    <Button
-        android:id="@+id/reserveButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Reserve"
-        android:background="@drawable/reserve_button"/>
-</LinearLayout>
+        <Button
+            android:id="@+id/reserveButton"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:text="Reserve"
+            android:textColor="#FFFFFF"
+            android:background="@drawable/button"
+            android:paddingHorizontal="24dp"/>
+    </LinearLayout>
+
+</ScrollView>
