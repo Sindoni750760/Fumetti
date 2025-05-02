@@ -5,4 +5,19 @@
     <string name="lista_di_attesa">Lista di Attesa</string>
     <string name="aggiungi_fumetto">Aggiungi Fumetto</string>
     <string name="rimuovi_fumetto">Rimuovi Fumetto</string>
+    <string name="profile_picture">Profile Picture</string>
+    <string name="nome_utente">Nome Utente</string>
+    <string name="logout">Logout</string>
+    <string name="lista_manco">Lista Manco</string>
+    <string name="email_example_com">email@example.com</string>
+    <string name="stato_fumetto">Stato fumetto</string>
+    <string name="titolo_del_fumetto">Titolo del Fumetto</string>
+    <string name="prenota">Prenota</string>
+    <string name="noleggia">NOLEGGIA</string>
+    <string name="fuori">Fuori</string>
+    <string name="titolo_fumetto">Titolo Fumetto</string>
+    <string name="utente">Utente</string>
+    <string name="disponibili">Disponibili</string>
+    <string name="mancanti">Mancanti</string>
+    <string name="sample_text">Sample Text</string>
 </resources>

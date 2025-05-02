@@ -11,4 +11,6 @@
         <!-- Colore icona chiusura -->
         <item name="closeIconTint">@color/black</item>
     </style>
+
+    <style name="SpinnerThemeDark"></style>
 </resources>

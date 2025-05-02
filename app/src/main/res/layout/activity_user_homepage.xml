@@ -38,19 +38,21 @@
             android:contentDescription="Profile Icon"/>
     </LinearLayout>
 
-    <!-- TabLayout -->
+    <!-- Tabs -->
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:tabTextColor="#CCCCCC"
-        app:tabSelectedTextColor="#ffffff"
-        app:tabIndicatorColor="#42a5f5"
-        app:tabMode="fixed"
+        android:layout_marginTop="12dp"
+        app:tabTextColor="#C7D5E0"
+        app:tabSelectedTextColor="#66c0f4"
+        app:tabIndicatorColor="#66c0f4"
+        android:background="#2a475e"
         app:tabGravity="fill"
-        android:background="#263645"/>
+        app:tabMode="fixed"
+        android:elevation="2dp"/>
 
-    <!-- ViewPager2 -->
+    <!-- Pager -->
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/viewPager"
         android:layout_width="match_parent"
