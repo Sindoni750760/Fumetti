@@ -52,8 +52,6 @@ dependencies {
     androidTestImplementation(libs.androidx.junit.v113)
     androidTestImplementation(libs.androidx.espresso.core.v340)
     implementation(libs.kotlinx.coroutines.play.services)
-    implementation(libs.play.services.base)
-    implementation(libs.play.services.maps.v1910)
     implementation(libs.androidx.appcompat) // Versione corretta di AppCompat
     implementation (libs.play.services.base.v1830)
 }
