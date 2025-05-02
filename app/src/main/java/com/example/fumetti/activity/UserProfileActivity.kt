@@ -18,7 +18,7 @@ class UserProfileActivity: AppCompatActivity(){
         val userName = findViewById<TextView>(R.id.userName)
         val userEmail = findViewById<TextView>(R.id.userEmail)
         val logOutButton = findViewById<Button>(R.id.logoutButton)
-        val profileImage = findViewById<ImageView>(R.id.profileIcon)
+        findViewById<ImageView>(R.id.profileIcon)
         val mancoList = findViewById<Button>(R.id.mancoListButton)
 
         val user = FirebaseAuth.getInstance().currentUser

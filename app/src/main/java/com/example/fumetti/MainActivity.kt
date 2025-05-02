@@ -10,7 +10,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         // Start UserHomePageActivity
-        MyApplication()
         startActivity(Intent(this, HomePageActivity::class.java))
         finish()
     }

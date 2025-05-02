@@ -34,8 +34,7 @@ class ComicsOutFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         comicDatabase = ComicDatabase()
-
-        comicLoader = ComicLoader(requireContext()) // Initialize the ComicLoader
+        comicLoader = ComicLoader(requireContext())
         recyclerView = view.findViewById(R.id.recyclerView)
         searchView = view.findViewById(R.id.searchView)
         recyclerView.layoutManager = LinearLayoutManager(context)
@@ -46,7 +45,7 @@ class ComicsOutFragment : Fragment() {
     private fun loadComics() {
         comicLoader.loadComics(
             recyclerView = recyclerView,
-            filter = { comic -> comic.status == ComicStatus.OUT },
+            filter = { it.status == ComicStatus.OUT }
         )
     }
 

@@ -8,10 +8,6 @@ import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 
 class ComicDatabase {
-    /**
-     * lazy initialization of Firestore
-     * */
-    // Inizializzazione centralizzata di Firestore utilizzando il contesto globale
     private val firestore: FirebaseFirestore by lazy {
         val context = MyApplication.getContext()
         val appList = FirebaseApp.getApps(context)
@@ -22,7 +18,6 @@ class ComicDatabase {
         }
     }
 
-    // Costanti per uniformare l'uso delle collection in Firestore
     private companion object {
         const val COLLECTION_COMIC = "comic" // Utilizziamo "comic" come nome della collection
         const val COLLECTION_WAITING_LIST = "waiting_list"
@@ -31,12 +26,6 @@ class ComicDatabase {
         const val TAG = "ComicDatabase"
     }
 
-    /**
-     * function to reserve a comic taken by another user
-     * @param comicId: the id of the comic
-     * @param callback: a callback to return the result of the operation
-     * @return: a list of comics reserved
-     * */
     fun reserveComic(comicId: String,userId: String, callback: (Boolean) -> Unit) {
         firestore.collection(COLLECTION_COMIC)
             .document(comicId)
@@ -52,9 +41,7 @@ class ComicDatabase {
                 callback(false)
             }
     }
-    /**
-     * function to return a comic
-     * */
+
     fun returnComic(comicId: String, callback: (Boolean) -> Unit) {
         firestore.collection(COLLECTION_COMIC)
             .document(comicId)
@@ -70,9 +57,7 @@ class ComicDatabase {
                 callback(false)
             }
     }
-    /**
-     * function to add a comic to the waiting list
-     * */
+
     fun addToWaitingList(comicId: String, userId: String, callback: (Boolean) -> Unit) {
         firestore.collection(COLLECTION_WAITING_LIST)
             .add(mapOf("comicId" to comicId, "userId" to userId))

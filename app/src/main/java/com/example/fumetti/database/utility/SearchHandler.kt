@@ -7,6 +7,7 @@ class SearchHandler(
 ) {
     internal var lastQuery: String = ""
     private val debouncePeriod = 300L
+    private var debounceRunnable: Runnable? = null
 
     init {
         setupSearchListener()
@@ -21,7 +22,9 @@ class SearchHandler(
 
             override fun onQueryTextChange(newText: String?): Boolean {
                 newText?.let {
-                    searchView.postDelayed({ performSearch(it) }, debouncePeriod)
+                    searchView.removeCallbacks(debounceRunnable)
+                    debounceRunnable = Runnable { performSearch(it) }
+                    searchView.postDelayed(debounceRunnable, debouncePeriod)
                 }
                 return true
             }
@@ -32,8 +35,11 @@ class SearchHandler(
         if (query == lastQuery) return
         lastQuery = query
 
+        val loweredQuery = query.lowercase()
         adapter.filter { comic ->
-            comic.name.contains(query, ignoreCase = true)
+            comic.name.lowercase().contains(loweredQuery) ||
+                    comic.series.toString().contains(loweredQuery) ||
+                    comic.number.toString().contains(loweredQuery)
         }
     }
 

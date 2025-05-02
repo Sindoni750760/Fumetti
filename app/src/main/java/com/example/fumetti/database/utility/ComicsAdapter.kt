@@ -45,11 +45,8 @@ class ComicsAdapter(
     override fun onBindViewHolder(holder: ComicViewHolder, position: Int) {
         val comic = comicsList[position]
 
-        if(mode != AdapterMode.MY_LIBRARY){
-            comic.status = when{
-                isAvailable(comic.userId) -> ComicStatus.IN
-                else -> ComicStatus.OUT
-            }
+        if(mode != AdapterMode.MY_LIBRARY && comic.status == ComicStatus.UNKOWN){
+            comic.status = if(isAvailable(comic.userId)) ComicStatus.IN else ComicStatus.OUT
         }
         holder.titleText.text = comic.name
 
@@ -130,13 +127,33 @@ class ComicsAdapter(
     }
 
     fun restoreOriginal() {
+        val oldSize = comicsList.size
         comicsList = originalList
-        notifyDataSetChanged()
+        notifyItemRangeChanged(0, comicsList.size)
+        if (oldSize > comicsList.size) {
+            notifyItemRangeRemoved(comicsList.size, oldSize - comicsList.size)
+        } else if (oldSize < comicsList.size) {
+            notifyItemRangeInserted(oldSize, comicsList.size - oldSize)
+        }
     }
 
     fun filter(predicate: (Comic) -> Boolean) {
-        comicsList = originalList.filter(predicate)
-        notifyDataSetChanged()
+        val filteredList = originalList.filter(predicate)
+        val oldList = comicsList
+        comicsList = filteredList
+
+        val diff = oldList.size - comicsList.size
+        if (diff > 0) {
+            notifyItemRangeRemoved(comicsList.size, diff)
+        } else if (diff < 0) {
+            notifyItemRangeInserted(oldList.size, -diff)
+        }
+
+        comicsList.forEachIndexed { index, comic ->
+            if (index < oldList.size && oldList[index] != comic) {
+                notifyItemChanged(index)
+            }
+        }
     }
 
     private fun isAvailable(userId: String?): Boolean{
@@ -148,8 +165,31 @@ class ComicsAdapter(
         MY_LIBRARY
     }
     fun updateList(newList: List<Comic>) {
-        originalList = newList
+        val oldList = comicsList
         comicsList = newList
-        notifyDataSetChanged()
+
+        val oldSize = oldList.size
+        val newSize = comicsList.size
+
+        // Rimuovi gli elementi in eccesso
+        if (oldSize > newSize) {
+            notifyItemRangeRemoved(newSize, oldSize - newSize)
+        }
+
+        // Aggiungi nuovi elementi
+        if (oldSize < newSize) {
+            notifyItemRangeInserted(oldSize, newSize - oldSize)
+        }
+
+        // Aggiorna gli elementi modificati
+        val minSize = minOf(oldSize, newSize)
+        for (i in 0 until minSize) {
+            if (oldList[i] != comicsList[i]) {
+                notifyItemChanged(i)
+            }
+        }
+
+        // Aggiorna la lista originale
+        originalList = newList
     }
 }

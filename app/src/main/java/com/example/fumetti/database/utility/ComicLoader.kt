@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fumetti.activity.ComicDetailActivity
 import com.example.fumetti.data.Comic
+import com.example.fumetti.data.ComicSorted
 import com.example.fumetti.data.ComicStatus
 import com.example.fumetti.database.ComicDatabase
 import com.google.firebase.firestore.FirebaseFirestore
@@ -20,8 +21,8 @@ class ComicLoader(private val context: Context) {
     fun loadComics(
         recyclerView: RecyclerView,
         adapterMode: ComicsAdapter.AdapterMode = ComicsAdapter.AdapterMode.PREVIEW,
-        filter: (Comic) -> Boolean = { true },
-        sort: (List<Comic>) -> List<Comic> = { it.sortedBy { comic -> comic.seriesNumber } }
+        ordering: ComicSorted = ComicSorted.BY_SERIES,
+        filter: (Comic) -> Boolean = { true }
     ) {
         if (recyclerView.layoutManager == null) {
             recyclerView.layoutManager = LinearLayoutManager(context)
@@ -29,7 +30,7 @@ class ComicLoader(private val context: Context) {
 
         val comicsAdapter = ComicsAdapter(
             context = context,
-            comics = emptyList(), // lista iniziale vuota
+            comics = emptyList(),
             mode = adapterMode,
             comicDatabase = comicDatabase,
             updateStatus = { _, _ ->
@@ -48,7 +49,7 @@ class ComicLoader(private val context: Context) {
             }
         )
 
-        recyclerView.adapter = comicsAdapter // assegno SUBITO l'adapter, anche se vuoto
+        recyclerView.adapter = comicsAdapter
 
         FirebaseFirestore.getInstance().collection("comic")
             .get()
@@ -57,10 +58,9 @@ class ComicLoader(private val context: Context) {
                     val id = document.getString("id") ?: document.id
                     val name = document.getString("name") ?: return@mapNotNull null
                     val imageUrl = document.getString("imageUrl") ?: ""
-                    val numberField = document.get("number")
-                    val number = when (numberField) {
-                        is Number -> numberField.toLong()
-                        is String -> numberField.toLongOrNull() ?: 0L
+                    val number = when (val nf = document.get("number")) {
+                        is Number -> nf.toLong()
+                        is String -> nf.toLongOrNull() ?: 0L
                         else -> 0L
                     }
                     val series = document.getString("series") ?: ""
@@ -69,26 +69,44 @@ class ComicLoader(private val context: Context) {
                         ?: document.getString("numericId") ?: ""
                     val userId = document.getString("userId")
                         ?: document.getLong("userId")?.toString() ?: "undefined"
-                    val seriesNumberField = document.get("seriesNumber")
-                    val seriesNumber = when (seriesNumberField) {
-                        is Number -> seriesNumberField.toInt()
-                        is String -> seriesNumberField.toIntOrNull() ?: 0
+                    val seriesNumber = when (val sn = document.get("seriesNumber")) {
+                        is Number -> sn.toInt()
+                        is String -> sn.toIntOrNull() ?: 0
                         else -> 0
                     }
 
                     val status = try {
-                        ComicStatus.valueOf(document.getString("status") ?: "DISPONIBILE")
+                        val statusStr = document.getString("status")?.uppercase() ?: "IN"
+                        ComicStatus.valueOf(statusStr)
                     } catch (_: Exception) {
                         ComicStatus.UNKOWN
                     }
 
-                    Comic(description, id, imageUrl, name, number, numericId, series, seriesNumber, status, userId)
+                    Comic(
+                        description = description,
+                        id = id,
+                        imageUrl = imageUrl,
+                        name = name,
+                        number = number,
+                        numericId = numericId,
+                        series = series,
+                        seriesNumber = seriesNumber,
+                        status = status,
+                        userId = userId
+                    )
+                }
+
+                val sort: (List<Comic>) -> List<Comic> = when (ordering) {
+                    ComicSorted.BY_SERIES -> { comics -> comics.sortedBy { comic -> comic.series } }
+                    ComicSorted.BY_NAME -> { comics -> comics.sortedBy { comic -> comic.name } }
+                    ComicSorted.BY_NUMBER -> { comics -> comics.sortedBy { comic -> comic.number } }
+                    else -> { comics -> comics }
                 }
 
                 val sortedComics = sort(comics)
                 val filteredComics = sortedComics.filter(filter)
 
-                comicsAdapter.updateList(filteredComics) // aggiorno l'adapter esistente
+                comicsAdapter.updateList(filteredComics)
             }
             .addOnFailureListener { exception ->
                 Log.e("FirestoreError", "Errore di caricamento", exception)

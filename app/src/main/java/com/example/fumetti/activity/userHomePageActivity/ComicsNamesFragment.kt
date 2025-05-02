@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.fumetti.R
 import com.example.fumetti.activity.ComicDetailActivity
 import com.example.fumetti.data.Comic
+import com.example.fumetti.data.ComicSorted
 import com.example.fumetti.data.ComicStatus
 import com.example.fumetti.database.ComicDatabase
 import com.example.fumetti.database.utility.ComicLoader
@@ -33,7 +34,7 @@ class ComicsNamesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         comicDatabase = ComicDatabase()
-        comicLoader = ComicLoader(requireContext()) // Initialize the ComicLoader
+        comicLoader = ComicLoader(requireContext())
         recyclerView = view.findViewById(R.id.recyclerView)
         recyclerView.layoutManager = LinearLayoutManager(context)
 
@@ -43,9 +44,8 @@ class ComicsNamesFragment : Fragment() {
     private fun loadData() {
         comicLoader.loadComics(
             recyclerView = recyclerView,
-            filter = { comic -> comic.name.isNotBlank() },
-            sort = { comics -> comics.sortedBy { it.name } }
+            adapterMode = ComicsAdapter.AdapterMode.PREVIEW,
+            ordering = ComicSorted.BY_NUMBER
         )
     }
 }
-

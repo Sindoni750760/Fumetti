@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fumetti.R
+import com.example.fumetti.data.ComicSorted
 import com.example.fumetti.data.ComicStatus
 import com.example.fumetti.database.ComicDatabase
 import com.example.fumetti.database.utility.ComicLoader
@@ -30,7 +31,6 @@ class ComicsInFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         comicDatabase = ComicDatabase()
-
         comicLoader = ComicLoader(requireContext())
         recyclerView = view.findViewById(R.id.recyclerView)
         searchView = view.findViewById(R.id.searchView)
@@ -42,7 +42,7 @@ class ComicsInFragment : Fragment() {
     private fun loadComics() {
         comicLoader.loadComics(
             recyclerView = recyclerView,
-            filter = { comic -> comic.status == ComicStatus.TAKEN },
+            filter = { it.status == ComicStatus.IN }
         )
     }
 
