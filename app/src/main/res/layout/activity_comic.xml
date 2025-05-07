@@ -5,9 +5,9 @@
     android:layout_height="match_parent"
     android:background="#1b2b3b"
     android:padding="16dp">
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         android:background="#263645"
         android:padding="24dp">
@@ -16,7 +16,7 @@
             android:id="@+id/comicTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Comic Title"
+            android:text="@string/comic_title"
             android:textColor="#C7D5E0"
             android:textSize="20sp"
             android:layout_marginBottom="24dp"
@@ -26,8 +26,8 @@
             android:id="@+id/reserveButton"
             android:layout_width="wrap_content"
             android:layout_height="48dp"
-            android:text="Reserve"
-            android:textColor="#FFFFFF"
+            android:text="@string/reserve"
+            android:textColor="@color/black"
             android:background="@drawable/button"
             android:paddingHorizontal="24dp"/>
     </LinearLayout>

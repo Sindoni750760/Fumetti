@@ -20,4 +20,12 @@
     <string name="disponibili">Disponibili</string>
     <string name="mancanti">Mancanti</string>
     <string name="sample_text">Sample Text</string>
+    <string name="Consegna" />
+    <string name="consegna">Consegna</string>
+    <string name="prendi_in_prestito">Prendi in prestito</string>
+    <string name="In_lista_di_attesa" />
+    <string name="in_lista_di_attesa" />
+    <string name="prenotati" />
+    <string name="comic_title">Comic Title</string>
+    <string name="reserve">Reserve</string>
 </resources>

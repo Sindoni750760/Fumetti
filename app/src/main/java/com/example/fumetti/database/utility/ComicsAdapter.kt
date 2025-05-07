@@ -42,52 +42,6 @@ class ComicsAdapter(
 
     override fun getItemCount(): Int = comicsList.size
 
-    override fun onBindViewHolder(holder: ComicViewHolder, position: Int) {
-        val comic = comicsList[position]
-
-        if(mode != AdapterMode.MY_LIBRARY && comic.status == ComicStatus.UNKOWN){
-            comic.status = if(isAvailable(comic.userId)) ComicStatus.IN else ComicStatus.OUT
-        }
-        holder.titleText.text = comic.name
-
-        holder.statusIndicator.setImageResource(
-            when (comic.status) {
-                ComicStatus.IN     -> R.drawable.ic_circle_green
-                ComicStatus.TAKEN -> R.drawable.ic_circle_yellow
-                ComicStatus.OUT -> R.drawable.ic_circle_red
-                else                        -> R.drawable.ic_circle_gray
-            }
-        )
-
-        if (mode == AdapterMode.MY_LIBRARY) {
-            holder.reserveButton.visibility = View.GONE
-            holder.returnButton.visibility = View.GONE
-            holder.waitlistButton.visibility = View.GONE
-            holder.titleText.setTextColor(context?.getColor(R.color.gray) ?: 0)
-        } else {
-            holder.reserveButton.visibility =
-                if (comic.status == ComicStatus.IN) View.VISIBLE else View.GONE
-            holder.returnButton.visibility =
-                if (comic.status == ComicStatus.TAKEN) View.VISIBLE else View.GONE
-            holder.waitlistButton.visibility =
-                if (comic.status == ComicStatus.OUT) View.VISIBLE else View.GONE
-
-            holder.reserveButton.setOnClickListener {
-                handleReserveComic(comic, position)
-            }
-            holder.returnButton.setOnClickListener {
-                handleReturnComic(comic, position)
-            }
-            holder.waitlistButton.setOnClickListener {
-                handleAddToWaitingList(comic)
-            }
-        }
-
-        holder.itemView.setOnClickListener {
-            onComicClick(comic)
-        }
-    }
-
     private fun handleReserveComic(comic: Comic, position: Int) {
         val currentUserId = FirebaseAuth.getInstance().currentUser?.uid ?: return
         comicDatabase.reserveComic(comic.id.toString(), currentUserId) { success ->
@@ -158,6 +112,51 @@ class ComicsAdapter(
 
     private fun isAvailable(userId: String?): Boolean{
         return userId.isNullOrBlank() || userId == "null"
+    }
+
+    override fun onBindViewHolder(holder: ComicViewHolder, position: Int) {
+        val comic = comicsList[position]
+
+        if(mode != AdapterMode.MY_LIBRARY && comic.status == ComicStatus.UNKOWN){
+            comic.status = if(isAvailable(comic.userId)) ComicStatus.IN else ComicStatus.OUT
+        }
+        holder.titleText.text = comic.name
+
+        holder.statusIndicator.setImageResource(
+            when (comic.status) {
+                ComicStatus.IN     -> R.drawable.ic_circle_green
+                ComicStatus.TAKEN -> R.drawable.ic_circle_yellow
+                ComicStatus.OUT -> R.drawable.ic_circle_red
+                ComicStatus.UNKOWN -> R.drawable.ic_circle_gray
+            }
+        )
+        if (mode == AdapterMode.PREVIEW) {
+            holder.reserveButton.visibility = View.GONE
+            holder.returnButton.visibility = View.GONE
+            holder.waitlistButton.visibility = View.GONE
+        }
+        else if(mode == AdapterMode.MY_LIBRARY) {
+            holder.reserveButton.visibility =
+                if (comic.status == ComicStatus.IN) View.VISIBLE else View.GONE
+            holder.returnButton.visibility =
+                if (comic.status == ComicStatus.TAKEN) View.VISIBLE else View.GONE
+            holder.waitlistButton.visibility =
+                if (comic.status == ComicStatus.OUT) View.VISIBLE else View.GONE
+
+            holder.reserveButton.setOnClickListener {
+                handleReserveComic(comic, position)
+            }
+            holder.returnButton.setOnClickListener {
+                handleReturnComic(comic, position)
+            }
+            holder.waitlistButton.setOnClickListener {
+                handleAddToWaitingList(comic)
+            }
+        }
+
+        holder.itemView.setOnClickListener {
+            onComicClick(comic)
+        }
     }
 
     enum class AdapterMode {

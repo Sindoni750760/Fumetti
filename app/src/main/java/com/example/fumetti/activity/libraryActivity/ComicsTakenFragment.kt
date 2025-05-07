@@ -11,6 +11,7 @@ import com.example.fumetti.R
 import com.example.fumetti.data.ComicStatus
 import com.example.fumetti.database.ComicDatabase
 import com.example.fumetti.database.utility.ComicLoader
+import com.example.fumetti.database.utility.ComicsAdapter
 
 class ComicsTakenFragment : Fragment() {
 
@@ -39,7 +40,8 @@ class ComicsTakenFragment : Fragment() {
     private fun loadComics() {
         comicLoader.loadComics(
             recyclerView = recyclerView,
-            filter = { it.status == ComicStatus.TAKEN }
+            filter = { it.status == ComicStatus.TAKEN },
+            adapterMode = ComicsAdapter.AdapterMode.MY_LIBRARY
         )
     }
 

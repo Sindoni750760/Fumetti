@@ -21,7 +21,8 @@ class ComicLoader(private val context: Context) {
     fun loadComics(
         recyclerView: RecyclerView,
         adapterMode: ComicsAdapter.AdapterMode = ComicsAdapter.AdapterMode.PREVIEW,
-        ordering: ComicSorted = ComicSorted.BY_SERIES,
+        ordering: ComicSorted = ComicSorted.UNKOWN,
+        status: ComicStatus = ComicStatus.UNKOWN,
         filter: (Comic) -> Boolean = { true }
     ) {
         if (recyclerView.layoutManager == null) {
@@ -96,15 +97,16 @@ class ComicLoader(private val context: Context) {
                     )
                 }
 
-                val sort: (List<Comic>) -> List<Comic> = when (ordering) {
-                    ComicSorted.BY_SERIES -> { comics -> comics.sortedBy { comic -> comic.series } }
-                    ComicSorted.BY_NAME -> { comics -> comics.sortedBy { comic -> comic.name } }
-                    ComicSorted.BY_NUMBER -> { comics -> comics.sortedBy { comic -> comic.number } }
-                    else -> { comics -> comics }
+                val sortedComics = when (ordering) {
+                    ComicSorted.BY_NAME -> comics.sortedBy { it.name }
+                    ComicSorted.BY_NUMBER -> comics.sortedBy { it.number }
+                    ComicSorted.BY_SERIES -> comics.sortedBy { it.series }
+                    else -> comics
                 }
 
-                val sortedComics = sort(comics)
-                val filteredComics = sortedComics.filter(filter)
+                val filteredComics = sortedComics.filter {
+                    filter(it) && (status == ComicStatus.UNKOWN || it.status == status)
+                }
 
                 comicsAdapter.updateList(filteredComics)
             }

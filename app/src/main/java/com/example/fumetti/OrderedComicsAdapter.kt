@@ -33,7 +33,7 @@ class OrderedComicsAdapter(
                 ComicStatus.IN -> R.drawable.ic_circle_green
                 ComicStatus.TAKEN -> R.drawable.ic_circle_yellow
                 ComicStatus.OUT -> R.drawable.ic_circle_red
-                else -> R.drawable.ic_circle_gray
+                ComicStatus.UNKOWN -> R.drawable.ic_circle_gray
             }
         )
     }

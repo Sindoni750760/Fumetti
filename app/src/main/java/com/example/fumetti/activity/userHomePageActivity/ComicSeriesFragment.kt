@@ -1,25 +1,18 @@
 package com.example.fumetti.activity.userHomePageActivity
 
-import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fumetti.R
-import com.example.fumetti.activity.ComicDetailActivity
-import com.example.fumetti.data.Comic
 import com.example.fumetti.data.ComicSorted
 import com.example.fumetti.data.ComicStatus
 import com.example.fumetti.database.ComicDatabase
 import com.example.fumetti.database.utility.ComicLoader
 import com.example.fumetti.database.utility.ComicsAdapter
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
 
 class ComicSeriesFragment : Fragment() {
 
@@ -46,7 +39,9 @@ class ComicSeriesFragment : Fragment() {
         comicLoader.loadComics(
             recyclerView = recyclerView,
             adapterMode = ComicsAdapter.AdapterMode.PREVIEW,
-            ordering = ComicSorted.BY_NUMBER
+            ordering = ComicSorted.BY_SERIES,
+            status = ComicStatus.UNKOWN,
+            filter = { comic -> !(comic.series.isNullOrEmpty()) }
         )
     }
 }

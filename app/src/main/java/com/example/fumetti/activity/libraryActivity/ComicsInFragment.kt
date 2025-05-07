@@ -10,10 +10,10 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fumetti.R
-import com.example.fumetti.data.ComicSorted
 import com.example.fumetti.data.ComicStatus
 import com.example.fumetti.database.ComicDatabase
 import com.example.fumetti.database.utility.ComicLoader
+import com.example.fumetti.database.utility.ComicsAdapter
 
 class ComicsInFragment : Fragment() {
 
@@ -42,7 +42,8 @@ class ComicsInFragment : Fragment() {
     private fun loadComics() {
         comicLoader.loadComics(
             recyclerView = recyclerView,
-            filter = { it.status == ComicStatus.IN }
+            filter = { it.status == ComicStatus.IN },
+            adapterMode = ComicsAdapter.AdapterMode.MY_LIBRARY
         )
     }
 
