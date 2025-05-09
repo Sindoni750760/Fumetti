@@ -1,62 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="#1b2b3b">
+    android:background="#1b2b3b"
+    android:padding="16dp">
 
-    <!-- Barra superiore -->
+    <!-- Top bar -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="56dp"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:paddingStart="12dp"
-        android:paddingEnd="12dp"
         android:gravity="center_vertical"
-        android:background="#101820">
+        android:padding="8dp">
 
         <Button
             android:id="@+id/buttonToLibrary"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="#101820"
             android:text="Library"
-            android:textColor="#FFFFFF"
-            android:textStyle="bold"
-            android:textSize="16sp" />
+            android:backgroundTint="#2a475e"
+            android:textColor="#FFFFFF"/>
 
         <ImageButton
             android:id="@+id/profileIcon"
             android:layout_width="40dp"
             android:layout_height="40dp"
+            android:layout_marginStart="8dp"
             android:background="@drawable/circle_shape"
             android:src="@drawable/profile_icon"
             android:scaleType="centerCrop"
             android:contentDescription="Profile Icon"/>
     </LinearLayout>
 
-    <!-- Tabs -->
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/tabLayout"
-        android:layout_width="match_parent"
+    <!-- Welcome and user info -->
+    <TextView
+        android:id="@+id/textWelcome"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        app:tabTextColor="#C7D5E0"
-        app:tabSelectedTextColor="#66c0f4"
-        app:tabIndicatorColor="#66c0f4"
-        android:background="#2a475e"
-        app:tabGravity="fill"
-        app:tabMode="fixed"
-        android:elevation="2dp"/>
+        android:text="Benvenuto, utente!"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_marginTop="16dp"/>
 
-    <!-- Pager -->
-    <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/viewPager"
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ultimi fumetti letti:"
+        android:textColor="#C7D5E0"
+        android:layout_marginTop="8dp"
+        android:textSize="16sp"/>
+
+    <!-- RecyclerView -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerRecentComics"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:layout_marginTop="8dp"/>
+        android:layout_marginTop="12dp"
+        android:clipToPadding="false"
+        android:paddingBottom="12dp"/>
 </LinearLayout>
