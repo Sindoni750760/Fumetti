@@ -16,6 +16,7 @@ import com.example.fumetti.data.ComicSorted
 import com.example.fumetti.data.ComicStatus
 import com.example.fumetti.database.utility.ComicLoader
 import com.example.fumetti.database.utility.ComicsAdapter
+import com.google.firebase.auth.FirebaseAuth
 
 class ComicsOutFragment : Fragment() {
 
@@ -37,6 +38,10 @@ class ComicsOutFragment : Fragment() {
         recyclerView = view.findViewById(R.id.recyclerView)
         searchView = view.findViewById(R.id.searchView)
         sortSpinner = view.findViewById(R.id.sortSpinner)
+        searchView.clearFocus()
+        searchView.setOnClickListener {
+            searchView.isIconified = false
+        }
 
         setupSortSpinner()
         loadComics(ComicSorted.BY_NAME)
@@ -69,12 +74,40 @@ class ComicsOutFragment : Fragment() {
             adapterMode = ComicsAdapter.AdapterMode.MY_LIBRARY,
             ordering = sort,
             status = ComicStatus.OUT,
+            filter = { comic ->
+                comic.status == ComicStatus.OUT && comic.userId != FirebaseAuth.getInstance().currentUser?.uid
+            },
             onAdapterReady = { adapter ->
                 searchHandler = SearchHandler(searchView, adapter)
+                setupSearchBar(adapter)
             }
         )
     }
 
+
+    private fun setupSearchBar(adapter: ComicsAdapter) {
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                query?.let {
+                    adapter.filter { comic ->
+                        comic.name.contains(it, ignoreCase = true) ||
+                                (comic.series?.contains(it, ignoreCase = true) == true)
+                    }
+                } ?: adapter.restoreOriginal()
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                newText?.let {
+                    adapter.filter { comic ->
+                        comic.name.contains(it, ignoreCase = true) ||
+                                (comic.series?.contains(it, ignoreCase = true) == true)
+                    }
+                } ?: adapter.restoreOriginal()
+                return true
+            }
+        })
+    }
     override fun onDestroyView() {
         searchHandler = null
         super.onDestroyView()

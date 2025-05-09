@@ -24,7 +24,8 @@ class ComicLoader(private val context: Context) {
         ordering: ComicSorted = ComicSorted.UNKOWN,
         status: ComicStatus = ComicStatus.UNKOWN,
         filter: (Comic) -> Boolean = { true },
-        onAdapterReady: ((ComicsAdapter) -> Unit)? = null
+        onAdapterReady: ((ComicsAdapter) -> Unit)? = null,
+        excludeUser: String?= ""
     ) {
         if (recyclerView.layoutManager == null) {
             recyclerView.layoutManager = LinearLayoutManager(context)

@@ -50,8 +50,8 @@ class LibraryActivity : AppCompatActivity() {
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
             tab.text = when (position) {
                 0 -> "Fuori"
-                1 -> "Disponibili"
-                else -> "Non disponibili"
+                1 -> "In prestito"
+                else -> "disponibili"
             }
         }.attach()
     }

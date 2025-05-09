@@ -29,4 +29,6 @@
     <string name="comic_title">Comic Title</string>
     <string name="reserve">Riserva</string>
     <string name="non_disponibile" />
+    <string name="numero">Numero</string>
+    <string name="serie">Serie</string>
 </resources>

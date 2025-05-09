@@ -45,7 +45,7 @@
             android:textColor="#C7D5E0"
             android:textSize="14sp"
             android:visibility="gone"
-            android:text="Serie"/>
+            android:text="@string/serie"/>
 
         <!-- Numero -->
         <TextView
@@ -55,7 +55,7 @@
             android:textColor="#C7D5E0"
             android:textSize="14sp"
             android:visibility="gone"
-            android:text="Numero"/>
+            android:text="@string/numero"/>
 
         <!-- Pulsanti -->
         <LinearLayout
@@ -72,7 +72,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/reserve"
+                android:text="@string/prendi_in_prestito"
                 android:background="#ffffff"
                 android:textColor="#000000" />
 
@@ -82,7 +82,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/prendi_in_prestito"
+                android:text="@string/consegna"
                 android:background="#ffffff"
                 android:textColor="#000000" />
 
@@ -92,7 +92,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/consegna"
+                android:text="@string/lista_di_attesa"
                 android:background="#ffffff"
                 android:textColor="#000000" />
         </LinearLayout>

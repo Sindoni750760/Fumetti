@@ -37,8 +37,13 @@ class ComicsTakenFragment : Fragment() {
         recyclerView = view.findViewById(R.id.recyclerView)
         searchView = view.findViewById(R.id.searchView)
         sortSpinner = view.findViewById(R.id.sortSpinner)
+        searchView.clearFocus()
+        searchView.setOnClickListener {
+            searchView.isIconified = false
+        }
 
         setupSortSpinner()
+
         loadComics(ComicSorted.BY_NAME)
     }
 

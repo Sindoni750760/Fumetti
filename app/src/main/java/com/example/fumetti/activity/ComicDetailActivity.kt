@@ -32,7 +32,7 @@ class ComicDetailActivity : AppCompatActivity() {
             .addOnSuccessListener{ doc ->
                 val name = doc.getString("name") ?: "N/D"
                 val series = doc.getString("series") ?: "N/D"
-                val number = doc.getLong("number") ?.toString() ?: "N/D"
+                val number = doc.get("number").toString() ?: "N/D"
                 val description = doc.getString("description")?: "Nessuna descrizione"
                 val status = doc.getString("status") ?: "Unkown"
                 val imageUrl = doc.getString("imageUrl") ?: ""
