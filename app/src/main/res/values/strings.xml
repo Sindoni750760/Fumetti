@@ -27,5 +27,6 @@
     <string name="in_lista_di_attesa" />
     <string name="prenotati" />
     <string name="comic_title">Comic Title</string>
-    <string name="reserve">Reserve</string>
+    <string name="reserve">Riserva</string>
+    <string name="non_disponibile" />
 </resources>
