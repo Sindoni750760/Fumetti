@@ -12,20 +12,30 @@ import com.example.fumetti.data.Comic
 import com.example.fumetti.data.ComicSorted
 import com.example.fumetti.data.ComicStatus
 import com.example.fumetti.database.ComicDatabase
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
 class ComicLoader(private val context: Context) {
 
     private val comicDatabase = ComicDatabase()
 
+    val userId = FirebaseAuth.getInstance().currentUser?.uid.orEmpty()
+
+    val statusEnum = when {
+        userId.isEmpty() -> ComicStatus.IN
+        userId == FirebaseAuth.getInstance().currentUser?.uid -> ComicStatus.TAKEN
+        else -> ComicStatus.OUT
+    }
+
     fun loadComics(
         recyclerView: RecyclerView,
         adapterMode: ComicsAdapter.AdapterMode = ComicsAdapter.AdapterMode.PREVIEW,
         ordering: ComicSorted = ComicSorted.UNKOWN,
-        status: ComicStatus = ComicStatus.UNKOWN,
+        status: ComicStatus = statusEnum,
         filter: (Comic) -> Boolean = { true },
         onAdapterReady: ((ComicsAdapter) -> Unit)? = null
     ) {
+
         if (recyclerView.layoutManager == null) {
             recyclerView.layoutManager = LinearLayoutManager(context)
         }
