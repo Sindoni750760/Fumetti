@@ -51,6 +51,6 @@
         <activity
             android:name=".activity.RegisterActivity"/>
         <activity
-            android:name=".activity.MancoListActivity"/>
+            android:name=".activity.MissingListActivity"/>
     </application>
 </manifest>

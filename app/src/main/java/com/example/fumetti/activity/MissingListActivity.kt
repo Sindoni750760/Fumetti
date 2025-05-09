@@ -8,7 +8,7 @@ import com.example.fumetti.R
 import com.example.fumetti.activity.libraryActivity.ComicsOutFragment
 import com.example.fumetti.activity.userHomePageActivity.UserHomePageActivity
 
-class MancoListActivity : AppCompatActivity() {
+class MissingListActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
