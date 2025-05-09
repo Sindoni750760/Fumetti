@@ -6,7 +6,6 @@ import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.fumetti.R
-import com.example.fumetti.activity.libraryActivity.ComicsTakenFragment
 import com.example.fumetti.activity.libraryActivity.ComicsOutFragment
 import com.example.fumetti.activity.userHomePageActivity.UserHomePageActivity
 

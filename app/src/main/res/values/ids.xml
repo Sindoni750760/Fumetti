@@ -11,4 +11,5 @@
     <item name="textViewComicTitle" type="id" />
     <item name="textViewUserId" type="id" />
     <item name="searchView" type="id" />
+    <item name="sortSpinner" type="id" />
 </resources>

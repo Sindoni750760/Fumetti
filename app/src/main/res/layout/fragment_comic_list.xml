@@ -6,6 +6,7 @@
     android:background="#1b2838"
     android:padding="16dp">
 
+    <!-- Search bar -->
     <androidx.appcompat.widget.SearchView
         android:id="@+id/searchView"
         android:layout_width="match_parent"
@@ -15,11 +16,24 @@
         android:focusableInTouchMode="true"
         android:clickable="true"
         android:queryHint="Cerca fumetto..."
-        android:background="#ffff"/>
+        android:background="#ffff" />
 
+    <!-- Ordina per -->
+    <Spinner
+        android:id="@+id/sortSpinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_gravity="end"
+        android:backgroundTint="#2a475e"
+        android:popupBackground="#1b2b3b"
+        android:theme="@style/ThemeOverlay.AppCompat.Light" />
+
+    <!-- Lista -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:scrollbars="vertical" />
 </LinearLayout>

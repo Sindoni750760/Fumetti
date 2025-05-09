@@ -23,7 +23,8 @@ class ComicLoader(private val context: Context) {
         adapterMode: ComicsAdapter.AdapterMode = ComicsAdapter.AdapterMode.PREVIEW,
         ordering: ComicSorted = ComicSorted.UNKOWN,
         status: ComicStatus = ComicStatus.UNKOWN,
-        filter: (Comic) -> Boolean = { true }
+        filter: (Comic) -> Boolean = { true },
+        onAdapterReady: ((ComicsAdapter) -> Unit)? = null
     ) {
         if (recyclerView.layoutManager == null) {
             recyclerView.layoutManager = LinearLayoutManager(context)
@@ -76,7 +77,7 @@ class ComicLoader(private val context: Context) {
                         else -> 0
                     }
 
-                    val status = try {
+                    val statusEnum = try {
                         val statusStr = document.getString("status")?.uppercase() ?: "IN"
                         ComicStatus.valueOf(statusStr)
                     } catch (_: Exception) {
@@ -92,7 +93,7 @@ class ComicLoader(private val context: Context) {
                         numericId = numericId,
                         series = series,
                         seriesNumber = seriesNumber,
-                        status = status,
+                        status = statusEnum,
                         userId = userId
                     )
                 }
@@ -100,7 +101,9 @@ class ComicLoader(private val context: Context) {
                 val sortedComics = when (ordering) {
                     ComicSorted.BY_NAME -> comics.sortedBy { it.name }
                     ComicSorted.BY_NUMBER -> comics.sortedBy { it.number }
-                    ComicSorted.BY_SERIES -> comics.sortedBy { it.series }
+                    ComicSorted.BY_SERIES -> comics.sortedWith(
+                        compareBy<Comic> { it.series.toString() }.thenBy { it.number }
+                    )
                     else -> comics
                 }
 
@@ -109,6 +112,7 @@ class ComicLoader(private val context: Context) {
                 }
 
                 comicsAdapter.updateList(filteredComics)
+                onAdapterReady?.invoke(comicsAdapter)
             }
             .addOnFailureListener { exception ->
                 Log.e("FirestoreError", "Errore di caricamento", exception)

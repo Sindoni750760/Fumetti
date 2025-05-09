@@ -5,20 +5,25 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.Spinner
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fumetti.R
+import com.example.fumetti.data.ComicSorted
 import com.example.fumetti.data.ComicStatus
 import com.example.fumetti.database.utility.ComicLoader
 import com.example.fumetti.database.utility.ComicsAdapter
 
-class ComicsInFragment : Fragment() {
+class ComicsTakenFragment : Fragment() {
 
     private lateinit var comicLoader: ComicLoader
     private var searchHandler: SearchHandler? = null
     private lateinit var searchView: SearchView
     private lateinit var recyclerView: RecyclerView
+    private lateinit var sortSpinner: Spinner
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,14 +36,38 @@ class ComicsInFragment : Fragment() {
         comicLoader = ComicLoader(requireContext())
         recyclerView = view.findViewById(R.id.recyclerView)
         searchView = view.findViewById(R.id.searchView)
+        sortSpinner = view.findViewById(R.id.sortSpinner)
 
-        loadComics()
+        setupSortSpinner()
+        loadComics(ComicSorted.BY_NAME)
     }
 
-    private fun loadComics() {
+    private fun setupSortSpinner() {
+        val options = resources.getStringArray(R.array.sort_options)
+        val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, options)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        sortSpinner.adapter = adapter
+
+        sortSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
+                val sort = when (position) {
+                    0 -> ComicSorted.BY_SERIES
+                    1 -> ComicSorted.BY_NUMBER
+                    2 -> ComicSorted.BY_NAME
+                    else -> ComicSorted.UNKOWN
+                }
+                loadComics(sort)
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>) {}
+        }
+    }
+
+    private fun loadComics(sort: ComicSorted) {
         comicLoader.loadComics(
             recyclerView = recyclerView,
             adapterMode = ComicsAdapter.AdapterMode.MY_LIBRARY,
+            ordering = sort,
             status = ComicStatus.TAKEN,
             onAdapterReady = { adapter ->
                 searchHandler = SearchHandler(searchView, adapter)
@@ -51,3 +80,4 @@ class ComicsInFragment : Fragment() {
         super.onDestroyView()
     }
 }
+
