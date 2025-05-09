@@ -8,7 +8,7 @@ import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fumetti.R
-import com.example.fumetti.activity.MancoListActivity
+import com.example.fumetti.activity.MissingListActivity
 import com.example.fumetti.activity.UserProfileActivity
 import com.example.fumetti.activity.libraryActivity.LibraryActivity
 import com.example.fumetti.data.ComicStatus
@@ -35,7 +35,7 @@ class UserHomePageActivity : AppCompatActivity() {
         }
 
         findViewById<Button>(R.id.buttonSeeAllOut).setOnClickListener{
-            startActivity(Intent(this, MancoListActivity::class.java))
+            startActivity(Intent(this, MissingListActivity::class.java))
             finish()
         }
         // Init RecyclerView and ComicLoader

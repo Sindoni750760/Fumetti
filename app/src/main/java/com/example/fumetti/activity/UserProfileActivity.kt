@@ -35,7 +35,7 @@ class UserProfileActivity: AppCompatActivity(){
             finish()
         }
         mancoList.setOnClickListener{
-            startActivity(Intent(this, MancoListActivity::class.java))
+            startActivity(Intent(this, MissingListActivity::class.java))
             finish()
         }
     }
