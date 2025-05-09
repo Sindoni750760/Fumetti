@@ -83,28 +83,4 @@ class ComicsInFragment : Fragment() {
         searchHandler = null
         super.onDestroyView()
     }
-
-    private fun setupSearchBar(adapter: ComicsAdapter) {
-        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String?): Boolean {
-                query?.let {
-                    adapter.filter { comic ->
-                        comic.name.contains(it, ignoreCase = true) ||
-                                (comic.series?.contains(it, ignoreCase = true) == true)
-                    }
-                } ?: adapter.restoreOriginal()
-                return true
-            }
-
-            override fun onQueryTextChange(newText: String?): Boolean {
-                newText?.let {
-                    adapter.filter { comic ->
-                        comic.name.contains(it, ignoreCase = true) ||
-                                (comic.series?.contains(it, ignoreCase = true) == true)
-                    }
-                } ?: adapter.restoreOriginal()
-                return true
-            }
-        })
-    }
 }

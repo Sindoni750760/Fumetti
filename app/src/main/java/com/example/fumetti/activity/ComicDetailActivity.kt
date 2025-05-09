@@ -25,23 +25,23 @@ class ComicDetailActivity : AppCompatActivity() {
         val numberView = findViewById<TextView>(R.id.detailNumber)
         val descriptionView = findViewById<TextView>(R.id.detailDescription)
         val statusView = findViewById<TextView>(R.id.detailStatus)
-        val imageView = findViewById<ImageView>(R.id.detailImage)
+        findViewById<ImageView>(R.id.detailImage)
 
         val db = FirebaseFirestore.getInstance()
         db.collection("comic").document(comicId).get()
             .addOnSuccessListener{ doc ->
                 val name = doc.getString("name") ?: "N/D"
                 val series = doc.getString("series") ?: "N/D"
-                val number = doc.get("number").toString() ?: "N/D"
+                val number = doc.get("number").toString()
                 val description = doc.getString("description")?: "Nessuna descrizione"
                 val status = doc.getString("status") ?: "Unkown"
-                val imageUrl = doc.getString("imageUrl") ?: ""
+                doc.getString("imageUrl") ?: ""
 
                 titleView.text = name
-                seriesView.text = "Serie: $series"
-                numberView.text = "Numero: $number"
+                seriesView.text = series
+                numberView.text = number
                 descriptionView.text = description
-                statusView.text = "Stato: $status"
+                statusView.text = status
 
             }
             .addOnFailureListener{

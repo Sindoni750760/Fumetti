@@ -10,17 +10,10 @@ import androidx.viewpager2.widget.ViewPager2
 import com.example.fumetti.R
 import com.example.fumetti.activity.UserProfileActivity
 import com.example.fumetti.activity.userHomePageActivity.UserHomePageActivity
-import com.example.fumetti.database.utility.ComicLoader
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 
 class LibraryActivity : AppCompatActivity() {
-
-    companion object {
-        const val TAG = "LibraryActivity"
-        const val EXTRA_USER_ID = "EXTRA_USER_ID"
-    }
-
     private lateinit var viewModel: LibraryViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
