@@ -43,6 +43,9 @@ class LibraryActivity : AppCompatActivity() {
         val viewPager = findViewById<ViewPager2>(R.id.viewPager)
         viewPager.adapter = LibraryPagerAdapter(this)
 
+        val startTab = intent.getIntExtra("startTab", 0)
+        viewPager.setCurrentItem(startTab, false)
+
         val tabLayout = findViewById<TabLayout>(R.id.tabLayout)
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
             tab.text = when (position) {

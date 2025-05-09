@@ -3,7 +3,8 @@ import com.example.fumetti.database.utility.ComicsAdapter
 
 class SearchHandler(
     private val searchView: SearchView,
-    private val adapter: ComicsAdapter
+    private val adapter: ComicsAdapter,
+    private val minQueryLength: Int = 2
 ) {
     internal var lastQuery: String = ""
     private val debouncePeriod = 300L
@@ -32,10 +33,16 @@ class SearchHandler(
     }
 
     private fun performSearch(query: String) {
-        if (query == lastQuery) return
-        lastQuery = query
+        val loweredQuery = query.trim().lowercase()
 
-        val loweredQuery = query.lowercase()
+        if (loweredQuery == lastQuery) return
+        lastQuery = loweredQuery
+
+        if (loweredQuery.length < minQueryLength) {
+            adapter.restoreOriginal()
+            return
+        }
+
         adapter.filter { comic ->
             comic.name.lowercase().contains(loweredQuery) ||
                     comic.series.toString().contains(loweredQuery) ||
@@ -47,5 +54,10 @@ class SearchHandler(
         lastQuery = ""
         searchView.setQuery("", false)
         adapter.restoreOriginal()
+    }
+
+    fun restoreQuery(query: String) {
+        searchView.setQuery(query, false)
+        performSearch(query)
     }
 }

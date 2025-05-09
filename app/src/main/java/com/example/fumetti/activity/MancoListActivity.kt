@@ -1,5 +1,6 @@
 package com.example.fumetti.activity
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
@@ -7,6 +8,7 @@ import androidx.fragment.app.Fragment
 import com.example.fumetti.R
 import com.example.fumetti.activity.libraryActivity.ComicsTakenFragment
 import com.example.fumetti.activity.libraryActivity.ComicsOutFragment
+import com.example.fumetti.activity.userHomePageActivity.UserHomePageActivity
 
 class MancoListActivity : AppCompatActivity() {
 
@@ -14,26 +16,15 @@ class MancoListActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_mancolista)
 
-        val btnComicsAvaiable = findViewById<Button>(R.id.btn_comics_avaiable)
-        val btnComicsOut = findViewById<Button>(R.id.btn_comics_out)
-
-        btnComicsAvaiable.setOnClickListener {
-            replaceFragment(ComicsTakenFragment())
-        }
-
-        btnComicsOut.setOnClickListener {
-            replaceFragment(ComicsOutFragment())
-        }
-
-        // Load default fragment
         if (savedInstanceState == null) {
-            replaceFragment(ComicsTakenFragment())
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, ComicsOutFragment())
+                .commit()
         }
-    }
-
-    private fun replaceFragment(fragment: Fragment) {
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.fragment_container, fragment)
-            .commit()
+        val button = findViewById<Button>(R.id.buttonToHomePage)
+        button.setOnClickListener{
+            startActivity(Intent(this, UserHomePageActivity::class.java))
+        }
     }
 }
+

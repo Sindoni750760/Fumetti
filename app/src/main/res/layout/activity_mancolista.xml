@@ -1,41 +1,23 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
     android:orientation="vertical"
-    android:layout_height="match_parent">
+    android:background="#1b2b3b"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="12dp">
 
-    <LinearLayout
-        style="?android:attr/buttonBarStyle"
-        android:layout_width="match_parent"
+    <Button
+        android:id="@+id/buttonToHomePage"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:weightSum="2"
-        android:background="#1b2b3b">
-
-        <Button
-            android:id="@+id/btn_comics_avaiable"
-            style="?android:attr/buttonBarButtonStyle"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:text="@string/disponibili"
-            android:background="@drawable/button"
-            android:textColor = "@color/white"/>
-        <Button
-            android:id="@+id/btn_comics_out"
-            style="?android:attr/buttonBarButtonStyle"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:text="@string/mancanti"
-            android:background="@drawable/button"
-            android:textColor = "@color/white"/>
-    </LinearLayout>
+        android:text="Torna alla Home"
+        android:backgroundTint="#2a475e"
+        android:textColor="#FFFFFF"
+        android:layout_gravity="end"
+        android:layout_marginBottom="8dp"/>
 
     <FrameLayout
         android:id="@+id/fragment_container"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        />
+        android:layout_weight="1"/>
 </LinearLayout>

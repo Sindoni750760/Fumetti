@@ -30,6 +30,8 @@ class ComicsAdapter(
     class ComicViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val statusIndicator: ImageView = itemView.findViewById(R.id.statusIndicator)
         val titleText: TextView = itemView.findViewById(R.id.titleText)
+        val seriesText: TextView = itemView.findViewById(R.id.seriesText)
+        val numberText: TextView = itemView.findViewById(R.id.numberText)
         val reserveButton: Button = itemView.findViewById(R.id.reserveButton)
         val returnButton: Button = itemView.findViewById(R.id.returnButton)
         val waitlistButton: Button = itemView.findViewById(R.id.waitlistButton)
@@ -121,6 +123,22 @@ class ComicsAdapter(
             comic.status = if(isAvailable(comic.userId)) ComicStatus.IN else ComicStatus.OUT
         }
         holder.titleText.text = comic.name
+
+        if(!comic.series.isNullOrBlank()){
+            holder.seriesText.text ="Collana: ${comic.series}"
+            holder.seriesText.visibility = View.VISIBLE
+        }
+        else{
+            holder.seriesText.visibility = View.GONE
+        }
+
+        if(comic.number > 0){
+            holder.numberText.text = "Numero: ${comic.number}"
+            holder.numberText.visibility = View.VISIBLE
+        }
+        else{
+            holder.numberText.visibility = View.GONE
+        }
 
         holder.statusIndicator.setImageResource(
             when (comic.status) {

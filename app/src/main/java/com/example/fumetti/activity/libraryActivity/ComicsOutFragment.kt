@@ -7,48 +7,50 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fumetti.R
 import com.example.fumetti.data.ComicStatus
-import com.example.fumetti.database.ComicDatabase
 import com.example.fumetti.database.utility.ComicLoader
 import com.example.fumetti.database.utility.ComicsAdapter
 
 class ComicsOutFragment : Fragment() {
 
-    private lateinit var comicDatabase: ComicDatabase
-    private var searchHandler: SearchHandler? = null
-    private lateinit var recyclerView: RecyclerView
-    private lateinit var searchView: SearchView
-    private lateinit var comicLoader: ComicLoader
+    class ComicsInFragment : Fragment() {
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View = inflater.inflate(R.layout.fragment_comic_list, container, false)
+        private lateinit var comicLoader: ComicLoader
+        private var searchHandler: SearchHandler? = null
+        private lateinit var searchView: SearchView
+        private lateinit var recyclerView: RecyclerView
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        comicDatabase = ComicDatabase()
-        comicLoader = ComicLoader(requireContext())
-        recyclerView = view.findViewById(R.id.recyclerView)
-        searchView = view.findViewById(R.id.searchView)
-        recyclerView.layoutManager = LinearLayoutManager(context)
+        override fun onCreateView(
+            inflater: LayoutInflater, container: ViewGroup?,
+            savedInstanceState: Bundle?
+        ): View = inflater.inflate(R.layout.fragment_comic_list, container, false)
 
-        loadComics()
-    }
+        override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+            super.onViewCreated(view, savedInstanceState)
 
-    private fun loadComics() {
-        comicLoader.loadComics(
-            recyclerView = recyclerView,
-            adapterMode = ComicsAdapter.AdapterMode.MY_LIBRARY,
-            filter = { it.status == ComicStatus.OUT }
-        )
-    }
+            comicLoader = ComicLoader(requireContext())
+            recyclerView = view.findViewById(R.id.recyclerView)
+            searchView = view.findViewById(R.id.searchView)
 
-    override fun onDestroyView() {
-        searchHandler = null
-        super.onDestroyView()
+            loadComics()
+        }
+
+        private fun loadComics() {
+            comicLoader.loadComics(
+                recyclerView = recyclerView,
+                adapterMode = ComicsAdapter.AdapterMode.MY_LIBRARY,
+                status = ComicStatus.OUT,
+                onAdapterReady = { adapter ->
+                    searchHandler = SearchHandler(searchView, adapter)
+                }
+            )
+        }
+
+        override fun onDestroyView() {
+            searchHandler = null
+            super.onDestroyView()
+        }
     }
 }
