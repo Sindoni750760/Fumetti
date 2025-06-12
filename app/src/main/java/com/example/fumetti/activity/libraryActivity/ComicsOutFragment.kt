@@ -76,7 +76,7 @@ class ComicsOutFragment : Fragment() {
             ordering = sort,
             status = ComicStatus.OUT,
             filter = { comic ->
-                comic.status == ComicStatus.OUT &&
+                comic.status == ComicStatus.OUT ||
                         comic.userId != FirebaseAuth.getInstance().currentUser?.uid
             },
             onAdapterReady = { adapter ->
